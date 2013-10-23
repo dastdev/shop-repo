@@ -31,4 +31,8 @@ public class Kunde {
 	public long getID()	{
 		return ID;
 	}
+	
+	public void setID(long id)	{
+		ID = id;
+	}
 }
