@@ -4,6 +4,7 @@ public class Kunde {
 	
 	private String	Name;
 	private String	Vorname;
+	private long ID;
 	
 	public String getName() {
 		return Name;
@@ -25,5 +26,9 @@ public class Kunde {
 		super();
 		Name = name;
 		Vorname = vorname;
+	}
+	
+	public long getID()	{
+		return ID;
 	}
 }
