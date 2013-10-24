@@ -4,7 +4,7 @@ public class Kunde {
 	
 	private String	Name;
 	private String	Vorname;
-	private long ID;
+	private long	ID;
 	
 	public String getName() {
 		return Name;
@@ -28,11 +28,14 @@ public class Kunde {
 		Vorname = vorname;
 	}
 	
-	public long getID()	{
+	public long getID() {
 		return ID;
 	}
 	
-	public void setID(long id)	{
+	public void setID(long id) throws Exception {
+		if (id < 0)
+			throw new Exception();
+		
 		ID = id;
 	}
 }
