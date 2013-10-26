@@ -1,5 +1,6 @@
 package de.webshop.kundenverwaltung.domain;
 
+
 public class Kunde {
 	
 	private String	Name;
@@ -10,7 +11,9 @@ public class Kunde {
 		return Name;
 	}
 	
-	public void setName(String name) {
+	public void setName(String name) throws Exception {
+		if (name == null || name.isEmpty())
+			throw new IllegalArgumentException();
 		Name = name;
 	}
 	
@@ -18,7 +21,9 @@ public class Kunde {
 		return Vorname;
 	}
 	
-	public void setVorname(String vorname) {
+	public void setVorname(String vorname) throws Exception {
+		if (vorname == null || vorname.isEmpty())
+			throw new IllegalArgumentException();
 		Vorname = vorname;
 	}
 	
@@ -33,9 +38,11 @@ public class Kunde {
 	}
 	
 	public void setID(long id) throws Exception {
-		if (id < 0)
-			throw new Exception();
+		if (id <= 0)
+			throw new IllegalArgumentException();
 		
 		ID = id;
 	}
+	
+
 }
