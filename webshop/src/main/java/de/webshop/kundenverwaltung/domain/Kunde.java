@@ -1,48 +1,40 @@
 package de.webshop.kundenverwaltung.domain;
 
-
 public class Kunde {
 	
-	private String	Name;
-	private String	Vorname;
-	private long	ID;
+	private long	id;
+	private String	name;
+	private String	vorname;
 	
 	public String getName() {
-		return Name;
+		return name;
 	}
 	
 	public void setName(String name) throws Exception {
 		if (name == null || name.isEmpty())
 			throw new IllegalArgumentException();
-		Name = name;
+		this.name = name;
 	}
 	
 	public String getVorname() {
-		return Vorname;
+		return vorname;
 	}
 	
 	public void setVorname(String vorname) throws Exception {
 		if (vorname == null || vorname.isEmpty())
 			throw new IllegalArgumentException();
-		Vorname = vorname;
-	}
-	
-	public Kunde(String name, String vorname) {
-		super();
-		Name = name;
-		Vorname = vorname;
+		this.vorname = vorname;
 	}
 	
 	public long getID() {
-		return ID;
+		return id;
 	}
 	
 	public void setID(long id) throws Exception {
 		if (id <= 0)
 			throw new IllegalArgumentException();
 		
-		ID = id;
+		this.id = id;
 	}
 	
-
 }
