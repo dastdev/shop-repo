@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  * @author Mario Reinholdt
  * 
  */
-public class artikel {
+public class Artikel {
 	
 	// Eigenschaften
 	@Min(1)
@@ -39,9 +39,9 @@ public class artikel {
 	}
 	
 	// Konstruktoren
-	public artikel(long id, String artikelnummer, URI artikelbild, String bezeichnung,
+	public Artikel(long id, String artikelnummer, URI artikelbild, String bezeichnung,
 			String kurzBeschreibung, String beschreibung, BigDecimal preis, int lagerbestand,
-			long parentID, de.webshop.artikelverwaltung.domain.artikel.kategorie kategorie) {
+			long parentID, de.webshop.artikelverwaltung.domain.Artikel.kategorie kategorie) {
 		super();
 		this.id = id;
 		this.artikelnummer = artikelnummer;
@@ -164,7 +164,7 @@ public class artikel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		artikel other = (artikel) obj;
+		Artikel other = (Artikel) obj;
 		if (artikelbild == null) {
 			if (other.artikelbild != null)
 				return false;
