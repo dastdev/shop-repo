@@ -3,12 +3,14 @@ package de.webshop.kundenverwaltung.domain;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class Adresse {
 
 	// Eigenschaften
 	@Min(1)
-	private long id;
+	private Long id;
 	private String straﬂe;
 	@Size(max = 4)
 	@Pattern(regexp = "\\d+")
@@ -24,11 +26,11 @@ public class Adresse {
 	}
 
 	// get/set-Methoden
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
