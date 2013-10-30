@@ -27,7 +27,7 @@ public final class Mock {
 		position.setAnzahl(2);
 		
 		Artikel artikel = new Artikel();
-		artikel.setID(id.longValue());
+		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
 		artikel.setBezeichnung("Robobike");
 		artikel.setKurzBeschreibung("Das Robobike weiﬂ wohin ...");
