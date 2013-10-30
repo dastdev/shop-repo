@@ -1,5 +1,6 @@
 package de.webshop.kundenverwaltung.domain;
 
+//Test
 public class Kunde {
 	
 	private long	id;
