@@ -13,7 +13,7 @@ public class Adresse {
 	@Size(max = 4)
 	@Pattern(regexp = "\\d+")
 	private String hausnummer;
-	@Pattern(regexp = "\\d{5}")
+	@Pattern(regexp = "\\d{4,5}")
 	private String plz;
 	private String stadt;
 	private land land;
