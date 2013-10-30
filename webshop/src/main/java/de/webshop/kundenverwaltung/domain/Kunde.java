@@ -1,39 +1,49 @@
 package de.webshop.kundenverwaltung.domain;
 
 import java.util.Date;
+import java.util.List;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.apache.xml.utils.URI;
+import de.webshop.bestellverwaltung.domain.Bestellung;
 
+@XmlRootElement
 public class Kunde {
 	
 	// Validierung, um Plausibilitätsprüfungen einzusparen
 	@Min(1)
-	private long		id;
+	private Long				id;
 	@NotNull
 	@Size(min = 2, max = 32)
 	@Pattern(regexp = "[A-Z][a-z]+")
-	private String		name;
+	private String				name;
 	@NotNull
 	@Size(min = 2, max = 32)
 	@Pattern(regexp = "[A-Z][a-z]+")
-	private String		vorname;
+	private String				vorname;
 	@Past
-	private Date		geburtstag;
+	private Date				geburtstag;
 	@NotNull
 	@Size(min = 4, max = 16)
-	private String		passwort;
+	private String				passwort;
 	@NotNull
 	@Pattern(regexp = "[\\w.%-]+@[\\w.%-]+\\.[A-Za-z]{2,4}")
-	private String		email;
+	private String				email;
 	@NotNull
-	private Kundentyp	typ;
-	private boolean		geloescht;
+	private Kundentyp			typ;
+	private boolean				geloescht;
+	@XmlTransient
+	private List<Bestellung>	bestellungen;
+	private URI					bestellungUri;
 	
-	public Kunde(long id, String name, String vorname, Date geburtstag, String passwort,
-			String email, Kundentyp typ, boolean geloescht) {
+	public Kunde(Long id, String name, String vorname, Date geburtstag, String passwort,
+			String email, Kundentyp typ, boolean geloescht, List<Bestellung> bestellungen,
+			URI bestellungUri) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -43,6 +53,8 @@ public class Kunde {
 		this.email = email;
 		this.typ = typ;
 		this.geloescht = geloescht;
+		this.bestellungen = bestellungen;
+		this.bestellungUri = bestellungUri;
 	}
 	
 	/**
@@ -64,10 +76,6 @@ public class Kunde {
 	
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
-	}
-	
-	public long getID() {
-		return id;
 	}
 	
 	public Date getGeburtstag() {
@@ -110,24 +118,45 @@ public class Kunde {
 		this.geloescht = geloescht;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	
+	public List<Bestellung> getBestellungen() {
+		return bestellungen;
+	}
+	
+	public void setBestellungen(List<Bestellung> bestellungen) {
+		this.bestellungen = bestellungen;
+	}
+	
+	public URI getBestellungUri() {
+		return bestellungUri;
+	}
+	
+	public void setBestellungUri(URI bestellungUri) {
+		this.bestellungUri = bestellungUri;
+	}
+	
 	/**
-	 * Ererbte Methoden aus Object
+	 * Geerbte Object-Methoden
 	 */
 	@Override
 	public String toString() {
-		return "Kunde:\nID: " + id + "\nNachname: " + name + "\nVorname: " + vorname
-				+ "\nGeburtstag: " + geburtstag + "\nPasswort: " + passwort + "\nEmail: " + email
-				+ "\nTyp: " + typ + "\nGeloescht: " + geloescht;
+		return "Kunde " + id + ":\nNachname: " + name + " , Vorname: " + vorname + "\nGeburtstag: "
+				+ geburtstag + "\nEmail: " + email + "\nTyp: " + typ + "\nGeloescht: " + geloescht
+				+ "\nBestellungen: " + bestellungUri;
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((bestellungen == null) ? 0 : bestellungen.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((geburtstag == null) ? 0 : geburtstag.hashCode());
 		result = prime * result + (geloescht ? 1231 : 1237);
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((passwort == null) ? 0 : passwort.hashCode());
 		result = prime * result + ((typ == null) ? 0 : typ.hashCode());
@@ -144,6 +173,12 @@ public class Kunde {
 		if (getClass() != obj.getClass())
 			return false;
 		Kunde other = (Kunde) obj;
+		if (bestellungen == null) {
+			if (other.bestellungen != null)
+				return false;
+		}
+		else if (!bestellungen.equals(other.bestellungen))
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -158,7 +193,11 @@ public class Kunde {
 			return false;
 		if (geloescht != other.geloescht)
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)
