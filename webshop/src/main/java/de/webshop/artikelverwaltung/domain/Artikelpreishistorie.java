@@ -16,9 +16,9 @@ public class Artikelpreishistorie {
 
 	// Eigenschaften
 	@Min(1)
-	private Long id;
+	private long id;
 	@Min(1)
-	private Long artikelID;
+	private long artikelID;
 	private Date gueltigVon;
 	@DecimalMin("0.0")
 	private BigDecimal preis;
