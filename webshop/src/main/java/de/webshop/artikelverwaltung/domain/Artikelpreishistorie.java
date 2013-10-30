@@ -5,13 +5,16 @@ package de.webshop.artikelverwaltung.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Stephan-PC
  * 
  */
+@XmlRootElement
 public class Artikelpreishistorie {
 
 	// Eigenschaften
