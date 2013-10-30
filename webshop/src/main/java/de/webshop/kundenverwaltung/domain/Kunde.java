@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 
 public class Kunde {
 	
+	// Validierung, um Plausibilitätsprüfungen einzusparen
 	@Min(1)
 	private long		id;
 	@NotNull
@@ -44,6 +45,11 @@ public class Kunde {
 		this.geloescht = geloescht;
 	}
 	
+	/**
+	 * Get- und Set-Methoden
+	 * 
+	 * @return: Jeweils Rückgabe des entspr. Attributs (get-Methode)
+	 */
 	public String getName() {
 		return name;
 	}
@@ -104,6 +110,9 @@ public class Kunde {
 		this.geloescht = geloescht;
 	}
 	
+	/**
+	 * Ererbte Methoden aus Object
+	 */
 	@Override
 	public String toString() {
 		return "Kunde:\nID: " + id + "\nNachname: " + name + "\nVorname: " + vorname
