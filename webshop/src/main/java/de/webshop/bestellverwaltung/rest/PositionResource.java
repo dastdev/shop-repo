@@ -18,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.rest.ArtikelResource;
 import de.webshop.bestellverwaltung.domain.Position;
+import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 
 @Path("/bestellung")
@@ -38,8 +39,7 @@ public class PositionResource {
 	@Path("{id:[1-9][0-9]*}")
 	public Response findPositionById(@PathParam("id") long id) {
 		
-		// FIXME: Benutze Mock-Klasse statt new Position()
-		final Position position = new Position();
+		final Position position = Mock.findPositionById(id);
 		
 		if (position == null) {
 			throw new NotFoundException(

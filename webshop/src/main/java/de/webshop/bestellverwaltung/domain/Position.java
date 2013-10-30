@@ -8,7 +8,7 @@ import de.webshop.artikelverwaltung.domain.Artikel;
 @XmlRootElement
 public class Position {
 	
-	private long	id;
+	private Long	id;
 	
 	@XmlTransient
 	private Artikel	artikel;
@@ -16,11 +16,11 @@ public class Position {
 	
 	private int		anzahl;
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

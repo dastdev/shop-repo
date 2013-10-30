@@ -11,7 +11,7 @@ public class Kunde {
 	
 	// Validierung, um Plausibilitätsprüfungen einzusparen
 	@Min(1)
-	private long		id;
+	private Long		id;
 	@NotNull
 	@Size(min = 2, max = 32)
 	@Pattern(regexp = "[A-Z][a-z]+")
@@ -31,6 +31,9 @@ public class Kunde {
 	@NotNull
 	private Kundentyp	typ;
 	private boolean		geloescht;
+	
+	public Kunde() {
+	}
 	
 	public Kunde(long id, String name, String vorname, Date geburtstag, String passwort,
 			String email, Kundentyp typ, boolean geloescht) {
@@ -66,7 +69,11 @@ public class Kunde {
 		this.vorname = vorname;
 	}
 	
-	public long getID() {
+	public void setID(Long id) {
+		this.id = id;
+	}
+	
+	public Long getID() {
 		return id;
 	}
 	

@@ -18,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.rest.KundeResource;
+import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 
 @Path("/bestellung")
@@ -38,8 +39,7 @@ public class BestellungResource {
 	@Path("{id:[1-9][0-9]*}")
 	public Response findBestellungById(@PathParam("id") long id) {
 		
-		// FIXME: Benutze Mock-Klasse statt new Bestellung()
-		final Bestellung bestellung = new Bestellung();
+		final Bestellung bestellung = Mock.findBestellungById(id);
 		
 		if (bestellung == null) {
 			throw new NotFoundException(
