@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import de.webshop.artikelverwaltung.domain.Artikel;
-import de.webshop.artikelverwaltung.domain.Artikel.kategorie;
+import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Adresse;
@@ -26,10 +26,16 @@ public final class Mock {
 		final Position position = new Position();
 		position.setAnzahl(2);
 		
-		Artikel artikel = new Artikel(id.longValue(), "R2D2uC3PO", null, "Robobike",
-										"Das Robobike weiß wohin ...",
-										"Lange Robobikebeschreibu...", new BigDecimal(1300.50), 43,
-										13, kategorie.KOMPLETTRÄDER);
+		Artikel artikel = new Artikel();
+		artikel.setID(id.longValue());
+		artikel.setArtikelnummer("R2D2uC3PO");
+		artikel.setBezeichnung("Robobike");
+		artikel.setKurzBeschreibung("Das Robobike weiß wohin ...");
+		artikel.setBeschreibung("Lange Robobikebeschreibu...........");
+		artikel.setKategorie(Kategorie.KOMPLETTRAEDER);
+		artikel.setLagerbestand(13);
+		artikel.setPreis(new BigDecimal(1300.50));
+		
 		position.setArtikel(artikel);
 		position.setId(id);
 		

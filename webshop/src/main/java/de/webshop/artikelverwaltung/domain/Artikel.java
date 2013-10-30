@@ -31,13 +31,13 @@ public class Artikel {
 	private Integer		lagerbestand;
 	@Min(1)
 	private Long		parentID;
-	private kategorie	kategorie;
+	private Kategorie	kategorie;
 	
-	public enum kategorie {
-			KOMPLETTRÄDER,
+	public enum Kategorie {
+			KOMPLETTRAEDER,
 			RADTEILE,
 			ERSATZTEILE,
-			ZUBEHÖR
+			ZUBEHOER
 	}
 	
 	// Konstruktoren
@@ -47,7 +47,7 @@ public class Artikel {
 	
 	public Artikel(Long id, String artikelnummer, URI artikelbild, String bezeichnung,
 			String kurzBeschreibung, String beschreibung, BigDecimal preis, Integer lagerbestand,
-			Long parentID, de.webshop.artikelverwaltung.domain.Artikel.kategorie kategorie) {
+			Long parentID, de.webshop.artikelverwaltung.domain.Artikel.Kategorie kategorie) {
 		super();
 		this.id = id;
 		this.artikelnummer = artikelnummer;
@@ -119,15 +119,19 @@ public class Artikel {
 		this.lagerbestand = lagerbestand;
 	}
 	
-	public kategorie getKategorie() {
+	public Kategorie getKategorie() {
 		return kategorie;
 	}
 	
-	public void setKategorie(kategorie kategorie) {
+	public void setKategorie(Kategorie kategorie) {
 		this.kategorie = kategorie;
 	}
 	
-	public Long getId() {
+	public void setID(Long id) {
+		this.id = id;
+	}
+	
+	public Long getID() {
 		return id;
 	}
 	
