@@ -15,7 +15,7 @@ public class Artikel {
 	
 	// Eigenschaften
 	@Min(1)
-	private long		id;
+	private Long		id;
 	@Pattern(regexp = "\\d{8}")
 	private String		artikelnummer;
 	private URI			artikelbild;
@@ -26,9 +26,9 @@ public class Artikel {
 	@DecimalMin("0.0")
 	private BigDecimal	preis;
 	@Min(0)
-	private int			lagerbestand;
+	private Integer			lagerbestand;
 	@Min(1)
-	private long		parentID;
+	private Long		parentID;
 	private kategorie	kategorie;
 	
 	public enum kategorie {
@@ -43,9 +43,9 @@ public class Artikel {
 		
 	}
 	
-	public Artikel(long id, String artikelnummer, URI artikelbild, String bezeichnung,
-			String kurzBeschreibung, String beschreibung, BigDecimal preis, int lagerbestand,
-			long parentID, de.webshop.artikelverwaltung.domain.Artikel.kategorie kategorie) {
+	public Artikel(Long id, String artikelnummer, URI artikelbild, String bezeichnung,
+			String kurzBeschreibung, String beschreibung, BigDecimal preis, Integer lagerbestand,
+			Long parentID, de.webshop.artikelverwaltung.domain.Artikel.kategorie kategorie) {
 		super();
 		this.id = id;
 		this.artikelnummer = artikelnummer;
@@ -109,11 +109,11 @@ public class Artikel {
 		this.preis = preis;
 	}
 	
-	public int getLagerbestand() {
+	public Integer getLagerbestand() {
 		return lagerbestand;
 	}
 	
-	public void setLagerbestand(int lagerbestand) {
+	public void setLagerbestand(Integer lagerbestand) {
 		this.lagerbestand = lagerbestand;
 	}
 	
@@ -125,11 +125,11 @@ public class Artikel {
 		this.kategorie = kategorie;
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public long getParentID() {
+	public Long getParentID() {
 		return parentID;
 	}
 	
