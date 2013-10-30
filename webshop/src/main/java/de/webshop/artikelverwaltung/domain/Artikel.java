@@ -39,6 +39,10 @@ public class Artikel {
 	}
 	
 	// Konstruktoren
+	public Artikel() {
+		
+	}
+	
 	public Artikel(long id, String artikelnummer, URI artikelbild, String bezeichnung,
 			String kurzBeschreibung, String beschreibung, BigDecimal preis, int lagerbestand,
 			long parentID, de.webshop.artikelverwaltung.domain.Artikel.kategorie kategorie) {
