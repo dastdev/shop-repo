@@ -6,11 +6,13 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Mario Reinholdt
  * 
  */
+@XmlRootElement
 public class Artikel {
 	
 	// Eigenschaften
@@ -26,7 +28,7 @@ public class Artikel {
 	@DecimalMin("0.0")
 	private BigDecimal	preis;
 	@Min(0)
-	private Integer			lagerbestand;
+	private Integer		lagerbestand;
 	@Min(1)
 	private Long		parentID;
 	private kategorie	kategorie;
