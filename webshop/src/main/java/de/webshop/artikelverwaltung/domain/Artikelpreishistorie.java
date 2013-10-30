@@ -16,15 +16,15 @@ public class Artikelpreishistorie {
 
 	// Eigenschaften
 	@Min(1)
-	private long id;
+	private Long id;
 	@Min(1)
-	private long artikelID;
+	private Long artikelID;
 	private Date gueltigVon;
 	@DecimalMin("0.0")
 	private BigDecimal preis;
 
 	// Konstruktor
-	public Artikelpreishistorie(long artikelid, Date gueltigVon,
+	public Artikelpreishistorie(Long artikelid, Date gueltigVon,
 			BigDecimal preis) {
 		super();
 		this.artikelID = artikelid;
@@ -33,19 +33,19 @@ public class Artikelpreishistorie {
 	}
 
 	// get/set-Methoden
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getArtikelid() {
+	public Long getArtikelid() {
 		return artikelID;
 	}
 
-	public void setArtikelid(long artikelid) {
+	public void setArtikelid(Long artikelid) {
 		this.artikelID = artikelid;
 	}
 
