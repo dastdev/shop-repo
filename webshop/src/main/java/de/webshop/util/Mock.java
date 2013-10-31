@@ -9,7 +9,7 @@ import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Adresse;
-import de.webshop.kundenverwaltung.domain.Adresse.land;
+import de.webshop.kundenverwaltung.domain.Adresse.Land;
 import de.webshop.kundenverwaltung.domain.Kunde;
 
 public final class Mock {
@@ -24,7 +24,7 @@ public final class Mock {
 		}
 		
 		final Position position = new Position();
-		position.setAnzahl(2);
+		position.setAnzahl(new Integer(2));
 		
 		Artikel artikel = new Artikel();
 		artikel.setID(id);
@@ -42,6 +42,11 @@ public final class Mock {
 		return position;
 	}
 	
+	public static List<Position> findPositionenByBestellung(Bestellung bestellung) {
+		List<Position> positionen = bestellung.getPositionen();
+		return positionen;
+	}
+	
 	public static Kunde findKundeById(Long id) {
 		if (id > MAX_ID) {
 			return null;
@@ -57,7 +62,7 @@ public final class Mock {
 		if (id % 2 == 0) {
 			adresse.setHausnummer("L4D");
 			adresse.setId(id + 1);
-			adresse.setLand(land.DE);
+			adresse.setLand(Land.DE);
 			adresse.setPlz("76133");
 			adresse.setStadt("Megashophausen");
 			adresse.setStraﬂe("Bikestraﬂe");
@@ -65,7 +70,7 @@ public final class Mock {
 		else {
 			adresse.setHausnummer("B2B");
 			adresse.setId(id + 1);
-			adresse.setLand(land.AT);
+			adresse.setLand(Land.AT);
 			adresse.setPlz("1885");
 			adresse.setStadt("Weizen");
 			adresse.setStraﬂe("Naturtr¸bweg");

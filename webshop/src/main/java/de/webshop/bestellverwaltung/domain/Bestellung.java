@@ -3,6 +3,7 @@ package de.webshop.bestellverwaltung.domain;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import de.webshop.kundenverwaltung.domain.Kunde;
@@ -10,22 +11,26 @@ import de.webshop.kundenverwaltung.domain.Kunde;
 @XmlRootElement
 public class Bestellung {
 	
-	private long			id;
+	private Long			id;
 	
 	@XmlTransient
 	private Kunde			kunde;
 	private URI				kundeUri;
 	
+	@NotNull
 	private Date			bestelldatum;
 	
 	// FIXME: welche @Xml Annotation? PostitionUri's speichern?
+	@XmlTransient
 	private List<Position>	positionen;
 	
-	public long getId() {
+	private URI				positionenUri;
+	
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -61,16 +66,24 @@ public class Bestellung {
 		this.positionen = positionen;
 	}
 	
-	// FIXME: Kunde.hashCode() und Kunde.equals() implementieren!
+	public URI getPositionenUri() {
+		return positionenUri;
+	}
+	
+	public void setPositionenUri(URI positionenUri) {
+		this.positionenUri = positionenUri;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((bestelldatum == null) ? 0 : bestelldatum.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((kunde == null) ? 0 : kunde.hashCode());
 		result = prime * result + ((kundeUri == null) ? 0 : kundeUri.hashCode());
 		result = prime * result + ((positionen == null) ? 0 : positionen.hashCode());
+		result = prime * result + ((positionenUri == null) ? 0 : positionenUri.hashCode());
 		return result;
 	}
 	
@@ -89,7 +102,11 @@ public class Bestellung {
 		}
 		else if (!bestelldatum.equals(other.bestelldatum))
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
 			return false;
 		if (kunde == null) {
 			if (other.kunde != null)
@@ -109,13 +126,20 @@ public class Bestellung {
 		}
 		else if (!positionen.equals(other.positionen))
 			return false;
+		if (positionenUri == null) {
+			if (other.positionenUri != null)
+				return false;
+		}
+		else if (!positionenUri.equals(other.positionenUri))
+			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
 		return "Bestellung [id=" + id + ", kunde=" + kunde + ", kundeUri=" + kundeUri
-				+ ", bestelldatum=" + bestelldatum + ", positionen=" + positionen + "]";
+				+ ", bestelldatum=" + bestelldatum + ", positionen=" + positionen
+				+ ", positionenUri=" + positionenUri + "]";
 	}
 	
 }

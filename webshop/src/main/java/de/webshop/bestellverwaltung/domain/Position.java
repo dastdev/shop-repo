@@ -1,6 +1,7 @@
 package de.webshop.bestellverwaltung.domain;
 
 import java.net.URI;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import de.webshop.artikelverwaltung.domain.Artikel;
@@ -14,7 +15,8 @@ public class Position {
 	private Artikel	artikel;
 	private URI		artikelUri;
 	
-	private int		anzahl;
+	@Size(min = 0)
+	private Integer	anzahl;
 	
 	public Long getId() {
 		return id;
@@ -40,11 +42,11 @@ public class Position {
 		this.artikelUri = artikelUri;
 	}
 	
-	public int getAnzahl() {
+	public Integer getAnzahl() {
 		return anzahl;
 	}
 	
-	public void setAnzahl(int anzahl) {
+	public void setAnzahl(Integer anzahl) {
 		this.anzahl = anzahl;
 	}
 	
@@ -52,10 +54,10 @@ public class Position {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + anzahl;
+		result = prime * result + ((anzahl == null) ? 0 : anzahl.hashCode());
 		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
 		result = prime * result + ((artikelUri == null) ? 0 : artikelUri.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 	
@@ -68,7 +70,11 @@ public class Position {
 		if (getClass() != obj.getClass())
 			return false;
 		Position other = (Position) obj;
-		if (anzahl != other.anzahl)
+		if (anzahl == null) {
+			if (other.anzahl != null)
+				return false;
+		}
+		else if (!anzahl.equals(other.anzahl))
 			return false;
 		if (artikel == null) {
 			if (other.artikel != null)
@@ -82,7 +88,11 @@ public class Position {
 		}
 		else if (!artikelUri.equals(other.artikelUri))
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

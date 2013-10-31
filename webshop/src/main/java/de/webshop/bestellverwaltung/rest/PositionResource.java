@@ -3,6 +3,7 @@ package de.webshop.bestellverwaltung.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
+import static de.webshop.util.Constants.SELF_LINK;
 import java.net.URI;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -21,7 +22,7 @@ import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 
-@Path("/bestellung")
+@Path("/position")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
 public class PositionResource {
@@ -55,7 +56,7 @@ public class PositionResource {
 	}
 	
 	public void setStructuralLinks(Position position, UriInfo uriInfo) {
-		// URI fuer Kunde setzen
+		// URI fuer Artikel setzen
 		final Artikel artikel = position.getArtikel();
 		if (artikel != null) {
 			// FIXME: ArtikelResource.getUriArtikel
@@ -66,9 +67,13 @@ public class PositionResource {
 	}
 	
 	private Link[] getTransitionalLinks(Position position, UriInfo uriInfo) {
-		// FIXME: Konstante SELF_LINK statt "self"
-		final Link self = Link.fromUri(getUriPosition(position, uriInfo)).rel("self").build();
+		final Link self = Link.fromUri(getUriPosition(position, uriInfo)).rel(SELF_LINK).build();
 		return new Link[] { self };
+	}
+	
+	public URI getUriPositionen(Position position, UriInfo uriInfo) {
+		return uriHelper.getUri(BestellungResource.class, "findPositionById", position.getId(),
+								uriInfo);
 	}
 	
 	public URI getUriPosition(Position position, UriInfo uriInfo) {
