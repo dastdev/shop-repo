@@ -2,6 +2,7 @@ package de.webshop.bestellverwaltung.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.FIRST_LINK;
 import static de.webshop.util.Constants.LAST_LINK;
@@ -45,6 +46,13 @@ public class BestellungResource {
 	private PositionResource	positionResource;
 	
 	@GET
+	@Produces({ TEXT_PLAIN, APPLICATION_JSON })
+	@Path("version")
+	public String getVersion() {
+		return "1.0";
+	}
+	
+	@GET
 	@Path("{id:[1-9][0-9]*}")
 	public Response findBestellungById(@PathParam("id") long id) {
 		
@@ -52,7 +60,7 @@ public class BestellungResource {
 		
 		if (bestellung == null) {
 			throw new NotFoundException(
-										String.format(	"Keine Bestellung mit der ID {0} gefunden.",
+										String.format(	"Keine Bestellung mit der ID %li gefunden.",
 														id));
 		}
 		setStructuralLinks(bestellung, uriInfo);
@@ -67,7 +75,7 @@ public class BestellungResource {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}/positionen")
-	public Response findPositionByBestellungId(@PathParam("id") long id) {
+	public Response findPositionenByBestellungId(@PathParam("id") long id) {
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		final Bestellung bestellung = Mock.findBestellungById(id);

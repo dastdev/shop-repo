@@ -44,7 +44,7 @@ public class PositionResource {
 		
 		if (position == null) {
 			throw new NotFoundException(
-										String.format("Keine Position mit der ID {0} gefunden.", id));
+										String.format("Keine Position mit der ID %li gefunden.", id));
 		}
 		setStructuralLinks(position, uriInfo);
 		
@@ -72,7 +72,7 @@ public class PositionResource {
 	}
 	
 	public URI getUriPositionen(Position position, UriInfo uriInfo) {
-		return uriHelper.getUri(BestellungResource.class, "findPositionById", position.getId(),
+		return uriHelper.getUri(BestellungResource.class, "findPositionenById", position.getId(),
 								uriInfo);
 	}
 	

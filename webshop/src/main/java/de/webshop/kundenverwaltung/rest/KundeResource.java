@@ -8,12 +8,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import de.webshop.util.interceptor.Log;
+
+//import de.webshop.util.interceptor.Log;
 
 @Path("/kunde")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.75" })
 @Consumes
-@Log
+// @Log
 public class KundeResource {
 	
 	@GET
