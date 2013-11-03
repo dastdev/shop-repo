@@ -7,8 +7,11 @@ import java.net.URI;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -182,5 +185,30 @@ public class KundeResource {
 								.rel(LAST_LINK).build();
 		
 		return new Link[] { self, first, last };
+	}
+	
+	@POST
+	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	@Produces
+	public Response createKunde(Kunde kunde) {
+		// TODO Anwendungskern statt Mock, Verwendung von Locale
+		kunde = Mock.createKunde(kunde);
+		return Response.created(getUriKunde(kunde, uriInfo)).build();
+	}
+	
+	@PUT
+	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	@Produces
+	public void updateKunde(Kunde kunde) {
+		// TODO Anwendungskern statt Mock, Locale
+		Mock.updateKunde(kunde);
+	}
+	
+	@DELETE
+	@Path("{id:[1-9][0-9]*}")
+	@Produces
+	public void deleteKunde(@PathParam("id") Long kundeId) {
+		// TODO Anwendungskern statt Mock, Verwendung von Locale
+		Mock.deleteKunde(kundeId);
 	}
 }
