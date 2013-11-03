@@ -4,6 +4,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import java.net.URI;
+import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -11,10 +12,13 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.util.Constants;
@@ -30,7 +34,14 @@ public class KundeResource {
 	
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
 	
-	private static final String	KUNDEN_PLZ_QUERY_PARAM		= "plz";
+	// FIXME Kundensuche nach PLZ implementieren
+	// private static final String KUNDEN_PLZ_QUERY_PARAM = "plz";
+	
+	private static final String	SELF_LINK					= null;
+	
+	private static final String	FIRST_LINK					= null;
+	
+	private static final String	LAST_LINK					= null;
 	
 	@Context
 	private UriInfo				uriInfo;
@@ -40,19 +51,6 @@ public class KundeResource {
 	
 	@Inject
 	private UriHelper			uriHelper;
-	
-	// TODO "findAllKunden", "findKundeByNachname"... (Klasse "KundeServe"?)
-	/*
-	 * @GET public Response
-	 * findAllKunden(@QueryParam(KUNDEN_NACHNAME_QUERY_PARAM) //FIXME Pattern
-	 * "Nachname_Pattern"? Woher? //@Pattern(regexp = Kunde.NACHNAME_PATTERN,
-	 * message = "{kunde.nachname.pattern}") String nachname,
-	 * 
-	 * @QueryParam(KUNDEN_PLZ_QUERY_PARAM)
-	 * 
-	 * @Pattern(regexp = "\\d{5}", message = "{adresse.plz}") String plz) {
-	 * List<Kunde> kunden = null; if (nachname != null) { //return null; } }
-	 */
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
@@ -103,4 +101,86 @@ public class KundeResource {
 		return uriHelper.getUri(KundeResource.class, "findKundeById", kunde.getId(), uriInfo);
 	}
 	
+	public Response findKundeByNachname(@QueryParam(KUNDEN_NACHNAME_QUERY_PARAM) String nachname) {
+		List<Kunde> kunden = null;
+		if (nachname != null) {
+			// TODO Anwendungskern statt Mock, Verwendung von Locale
+			kunden = Mock.findKundenByNachname(nachname);
+			if (kunden.isEmpty()) {
+				throw new NotFoundException("Kein Kunde mit Nachname " + nachname + " gefunden.");
+			}
+		}
+		else {
+			// TODO Anwendungskern statt Mock, Verwendung von Locale
+			kunden = Mock.findAllKunden();
+			if (kunden.isEmpty()) {
+				throw new NotFoundException("Keine Kunden vorhanden.");
+			}
+		}
+		
+		for (Kunde k : kunden) {
+			setStructuralLinks(k, uriInfo);
+		}
+		
+		return Response.ok(new GenericEntity<List<Kunde>>(kunden) {})
+						.links(getTransitionalLinksKunden(kunden, uriInfo)).build();
+	}
+	
+	private Link[] getTransitionalLinksKunden(List<Kunde> kunden, UriInfo uriInfo2) {
+		if (kunden == null || kunden.isEmpty()) {
+			return null;
+		}
+		
+		final Link first = Link.fromUri(getUriKunde(kunden.get(0), uriInfo)).rel(FIRST_LINK)
+								.build();
+		final int lastPos = kunden.size() - 1;
+		final Link last = Link.fromUri(getUriKunde(kunden.get(lastPos), uriInfo)).rel(LAST_LINK)
+								.build();
+		
+		return new Link[] { first, last };
+	}
+	
+	@GET
+	@Path("{id:[1-9][0-9]*}/bestellungen")
+	public Response findBestellungenByKundeId(@PathParam("id") Long kundeId) {
+		// FIXME Referenz auf Klasse KundeService
+		final Kunde kunde = Mock.findKundeById(kundeId);
+		if (kunde == null) {
+			throw new NotFoundException(
+										String.format(	"Es wurden keine Bestellungen für den Kunden {0} gefunden",
+														kundeId));
+		}
+		// FIXME Referenz auf Klasse BestellungService
+		final List<Bestellung> bestellungen = Mock.findBestellungenByKunde(kunde);
+		// URIs innerhalb der gefundenen Bestellungen anpassen
+		if (bestellungen != null) {
+			for (Bestellung bestellung : bestellungen) {
+				bestellungResource.setStructuralLinks(bestellung, uriInfo);
+			}
+		}
+		
+		return Response.ok(new GenericEntity<List<Bestellung>>(bestellungen) {})
+						.links(getTransitionalLinksBestellungen(bestellungen, kunde, uriInfo))
+						.build();
+	}
+	
+	private Link[] getTransitionalLinksBestellungen(List<Bestellung> bestellungen, Kunde kunde,
+			UriInfo uriInfo2) {
+		if (bestellungen == null || bestellungen.isEmpty()) {
+			return new Link[0];
+		}
+		
+		final Link self = Link.fromUri(getUriBestellung(kunde, uriInfo)).rel(SELF_LINK).build();
+		
+		final Link first = Link.fromUri(bestellungResource.getUriBestellung(bestellungen.get(0),
+																			uriInfo))
+								.rel(FIRST_LINK).build();
+		
+		final int lastPos = bestellungen.size() - 1;
+		final Link last = Link.fromUri(	bestellungResource.getUriBestellung(bestellungen.get(lastPos),
+																			uriInfo))
+								.rel(LAST_LINK).build();
+		
+		return new Link[] { self, first, last };
+	}
 }
