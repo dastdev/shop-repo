@@ -1,5 +1,6 @@
 package de.webshop.kundenverwaltung.domain;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.Min;
@@ -9,7 +10,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.apache.xml.utils.URI;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 
 @XmlRootElement
@@ -17,7 +17,7 @@ public class Kunde {
 	
 	// Validierung, um Plausibilitätsprüfungen einzusparen
 	@Min(1)
-	private Long		id;
+	private Long				id;
 	@NotNull
 	@Size(min = 2, max = 32)
 	@Pattern(regexp = "[A-Z][a-z]+")
@@ -39,7 +39,7 @@ public class Kunde {
 	private boolean				geloescht;
 	@XmlTransient
 	private List<Bestellung>	bestellungen;
-	private URI					bestellungUri;
+	private URI					uriBestellung;
 	
 	public Kunde() {
 	}
@@ -57,7 +57,7 @@ public class Kunde {
 		this.typ = typ;
 		this.geloescht = geloescht;
 		this.bestellungen = bestellungen;
-		this.bestellungUri = bestellungUri;
+		this.uriBestellung = bestellungUri;
 	}
 	
 	/**
@@ -141,12 +141,12 @@ public class Kunde {
 		this.bestellungen = bestellungen;
 	}
 	
-	public URI getBestellungUri() {
-		return bestellungUri;
+	public URI getUriBestellung() {
+		return uriBestellung;
 	}
 	
-	public void setBestellungUri(URI bestellungUri) {
-		this.bestellungUri = bestellungUri;
+	public void setUriBestellung(URI uri) {
+		this.uriBestellung = uri;
 	}
 	
 	/**
@@ -156,7 +156,7 @@ public class Kunde {
 	public String toString() {
 		return "Kunde " + id + ":\nNachname: " + name + " , Vorname: " + vorname + "\nGeburtstag: "
 				+ geburtstag + "\nEmail: " + email + "\nTyp: " + typ + "\nGeloescht: " + geloescht
-				+ "\nBestellungen: " + bestellungUri;
+				+ "\nBestellungen: " + uriBestellung;
 	}
 	
 	@Override
