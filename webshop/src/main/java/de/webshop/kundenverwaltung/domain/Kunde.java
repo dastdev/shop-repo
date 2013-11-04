@@ -40,6 +40,7 @@ public class Kunde {
 	@XmlTransient
 	private List<Bestellung>	bestellungen;
 	private URI					uriBestellung;
+	private Adresse				adresse;
 	
 	public Kunde() {
 	}
@@ -143,6 +144,14 @@ public class Kunde {
 	
 	public void setUriBestellung(URI uri) {
 		this.uriBestellung = uri;
+	}
+	
+	public Adresse getAdresse() {
+		return adresse;
+	}
+	
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
 	}
 	
 	/**
