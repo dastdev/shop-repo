@@ -5,6 +5,7 @@ import java.net.URI;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -41,7 +42,7 @@ public class ArtikelResource {
 	
 	@GET
 	@Path("{id:[1-9][0-9]{0,7}}")
-	public Response findArtikelById(@PathParam("id") Long id, @Context UriInfo uriInfo) {
+	public Response findArtikelByID(@PathParam("id") Long id, @Context UriInfo uriInfo) {
 		final Artikel artikel = as.findArtikelByID(id);
 		if (artikel == null) {
 			// TODO Sprachabhängige Fehlermeldung
@@ -56,30 +57,53 @@ public class ArtikelResource {
 	@POST
 	// TODO wandle MOCK um in reale Methode
 	// TODO Rückgabetyp über Erfolg oder Artikel als Rückgabewert
-	public void createArtikel() {
+	public static Artikel createArtikel(	@FormParam("ID") Long ID,
+									@FormParam("artikelnummer") String Artikelnummer,
+									@FormParam("bezeichnung") String Bezeichnung,
+									@FormParam("kurzBeschreibung") String Kurzbeschreibung,
+									@FormParam("beschreibung") String Beschreibung,
+									@FormParam("kategorie") Kategorie Kategorie,
+									@FormParam("lagerbestand") Integer Lagerbestand,
+									@FormParam("preis") BigDecimal Preis									
+									){
 		Artikel artikel = new Artikel();
-		artikel.setID(2L);
-		artikel.setArtikelnummer("AEAE99AE");
-		artikel.setBezeichnung("Fahrradschlauch 26\" 255mm");
-		artikel.setKurzBeschreibung("Mit diesem Fahrradschlauch haben die Pannen endlich ein Ende...");
-		artikel.setBeschreibung("Der Ultra Duba Mega Schlauch 26\" mit Pannenstoppeffekt macht dem Ärger endlich ein Ende, ...");
-		artikel.setKategorie(Kategorie.ERSATZTEILE);
-		artikel.setLagerbestand(70);
-		artikel.setPreis(new BigDecimal(14.99));
+		artikel.setID(ID);
+		artikel.setArtikelnummer(Artikelnummer);
+		artikel.setBezeichnung(Bezeichnung);
+		artikel.setKurzBeschreibung(Kurzbeschreibung);
+		artikel.setBeschreibung(Beschreibung);
+		artikel.setKategorie(Kategorie);
+		artikel.setLagerbestand(Lagerbestand);
+		artikel.setPreis(Preis);
+		return artikel;
 	}
 	
 	@PUT
 	//TODO wandle MOCK in reale Methode um
-	public Artikel updateArtikel(Artikel alt) {
-		alt.setID(2L);
-		alt.setArtikelnummer("99AA99AA");
-		alt.setBezeichnung("Geupdatetes Produkt");
-		alt.setKurzBeschreibung("Dieses Produkt wurde geupdatet.");
-		alt.setBeschreibung("Lange Beschreibung eines aktualisierten Produktes.");
-		alt.setKategorie(Kategorie.ERSATZTEILE);
-		alt.setLagerbestand(12000);
-		alt.setPreis(new BigDecimal(99.99));
-		return alt;
+	public Response updateArtikelbyID(	@FormParam("ID") Long ID,
+										@FormParam("artikelnummer") String Artikelnummer,
+										@FormParam("bezeichnung") String Bezeichnung,
+										@FormParam("kurzBeschreibung") String Kurzbeschreibung,
+										@FormParam("beschreibung") String Beschreibung,
+										@FormParam("kategorie") Kategorie Kategorie,
+										@FormParam("lagerbestand") Integer Lagerbestand,
+										@FormParam("preis") BigDecimal Preis,
+										@Context UriInfo uriInfo
+									){
+		final Artikel alt = as.findArtikelByID(ID);
+		alt.setID(ID);
+		alt.setArtikelnummer(Artikelnummer);
+		alt.setBezeichnung(Bezeichnung);
+		alt.setKurzBeschreibung(Kurzbeschreibung);
+		alt.setBeschreibung(Beschreibung);
+		alt.setKategorie(Kategorie);
+		alt.setLagerbestand(Lagerbestand);
+		alt.setPreis(Preis);
+
+		return Response.accepted(alt)
+                .links(getTransitionalLinks(alt, uriInfo))
+                .build();
+		
 	}
 	
 	private Link[] getTransitionalLinks(Artikel artikel, UriInfo uriInfo) {
