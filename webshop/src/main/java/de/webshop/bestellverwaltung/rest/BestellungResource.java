@@ -54,9 +54,9 @@ public class BestellungResource {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Response findBestellungById(@PathParam("id") long id) {
+	public Response findBestellungByID(@PathParam("id") long id) {
 		
-		final Bestellung bestellung = Mock.findBestellungById(id);
+		final Bestellung bestellung = Mock.findBestellungByID(id);
 		
 		if (bestellung == null) {
 			throw new NotFoundException(
@@ -75,10 +75,10 @@ public class BestellungResource {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}/positionen")
-	public Response findPositionenByBestellungId(@PathParam("id") long id) {
+	public Response findPositionenByBestellungID(@PathParam("id") long id) {
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		final Bestellung bestellung = Mock.findBestellungById(id);
+		final Bestellung bestellung = Mock.findBestellungByID(id);
 		final List<Position> positionen = Mock.findPositionenByBestellung(bestellung);
 		
 		if (positionen.isEmpty()) {
@@ -99,9 +99,7 @@ public class BestellungResource {
 		// URI fuer Kunde setzen
 		final Kunde kunde = bestellung.getKunde();
 		if (kunde != null) {
-			// FIXME: kundeResource.getUriKunde(...)
-			final URI kundeUri = null; // kundeResource.getUriKunde(bestellung.getKunde(),
-										// uriInfo);
+			final URI kundeUri = kundeResource.getUriKunde(bestellung.getKunde(), uriInfo);
 			bestellung.setKundeUri(kundeUri);
 		}
 		
@@ -141,12 +139,12 @@ public class BestellungResource {
 	}
 	
 	private URI getUriPositionen(Bestellung bestellung, UriInfo uriInfo) {
-		return uriHelper.getUri(BestellungResource.class, "findPositionenByBestellungId",
+		return uriHelper.getUri(BestellungResource.class, "findPositionenByBestellungID",
 								bestellung.getID(), uriInfo);
 	}
 	
 	public URI getUriBestellung(Bestellung bestellung, UriInfo uriInfo) {
-		return uriHelper.getUri(BestellungResource.class, "findBestellungById", bestellung.getID(),
+		return uriHelper.getUri(BestellungResource.class, "findBestellungByID", bestellung.getID(),
 								uriInfo);
 	}
 	

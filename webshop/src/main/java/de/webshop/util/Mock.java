@@ -24,7 +24,7 @@ public final class Mock {
 	private static final int	MAX_KUNDEN			= 8;
 	private static final int	MAX_BESTELLUNGEN	= 4;
 	
-	public static Position findPositionById(Long id) {
+	public static Position findPositionByID(Long id) {
 		if (id > MAX_ID) {
 			return null;
 		}
@@ -53,7 +53,7 @@ public final class Mock {
 		return positionen;
 	}
 	
-	public static Kunde findKundeById(Long id) {
+	public static Kunde findKundeByID(Long id) {
 		if (id > MAX_ID) {
 			return null;
 		}
@@ -89,7 +89,7 @@ public final class Mock {
 		final int anzahl = MAX_KUNDEN;
 		final List<Kunde> kunden = new ArrayList<>(anzahl);
 		for (int i = 1; i <= anzahl; i++) {
-			final Kunde kunde = findKundeById(Long.valueOf(i));
+			final Kunde kunde = findKundeByID(Long.valueOf(i));
 			kunden.add(kunde);
 		}
 		return kunden;
@@ -99,7 +99,7 @@ public final class Mock {
 		final int anzahl = nachname.length();
 		final List<Kunde> kunden = new ArrayList<>(anzahl);
 		for (int i = 1; i <= anzahl; i++) {
-			final Kunde kunde = findKundeById(Long.valueOf(i));
+			final Kunde kunde = findKundeByID(Long.valueOf(i));
 			kunde.setName(nachname);
 			kunden.add(kunde);
 		}
@@ -112,7 +112,7 @@ public final class Mock {
 		// 1 2 3 oder 4 Bestellungen
 		final List<Bestellung> bestellungen = new ArrayList<>(anzahl);
 		for (int i = 1; i <= anzahl; i++) {
-			final Bestellung bestellung = findBestellungById(Long.valueOf(i));
+			final Bestellung bestellung = findBestellungByID(Long.valueOf(i));
 			bestellung.setKunde(kunde);
 			bestellungen.add(bestellung);
 		}
@@ -122,12 +122,12 @@ public final class Mock {
 		return bestellungen;
 	}
 	
-	public static Bestellung findBestellungById(Long id) {
+	public static Bestellung findBestellungByID(Long id) {
 		if (id > MAX_ID) {
 			return null;
 		}
 		
-		final Kunde kunde = findKundeById(id + 1); // andere ID fuer den
+		final Kunde kunde = findKundeByID(id + 1); // andere ID fuer den
 													// Kunden
 		
 		final Bestellung bestellung = new Bestellung();
@@ -137,8 +137,8 @@ public final class Mock {
 		
 		// FIXME: setPositionen
 		List<Position> positionen = new ArrayList<>();
-		positionen.add(findPositionById((long) 1));
-		positionen.add(findPositionById((long) 2));
+		positionen.add(findPositionByID((long) 1));
+		positionen.add(findPositionByID((long) 2));
 		bestellung.setPositionen(positionen);
 		
 		return bestellung;
