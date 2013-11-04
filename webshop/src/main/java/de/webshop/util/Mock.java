@@ -1,5 +1,6 @@
 package de.webshop.util;
 
+//import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +13,12 @@ import de.webshop.kundenverwaltung.domain.Adresse;
 import de.webshop.kundenverwaltung.domain.Adresse.Land;
 import de.webshop.kundenverwaltung.domain.Kunde;
 
+//import org.jboss.logging.Logger;
+
 public final class Mock {
+	
+	// private static final Logger logger =
+	// Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private static final int	MAX_ID				= 99;
 	private static final int	MAX_KUNDEN			= 8;
@@ -154,11 +160,37 @@ public final class Mock {
 	}
 	
 	public static void updateKunde(Kunde kunde) {
+		// TODO: Logger benutzen?
 		System.out.println("Aktualisierter Kunde: " + kunde);
 	}
 	
 	public static void deleteKunde(Long kundeId) {
-		System.out.println("Kunde mit ID=" + kundeId + " geloescht");
+		// logger.infof("Kunde gelöscht mit Id: %li", kundeId);
+		System.out.println("Delete Kunde");
+	}
+	
+	public static Position createPosition(Position position) {
+		// logger.infof("Position erstellt: %s", position);
+		System.out.println("create Position");
+		// TODO: position anpassen
+		if (position == null) {
+			position = new Position();
+		}
+		
+		position.setID(12L);
+		return position;
+	}
+	
+	public static void updatePosition(Position position) {
+		// gespeicherte Position finden
+		// gesp. Position mir Werten aus Parameter überschreiben
+		
+		// logger.infof("Aktualisierte Position: %s", position);
+		System.out.println("updatePosition");
+	}
+	
+	public static void deletePosition(long positionId) {
+		System.out.println("deletePosition");
 	}
 	
 	private Mock() { /**/
