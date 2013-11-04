@@ -37,7 +37,7 @@ public final class Mock {
 		artikel.setPreis(new BigDecimal(1300.50));
 		
 		position.setArtikel(artikel);
-		position.setId(id);
+		position.setID(id);
 		
 		return position;
 	}
@@ -61,7 +61,7 @@ public final class Mock {
 		
 		if (id % 2 == 0) {
 			adresse.setHausnummer("L4D");
-			adresse.setId(id + 1);
+			adresse.setID(id + 1);
 			adresse.setLand(Land.DE);
 			adresse.setPlz("76133");
 			adresse.setStadt("Megashophausen");
@@ -69,7 +69,7 @@ public final class Mock {
 		}
 		else {
 			adresse.setHausnummer("B2B");
-			adresse.setId(id + 1);
+			adresse.setID(id + 1);
 			adresse.setLand(Land.AT);
 			adresse.setPlz("1885");
 			adresse.setStadt("Weizen");
@@ -125,12 +125,15 @@ public final class Mock {
 													// Kunden
 		
 		final Bestellung bestellung = new Bestellung();
-		bestellung.setId(id);
+		bestellung.setID(id);
 		bestellung.setKunde(kunde);
 		bestellung.setBestelldatum(new Date(1234567890));
 		
 		// FIXME: setPositionen
-		bestellung.setPositionen(null);
+		List<Position> positionen = new ArrayList<>();
+		positionen.add(findPositionById((long) 1));
+		positionen.add(findPositionById((long) 2));
+		bestellung.setPositionen(positionen);
 		
 		return bestellung;
 	}

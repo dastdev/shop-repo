@@ -76,7 +76,7 @@ public class KundeResource {
 	}
 	
 	private URI getUriBestellung(Kunde kunde, UriInfo uriInfo) {
-		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeId", kunde.getId(),
+		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeId", kunde.getID(),
 								uriInfo);
 	}
 	
@@ -92,7 +92,7 @@ public class KundeResource {
 								.rel(Constants.UPDATE_LINK).build();
 		
 		final Link remove = Link.fromUri(	uriHelper.getUri(	KundeResource.class, "deleteKunde",
-																kunde.getId(), uriInfo))
+																kunde.getID(), uriInfo))
 								.rel(Constants.REMOVE_LINK).build();
 		
 		// TODO "list" einfügen
@@ -100,7 +100,7 @@ public class KundeResource {
 	}
 	
 	private URI getUriKunde(Kunde kunde, UriInfo uriInfo) {
-		return uriHelper.getUri(KundeResource.class, "findKundeById", kunde.getId(), uriInfo);
+		return uriHelper.getUri(KundeResource.class, "findKundeById", kunde.getID(), uriInfo);
 	}
 	
 }

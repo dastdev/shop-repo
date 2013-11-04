@@ -129,10 +129,6 @@ public class Kunde {
 		this.geloescht = geloescht;
 	}
 	
-	public Long getId() {
-		return id;
-	}
-	
 	public List<Bestellung> getBestellungen() {
 		return bestellungen;
 	}

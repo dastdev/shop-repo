@@ -72,12 +72,12 @@ public class PositionResource {
 	}
 	
 	public URI getUriPositionen(Position position, UriInfo uriInfo) {
-		return uriHelper.getUri(BestellungResource.class, "findPositionenById", position.getId(),
+		return uriHelper.getUri(BestellungResource.class, "findPositionenById", position.getID(),
 								uriInfo);
 	}
 	
 	public URI getUriPosition(Position position, UriInfo uriInfo) {
-		return uriHelper.getUri(PositionResource.class, "findPositionById", position.getId(),
+		return uriHelper.getUri(PositionResource.class, "findPositionById", position.getID(),
 								uriInfo);
 	}
 	

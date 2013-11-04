@@ -80,6 +80,7 @@ public class BestellungResource {
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		final Bestellung bestellung = Mock.findBestellungById(id);
 		final List<Position> positionen = Mock.findPositionenByBestellung(bestellung);
+		
 		if (positionen.isEmpty()) {
 			throw new NotFoundException("Zur ID " + id + " wurden keine Position gefunden");
 		}
@@ -142,11 +143,11 @@ public class BestellungResource {
 	
 	private URI getUriPositionen(Bestellung bestellung, UriInfo uriInfo) {
 		return uriHelper.getUri(BestellungResource.class, "findPositionByBestellungId",
-								bestellung.getId(), uriInfo);
+								bestellung.getID(), uriInfo);
 	}
 	
 	public URI getUriBestellung(Bestellung bestellung, UriInfo uriInfo) {
-		return uriHelper.getUri(BestellungResource.class, "findBestellungById", bestellung.getId(),
+		return uriHelper.getUri(BestellungResource.class, "findBestellungById", bestellung.getID(),
 								uriInfo);
 	}
 	

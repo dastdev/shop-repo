@@ -18,11 +18,11 @@ public class Position {
 	@Size(min = 0)
 	private Integer	anzahl;
 	
-	public Long getId() {
+	public Long getID() {
 		return id;
 	}
 	
-	public void setId(Long id) {
+	public void setID(Long id) {
 		this.id = id;
 	}
 	

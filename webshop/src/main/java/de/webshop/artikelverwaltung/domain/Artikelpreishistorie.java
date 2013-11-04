@@ -34,11 +34,11 @@ public class Artikelpreishistorie {
 	}
 	
 	// get/set-Methoden
-	public long getId() {
+	public long getID() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setID(long id) {
 		this.id = id;
 	}
 	
