@@ -54,57 +54,57 @@ public class ArtikelResource {
                        .build();
 	}
 	
-	@POST
-	// TODO wandle MOCK um in reale Methode
-	// TODO Rückgabetyp über Erfolg oder Artikel als Rückgabewert
-	public static Artikel createArtikel(	@FormParam("ID") Long ID,
-									@FormParam("artikelnummer") String Artikelnummer,
-									@FormParam("bezeichnung") String Bezeichnung,
-									@FormParam("kurzBeschreibung") String Kurzbeschreibung,
-									@FormParam("beschreibung") String Beschreibung,
-									@FormParam("kategorie") Kategorie Kategorie,
-									@FormParam("lagerbestand") Integer Lagerbestand,
-									@FormParam("preis") BigDecimal Preis									
-									){
-		Artikel artikel = new Artikel();
-		artikel.setID(ID);
-		artikel.setArtikelnummer(Artikelnummer);
-		artikel.setBezeichnung(Bezeichnung);
-		artikel.setKurzBeschreibung(Kurzbeschreibung);
-		artikel.setBeschreibung(Beschreibung);
-		artikel.setKategorie(Kategorie);
-		artikel.setLagerbestand(Lagerbestand);
-		artikel.setPreis(Preis);
-		return artikel;
-	}
-	
-	@PUT
-	//TODO wandle MOCK in reale Methode um
-	public Response updateArtikelbyID(	@FormParam("ID") Long ID,
-										@FormParam("artikelnummer") String Artikelnummer,
-										@FormParam("bezeichnung") String Bezeichnung,
-										@FormParam("kurzBeschreibung") String Kurzbeschreibung,
-										@FormParam("beschreibung") String Beschreibung,
-										@FormParam("kategorie") Kategorie Kategorie,
-										@FormParam("lagerbestand") Integer Lagerbestand,
-										@FormParam("preis") BigDecimal Preis,
-										@Context UriInfo uriInfo
-									){
-		final Artikel alt = as.findArtikelByID(ID);
-		alt.setID(ID);
-		alt.setArtikelnummer(Artikelnummer);
-		alt.setBezeichnung(Bezeichnung);
-		alt.setKurzBeschreibung(Kurzbeschreibung);
-		alt.setBeschreibung(Beschreibung);
-		alt.setKategorie(Kategorie);
-		alt.setLagerbestand(Lagerbestand);
-		alt.setPreis(Preis);
-
-		return Response.accepted(alt)
-                .links(getTransitionalLinks(alt, uriInfo))
-                .build();
-		
-	}
+//	@POST
+//	// TODO wandle MOCK um in reale Methode
+//	// TODO Rückgabetyp über Erfolg oder Artikel als Rückgabewert
+//	public static Artikel createArtikel(	@FormParam("ID") Long ID,
+//									@FormParam("artikelnummer") String Artikelnummer,
+//									@FormParam("bezeichnung") String Bezeichnung,
+//									@FormParam("kurzBeschreibung") String Kurzbeschreibung,
+//									@FormParam("beschreibung") String Beschreibung,
+//									@FormParam("kategorie") Kategorie Kategorie,
+//									@FormParam("lagerbestand") Integer Lagerbestand,
+//									@FormParam("preis") BigDecimal Preis									
+//									){
+//		Artikel artikel = new Artikel();
+//		artikel.setID(ID);
+//		artikel.setArtikelnummer(Artikelnummer);
+//		artikel.setBezeichnung(Bezeichnung);
+//		artikel.setKurzBeschreibung(Kurzbeschreibung);
+//		artikel.setBeschreibung(Beschreibung);
+//		artikel.setKategorie(Kategorie);
+//		artikel.setLagerbestand(Lagerbestand);
+//		artikel.setPreis(Preis);
+//		return artikel;
+//	}
+//	
+//	@PUT
+//	//TODO wandle MOCK in reale Methode um
+//	public Response updateArtikelbyID(	@FormParam("ID") Long ID,
+//										@FormParam("artikelnummer") String Artikelnummer,
+//										@FormParam("bezeichnung") String Bezeichnung,
+//										@FormParam("kurzBeschreibung") String Kurzbeschreibung,
+//										@FormParam("beschreibung") String Beschreibung,
+//										@FormParam("kategorie") Kategorie Kategorie,
+//										@FormParam("lagerbestand") Integer Lagerbestand,
+//										@FormParam("preis") BigDecimal Preis,
+//										@Context UriInfo uriInfo
+//									){
+//		final Artikel alt = as.findArtikelByID(ID);
+//		alt.setID(ID);
+//		alt.setArtikelnummer(Artikelnummer);
+//		alt.setBezeichnung(Bezeichnung);
+//		alt.setKurzBeschreibung(Kurzbeschreibung);
+//		alt.setBeschreibung(Beschreibung);
+//		alt.setKategorie(Kategorie);
+//		alt.setLagerbestand(Lagerbestand);
+//		alt.setPreis(Preis);
+//
+//		return Response.accepted(alt)
+//                .links(getTransitionalLinks(alt, uriInfo))
+//                .build();
+//		
+//	}
 	
 	private Link[] getTransitionalLinks(Artikel artikel, UriInfo uriInfo) {
 		final Link self = Link.fromUri(getUriArtikel(artikel, uriInfo))
@@ -115,6 +115,6 @@ public class ArtikelResource {
 	}
 	
 	public URI getUriArtikel(Artikel artikel, UriInfo uriInfo) {
-		return uriHelper.getUri(ArtikelResource.class, "findArtikelById", artikel.getID(), uriInfo);
+		return uriHelper.getUri(ArtikelResource.class, "findArtikelByID", artikel.getID(), uriInfo);
 	}
 }

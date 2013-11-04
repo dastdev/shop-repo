@@ -21,15 +21,15 @@ public class ArtikelServiceMock {
 		return artikel;
 	}
 
-	public Artikel updateArtikel(Artikel artikel) {
-
-			if (artikel == null) {
-				return null;
-			}
-			
-			// TODO Datenbanzugriffsschicht statt Mock
-						
-			return artikel;
-	}
+//	public Artikel updateArtikel(Artikel artikel) {
+//
+//			if (artikel == null) {
+//				return null;
+//			}
+//			
+//			// TODO Datenbanzugriffsschicht statt Mock
+//						
+//			return artikel;
+//	}
 	
 }
