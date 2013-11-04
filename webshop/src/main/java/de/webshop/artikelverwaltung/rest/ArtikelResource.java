@@ -29,7 +29,6 @@ import static de.webshop.util.Constants.SELF_LINK;
 public class ArtikelResource {
 	// This method is called if XMLis request
 
-
 	@Inject
 	private ArtikelServiceMock as;
 	
