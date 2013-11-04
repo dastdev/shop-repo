@@ -36,7 +36,7 @@ public class KundeResource {
 	
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
 	
-	// FIXME Kundensuche nach PLZ implementieren
+	// TODO Kundensuche nach PLZ implementieren
 	// private static final String KUNDEN_PLZ_QUERY_PARAM = "plz";
 	
 	private static final String	SELF_LINK					= null;

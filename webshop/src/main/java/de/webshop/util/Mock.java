@@ -11,6 +11,7 @@ import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Adresse;
 import de.webshop.kundenverwaltung.domain.Adresse.Land;
 import de.webshop.kundenverwaltung.domain.Kunde;
+import de.webshop.kundenverwaltung.domain.Kundentyp;
 
 public final class Mock {
 	
@@ -54,7 +55,11 @@ public final class Mock {
 		
 		final Kunde kunde = new Kunde();
 		kunde.setID(id);
-		kunde.setName("Nachname" + id);
+		kunde.setVorname("Axel");
+		kunde.setName("Schweiﬂ" + id);
+		kunde.setPasswort("zyxghi");
+		kunde.setTyp(Kundentyp.PRIVATKUNDE);
+		kunde.setGeloescht(false);
 		kunde.setEmail("" + id + "@hska.de");
 		
 		final Adresse adresse = new Adresse();
