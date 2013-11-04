@@ -26,7 +26,6 @@ import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.util.Constants;
 import de.webshop.util.Mock;
-import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
 @Path("/kunde")
