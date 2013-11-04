@@ -35,14 +35,13 @@ import de.webshop.util.rest.UriHelper;
 public class KundeResource {
 	
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
+	public static final String	KUNDEN_ID_PATH_PARAM		= "id";
 	
-	// FIXME Kundensuche nach PLZ implementieren
+	// TODO Kundensuche nach PLZ implementieren
 	// private static final String KUNDEN_PLZ_QUERY_PARAM = "plz";
 	
 	private static final String	SELF_LINK					= null;
-	
 	private static final String	FIRST_LINK					= null;
-	
 	private static final String	LAST_LINK					= null;
 	
 	@Context
@@ -55,18 +54,17 @@ public class KundeResource {
 	private UriHelper			uriHelper;
 	
 	@GET
-	@Path("{id:[1-9][0-9]*}")
+	@Path("{" + KUNDEN_ID_PATH_PARAM + ":[1-9][0-9]*}")
 	// Kunde über ID suchen
-	public Response findKundeById(@PathParam("id") Long id) {
+	public Response findKundeByID(@PathParam(KUNDEN_ID_PATH_PARAM) Long id) {
 		final Kunde kunde = Mock.findKundeByID(id);
 		if (kunde == null) {
 			throw new NotFoundException(String.format("Kein Kunde mit der ID {0] gefunden.", id));
 		}
+		
 		setStructuralLinks(kunde, uriInfo);
 		// Link-Header setzen
-		final Response response = Response.ok(kunde).links(getTransitionalLinks(kunde, uriInfo))
-											.build();
-		return response;
+		return Response.ok(kunde).links(getTransitionalLinks(kunde, uriInfo)).build();
 	}
 	
 	public void setStructuralLinks(Kunde kunde, UriInfo uriInfo) {
