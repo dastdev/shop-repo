@@ -47,7 +47,7 @@ public class BestellungResource {
 	
 	@GET
 	@Produces({ TEXT_PLAIN, APPLICATION_JSON })
-	@Path("version")
+	@Path("test")
 	public String getVersion() {
 		return "1.0";
 	}
@@ -129,20 +129,19 @@ public class BestellungResource {
 		final Link self = Link.fromUri(getUriPositionen(bestellung, uriInfo)).rel(SELF_LINK)
 								.build();
 		
-		final Link first = Link.fromUri(positionResource.getUriPositionen(	positionen.get(0),
-																			uriInfo))
+		final Link first = Link.fromUri(positionResource.getUriPosition(positionen.get(0), uriInfo))
 								.rel(FIRST_LINK).build();
 		final int lastPos = positionen.size() - 1;
 		
-		final Link last = Link.fromUri(	positionResource.getUriPositionen(	positionen.get(lastPos),
-																			uriInfo))
-								.rel(LAST_LINK).build();
+		final Link last = Link.fromUri(	positionResource.getUriPosition(positionen.get(lastPos),
+																		uriInfo)).rel(LAST_LINK)
+								.build();
 		
 		return new Link[] { self, first, last };
 	}
 	
 	private URI getUriPositionen(Bestellung bestellung, UriInfo uriInfo) {
-		return uriHelper.getUri(BestellungResource.class, "findPositionByBestellungId",
+		return uriHelper.getUri(BestellungResource.class, "findPositionenByBestellungId",
 								bestellung.getID(), uriInfo);
 	}
 	
