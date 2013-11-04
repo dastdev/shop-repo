@@ -60,7 +60,10 @@ public final class Mock {
 		
 		final Kunde kunde = new Kunde();
 		kunde.setID(id);
+		kunde.setVorname("Vorname");
 		kunde.setName("Nachname" + id);
+		kunde.setPasswort("Texttest");
+		kunde.setGeloescht(false);
 		kunde.setEmail("" + id + "@hska.de");
 		
 		final Adresse adresse = new Adresse();
@@ -81,6 +84,7 @@ public final class Mock {
 			adresse.setStadt("Weizen");
 			adresse.setStraße("Naturtrübweg");
 		}
+		kunde.setAdresse(adresse);
 		
 		return kunde;
 	}
