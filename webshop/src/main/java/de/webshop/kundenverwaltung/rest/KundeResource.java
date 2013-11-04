@@ -58,7 +58,7 @@ public class KundeResource {
 	@Path("{id:[1-9][0-9]*}")
 	// Kunde über ID suchen
 	public Response findKundeById(@PathParam("id") Long id) {
-		final Kunde kunde = Mock.findKundeById(id);
+		final Kunde kunde = Mock.findKundeByID(id);
 		if (kunde == null) {
 			throw new NotFoundException(String.format("Kein Kunde mit der ID {0] gefunden.", id));
 		}
@@ -76,7 +76,7 @@ public class KundeResource {
 	}
 	
 	private URI getUriBestellung(Kunde kunde, UriInfo uriInfo) {
-		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeId", kunde.getID(),
+		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeID", kunde.getID(),
 								uriInfo);
 	}
 	
@@ -99,8 +99,8 @@ public class KundeResource {
 		return new Link[] { self, add, update, remove };
 	}
 	
-	private URI getUriKunde(Kunde kunde, UriInfo uriInfo) {
-		return uriHelper.getUri(KundeResource.class, "findKundeById", kunde.getID(), uriInfo);
+	public URI getUriKunde(Kunde kunde, UriInfo uriInfo) {
+		return uriHelper.getUri(KundeResource.class, "findKundeByID", kunde.getID(), uriInfo);
 	}
 	
 	public Response findKundeByNachname(@QueryParam(KUNDEN_NACHNAME_QUERY_PARAM) String nachname) {
@@ -144,9 +144,9 @@ public class KundeResource {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}/bestellungen")
-	public Response findBestellungenByKundeId(@PathParam("id") Long kundeId) {
+	public Response findBestellungenByKundeID(@PathParam("id") Long kundeId) {
 		// FIXME Referenz auf Klasse KundeService
-		final Kunde kunde = Mock.findKundeById(kundeId);
+		final Kunde kunde = Mock.findKundeByID(kundeId);
 		if (kunde == null) {
 			throw new NotFoundException(
 										String.format(	"Es wurden keine Bestellungen für den Kunden {0} gefunden",

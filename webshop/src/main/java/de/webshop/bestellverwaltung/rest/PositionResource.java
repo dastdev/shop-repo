@@ -44,9 +44,9 @@ public class PositionResource {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Response findPositionById(@PathParam("id") long id) {
+	public Response findPositionByID(@PathParam("id") long id) {
 		
-		final Position position = Mock.findPositionById(id);
+		final Position position = Mock.findPositionByID(id);
 		
 		if (position == null) {
 			throw new NotFoundException(
@@ -65,9 +65,7 @@ public class PositionResource {
 		// URI fuer Artikel setzen
 		final Artikel artikel = position.getArtikel();
 		if (artikel != null) {
-			// FIXME: ArtikelResource.getUriArtikel
-			final URI artikelUri = null; // artikelResource.getUriArtikel(position.getArtikel(),
-											// uriInfo);
+			final URI artikelUri = artikelResource.getUriArtikel(position.getArtikel(), uriInfo);
 			position.setArtikelUri(artikelUri);
 		}
 	}
@@ -83,7 +81,7 @@ public class PositionResource {
 	}
 	
 	public URI getUriPosition(Position position, UriInfo uriInfo) {
-		return uriHelper.getUri(PositionResource.class, "findPositionById", position.getID(),
+		return uriHelper.getUri(PositionResource.class, "findPositionByID", position.getID(),
 								uriInfo);
 	}
 	
