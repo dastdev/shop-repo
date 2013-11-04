@@ -18,8 +18,7 @@ import javax.ws.rs.core.UriInfo;
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.service.ArtikelServiceMock;
 import de.webshop.util.rest.UriHelper;
-import de.webshop.util.Constants;
-
+import static de.webshop.util.Constants.SELF_LINK;
 
 /**
  * @author Mario Reinholdt
