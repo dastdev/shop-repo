@@ -210,7 +210,7 @@ public final class Mock {
 		}
 		
 		final Position position = new Position();
-		position.setAnzahl(new Integer(2));
+		position.setAnzahl(2);
 		
 		Artikel artikel = new Artikel();
 		artikel.setID(id);

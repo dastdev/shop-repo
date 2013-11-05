@@ -62,8 +62,7 @@ public class BestellungResource {
 		final Bestellung bestellung = Mock.findBestellungByID(id);
 		
 		if (bestellung == null) {
-			throw new NotFoundException(
-										String.format(	"Keine Bestellung mit der ID %li gefunden.",
+			throw new NotFoundException(String.format(	"Keine Bestellung mit der ID %d gefunden.",
 														id));
 		}
 		setStructuralLinks(bestellung, uriInfo);

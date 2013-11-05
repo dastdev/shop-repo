@@ -8,12 +8,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * @author Mario Reinholdt
- * 
- */
 @XmlRootElement
-//JAX-RS supports an automatic mapping from JAXB annotated class to XML and JSON
+// JAX-RS supports an automatic mapping from JAXB annotated class to XML and
+// JSON
 public class Artikel {
 	
 	// Eigenschaften
@@ -44,22 +41,6 @@ public class Artikel {
 	// Konstruktoren
 	public Artikel() {
 		
-	}
-	
-	public Artikel(Long id, String artikelnummer, URI artikelbild, String bezeichnung,
-			String kurzBeschreibung, String beschreibung, BigDecimal preis, Integer lagerbestand,
-			Long parentID, de.webshop.artikelverwaltung.domain.Artikel.Kategorie kategorie) {
-		super();
-		this.id = id;
-		this.artikelnummer = artikelnummer;
-		this.artikelbild = artikelbild;
-		this.bezeichnung = bezeichnung;
-		this.kurzBeschreibung = kurzBeschreibung;
-		this.beschreibung = beschreibung;
-		this.preis = preis;
-		this.lagerbestand = lagerbestand;
-		this.parentID = parentID;
-		this.kategorie = kategorie;
 	}
 	
 	// Getter und Setter
@@ -161,11 +142,11 @@ public class Artikel {
 		result = prime * result + ((artikelnummer == null) ? 0 : artikelnummer.hashCode());
 		result = prime * result + ((beschreibung == null) ? 0 : beschreibung.hashCode());
 		result = prime * result + ((bezeichnung == null) ? 0 : bezeichnung.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((kategorie == null) ? 0 : kategorie.hashCode());
 		result = prime * result + ((kurzBeschreibung == null) ? 0 : kurzBeschreibung.hashCode());
-		result = prime * result + lagerbestand;
-		result = prime * result + (int) (parentID ^ (parentID >>> 32));
+		result = prime * result + ((lagerbestand == null) ? 0 : lagerbestand.hashCode());
+		result = prime * result + ((parentID == null) ? 0 : parentID.hashCode());
 		result = prime * result + ((preis == null) ? 0 : preis.hashCode());
 		return result;
 	}
@@ -178,7 +159,7 @@ public class Artikel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Artikel other = (Artikel) obj;
+		final Artikel other = (Artikel) obj;
 		if (artikelbild == null) {
 			if (other.artikelbild != null)
 				return false;
@@ -203,7 +184,11 @@ public class Artikel {
 		}
 		else if (!bezeichnung.equals(other.bezeichnung))
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
 			return false;
 		if (kategorie != other.kategorie)
 			return false;
@@ -213,9 +198,17 @@ public class Artikel {
 		}
 		else if (!kurzBeschreibung.equals(other.kurzBeschreibung))
 			return false;
-		if (lagerbestand != other.lagerbestand)
+		if (lagerbestand == null) {
+			if (other.lagerbestand != null)
+				return false;
+		}
+		else if (!lagerbestand.equals(other.lagerbestand))
 			return false;
-		if (parentID != other.parentID)
+		if (parentID == null) {
+			if (other.parentID != null)
+				return false;
+		}
+		else if (!parentID.equals(other.parentID))
 			return false;
 		if (preis == null) {
 			if (other.preis != null)

@@ -76,13 +76,12 @@ public class Adresse {
 		this.land = land;
 	}
 	
-	// Basismethoden
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((hausnummer == null) ? 0 : hausnummer.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((land == null) ? 0 : land.hashCode());
 		result = prime * result + ((plz == null) ? 0 : plz.hashCode());
 		result = prime * result + ((stadt == null) ? 0 : stadt.hashCode());
@@ -98,14 +97,18 @@ public class Adresse {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Adresse other = (Adresse) obj;
+		final Adresse other = (Adresse) obj;
 		if (hausnummer == null) {
 			if (other.hausnummer != null)
 				return false;
 		}
 		else if (!hausnummer.equals(other.hausnummer))
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
 			return false;
 		if (land != other.land)
 			return false;

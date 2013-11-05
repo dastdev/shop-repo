@@ -59,7 +59,7 @@ public class KundeResource {
 	public Response findKundeByID(@PathParam("id") long id) {
 		final Kunde kunde = Mock.findKundeByID(id);
 		if (kunde == null) {
-			throw new NotFoundException(String.format("Kein Kunde mit der ID %li gefunden.", id));
+			throw new NotFoundException(String.format("Kein Kunde mit der ID %d gefunden.", id));
 		}
 		
 		setStructuralLinks(kunde, uriInfo);
@@ -147,7 +147,7 @@ public class KundeResource {
 		final Kunde kunde = Mock.findKundeByID(kundeId);
 		if (kunde == null) {
 			throw new NotFoundException(
-										String.format(	"Es wurden keine Bestellungen für den Kunden %li gefunden",
+										String.format(	"Es wurden keine Bestellungen für den Kunden %d gefunden",
 														kundeId));
 		}
 		// FIXME Referenz auf Klasse BestellungService

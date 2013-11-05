@@ -41,8 +41,7 @@ public class ArtikelResource {
 		final Artikel artikel = Mock.findArtikelByID(id);
 		
 		if (artikel == null) {
-			throw new NotFoundException(
-										String.format("Keine Position mit der ID %li gefunden.", id));
+			throw new NotFoundException(String.format("Keine Position mit der ID %d gefunden.", id));
 		}
 		
 		// Link-Header setzen

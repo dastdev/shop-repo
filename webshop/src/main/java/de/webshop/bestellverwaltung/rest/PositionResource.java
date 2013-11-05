@@ -49,8 +49,7 @@ public class PositionResource {
 		final Position position = Mock.findPositionByID(id);
 		
 		if (position == null) {
-			throw new NotFoundException(
-										String.format("Keine Position mit der ID %li gefunden.", id));
+			throw new NotFoundException(String.format("Keine Position mit der ID %d gefunden.", id));
 		}
 		setStructuralLinks(position, uriInfo);
 		

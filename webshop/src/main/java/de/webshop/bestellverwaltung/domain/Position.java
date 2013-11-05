@@ -69,7 +69,7 @@ public class Position {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Position other = (Position) obj;
+		final Position other = (Position) obj;
 		if (anzahl == null) {
 			if (other.anzahl != null)
 				return false;

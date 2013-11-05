@@ -86,7 +86,7 @@ public class Artikelpreishistorie {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Artikelpreishistorie other = (Artikelpreishistorie) obj;
+		final Artikelpreishistorie other = (Artikelpreishistorie) obj;
 		if (artikelID != other.artikelID)
 			return false;
 		if (gueltigVon == null) {
