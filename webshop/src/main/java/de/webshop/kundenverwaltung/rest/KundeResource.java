@@ -3,9 +3,13 @@ package de.webshop.kundenverwaltung.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
+import static de.webshop.util.Constants.SELF_LINK;
+import static de.webshop.util.Constants.FIRST_LINK;
+import static de.webshop.util.Constants.LAST_LINK;
 import java.net.URI;
 import java.util.List;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -31,7 +35,6 @@ import de.webshop.util.rest.UriHelper;
 @Path("/kunde")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.75" })
 @Consumes
-// @Log
 public class KundeResource {
 	
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
@@ -39,10 +42,6 @@ public class KundeResource {
 	
 	// TODO Kundensuche nach PLZ implementieren
 	// private static final String KUNDEN_PLZ_QUERY_PARAM = "plz";
-	
-	private static final String	SELF_LINK					= null;
-	private static final String	FIRST_LINK					= null;
-	private static final String	LAST_LINK					= null;
 	
 	@Context
 	private UriInfo				uriInfo;
@@ -53,13 +52,13 @@ public class KundeResource {
 	@Inject
 	private UriHelper			uriHelper;
 	
-	@GET
-	@Path("{" + KUNDEN_ID_PATH_PARAM + ":[1-9][0-9]*}")
 	// Kunde über ID suchen
-	public Response findKundeByID(@PathParam(KUNDEN_ID_PATH_PARAM) Long id) {
+	@GET
+	@Path("{id:[1-9][0-9]*}")
+	public Response findKundeByID(@PathParam("id") long id) {
 		final Kunde kunde = Mock.findKundeByID(id);
 		if (kunde == null) {
-			throw new NotFoundException(String.format("Kein Kunde mit der ID {0] gefunden.", id));
+			throw new NotFoundException(String.format("Kein Kunde mit der ID %li gefunden.", id));
 		}
 		
 		setStructuralLinks(kunde, uriInfo);
@@ -147,7 +146,7 @@ public class KundeResource {
 		final Kunde kunde = Mock.findKundeByID(kundeId);
 		if (kunde == null) {
 			throw new NotFoundException(
-										String.format(	"Es wurden keine Bestellungen für den Kunden {0} gefunden",
+										String.format(	"Es wurden keine Bestellungen für den Kunden %li gefunden",
 														kundeId));
 		}
 		// FIXME Referenz auf Klasse BestellungService
@@ -165,7 +164,7 @@ public class KundeResource {
 	}
 	
 	private Link[] getTransitionalLinksBestellungen(List<Bestellung> bestellungen, Kunde kunde,
-			UriInfo uriInfo2) {
+			UriInfo uriInfo) {
 		if (bestellungen == null || bestellungen.isEmpty()) {
 			return new Link[0];
 		}
@@ -187,7 +186,7 @@ public class KundeResource {
 	@POST
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public Response createKunde(Kunde kunde) {
+	public Response createKunde(@Valid Kunde kunde) {
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		kunde = Mock.createKunde(kunde);
 		return Response.created(getUriKunde(kunde, uriInfo)).build();
@@ -196,7 +195,7 @@ public class KundeResource {
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateKunde(Kunde kunde) {
+	public void updateKunde(@Valid Kunde kunde) {
 		// TODO Anwendungskern statt Mock, Locale
 		Mock.updateKunde(kunde);
 	}
@@ -204,7 +203,7 @@ public class KundeResource {
 	@DELETE
 	@Path("{id:[1-9][0-9]*}")
 	@Produces
-	public void deleteKunde(@PathParam("id") Long kundeId) {
+	public void deleteKunde(@PathParam("id") long kundeId) {
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		Mock.deleteKunde(kundeId);
 	}
