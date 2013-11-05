@@ -65,7 +65,9 @@ public class PositionResource {
 		// URI fuer Artikel setzen
 		final Artikel artikel = position.getArtikel();
 		if (artikel != null) {
-			final URI artikelUri = artikelResource.getUriArtikel(position.getArtikel(), uriInfo);
+			// FIXME: ArtikelResource implementieren!
+			final URI artikelUri = null;// artikelResource.getUriArtikel(position.getArtikel(),
+										// uriInfo);
 			position.setArtikelUri(artikelUri);
 		}
 	}

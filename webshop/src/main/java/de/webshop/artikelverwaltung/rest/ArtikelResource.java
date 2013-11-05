@@ -28,49 +28,47 @@ import static javax.ws.rs.core.MediaType.TEXT_XML;
 @Consumes
 public class ArtikelResource {
 	
-	// This method is called if XMLis request
-	
-	@Inject
-	private ArtikelServiceMock	as;
-	
-	@Inject
-	private UriHelper			uriHelper;
-	
-	@GET
-	@Path("{id:[1-9][0-9]*}")
-	public Response findArtikelByID(@PathParam("id") long id, @Context UriInfo uriInfo) {
-		final Artikel artikel = as.findArtikelByID(id);
-		if (artikel == null) {
-			// TODO Sprachabhängige Fehlermeldung
-			throw new NotFoundException(
-										"Der angegebene Artikel konnte leider nicht gefunden werden. Bitte überprüfen Sie die ArtikelID.");
-		}
-		
-		return Response.ok(artikel).links(getTransitionalLinks(artikel, uriInfo)).build();
-	}
-	
-	@POST
-	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
-	@Produces
-	public static Artikel createArtikel(@Valid Artikel artikel) {
-		artikel.setID(13L);
-		return artikel;
-	}
-	
-	@PUT
-	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
-	@Produces
-	public void updateArtikelbyID(@Valid Artikel artikel) {
-		System.out.println("update Artikel");
-	}
-	
-	private Link[] getTransitionalLinks(Artikel artikel, UriInfo uriInfo) {
-		final Link self = Link.fromUri(getUriArtikel(artikel, uriInfo)).rel(SELF_LINK).build();
-		
-		return new Link[] { self };
-	}
-	
-	public URI getUriArtikel(Artikel artikel, UriInfo uriInfo) {
-		return uriHelper.getUri(ArtikelResource.class, "findArtikelById", artikel.getID(), uriInfo);
-	}
+	/*
+	 * // This method is called if XMLis request
+	 * 
+	 * @Inject private ArtikelServiceMock as;
+	 * 
+	 * @Inject private UriHelper uriHelper;
+	 * 
+	 * @GET
+	 * 
+	 * @Path("{id:[1-9][0-9]*}") public Response
+	 * findArtikelByID(@PathParam("id") long id, @Context UriInfo uriInfo) {
+	 * final Artikel artikel = as.findArtikelByID(id); if (artikel == null) { //
+	 * TODO Sprachabhängige Fehlermeldung throw new NotFoundException(
+	 * "Der angegebene Artikel konnte leider nicht gefunden werden. Bitte überprüfen Sie die ArtikelID."
+	 * ); }
+	 * 
+	 * return Response.ok(artikel).links(getTransitionalLinks(artikel,
+	 * uriInfo)).build(); }
+	 * 
+	 * @POST
+	 * 
+	 * @Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	 * 
+	 * @Produces public static Artikel createArtikel(@Valid Artikel artikel) {
+	 * artikel.setID(13L); return artikel; }
+	 * 
+	 * @PUT
+	 * 
+	 * @Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	 * 
+	 * @Produces public void updateArtikelbyID(@Valid Artikel artikel) {
+	 * System.out.println("update Artikel"); }
+	 * 
+	 * private Link[] getTransitionalLinks(Artikel artikel, UriInfo uriInfo) {
+	 * final Link self = Link.fromUri(getUriArtikel(artikel,
+	 * uriInfo)).rel(SELF_LINK).build();
+	 * 
+	 * return new Link[] { self }; }
+	 * 
+	 * public URI getUriArtikel(Artikel artikel, UriInfo uriInfo) { return
+	 * uriHelper.getUri(ArtikelResource.class, "findArtikelById",
+	 * artikel.getID(), uriInfo); }
+	 */
 }
