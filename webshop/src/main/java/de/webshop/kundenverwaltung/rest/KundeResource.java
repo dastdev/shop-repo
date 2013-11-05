@@ -32,7 +32,6 @@ import de.webshop.util.Constants;
 import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 
-
 //TESTTESTTESTTESTTEST
 @Path("/kunde")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.75" })

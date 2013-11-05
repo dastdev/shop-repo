@@ -39,7 +39,7 @@ public final class Mock {
 	}
 	
 	public static Artikel findArtikelByID(long id) {
-		Artikel artikel = new Artikel();
+		final Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
 		artikel.setBezeichnung("Robobike");
@@ -95,7 +95,7 @@ public final class Mock {
 		bestellung.setBestelldatum(new Date(1234567890));
 		
 		// FIXME: setPositionen
-		List<Position> positionen = new ArrayList<>();
+		final List<Position> positionen = new ArrayList<>();
 		positionen.add(findPositionByID((long) 1));
 		positionen.add(findPositionByID((long) 2));
 		bestellung.setPositionen(positionen);
@@ -149,7 +149,7 @@ public final class Mock {
 			adresse.setLand(Land.DE);
 			adresse.setPlz("76133");
 			adresse.setStadt("Megashophausen");
-			adresse.setStraße("Bikestraße");
+			adresse.setStrasse("Bikestraße");
 		}
 		else {
 			adresse.setHausnummer("B2B");
@@ -157,7 +157,7 @@ public final class Mock {
 			adresse.setLand(Land.AT);
 			adresse.setPlz("1885");
 			adresse.setStadt("Weizen");
-			adresse.setStraße("Naturtrübweg");
+			adresse.setStrasse("Naturtrübweg");
 		}
 		kunde.setAdresse(adresse);
 		
@@ -229,7 +229,7 @@ public final class Mock {
 	}
 	
 	public static List<Position> findPositionenByBestellung(Bestellung bestellung) {
-		List<Position> positionen = bestellung.getPositionen();
+		final List<Position> positionen = bestellung.getPositionen();
 		return positionen;
 	}
 	

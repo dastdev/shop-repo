@@ -45,22 +45,6 @@ public class Kunde {
 	public Kunde() {
 	}
 	
-	public Kunde(Long id, String name, String vorname, Date geburtstag, String passwort,
-			String email, Kundentyp typ, boolean geloescht, List<Bestellung> bestellungen,
-			URI bestellungUri) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.vorname = vorname;
-		this.geburtstag = geburtstag;
-		this.passwort = passwort;
-		this.email = email;
-		this.typ = typ;
-		this.geloescht = geloescht;
-		this.bestellungen = bestellungen;
-		this.uriBestellung = bestellungUri;
-	}
-	
 	/**
 	 * Get- und Set-Methoden
 	 * 
@@ -188,7 +172,7 @@ public class Kunde {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Kunde other = (Kunde) obj;
+		final Kunde other = (Kunde) obj;
 		if (bestellungen == null) {
 			if (other.bestellungen != null)
 				return false;
