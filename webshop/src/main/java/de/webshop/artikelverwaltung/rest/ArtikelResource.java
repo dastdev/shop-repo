@@ -16,7 +16,7 @@ import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import de.webshop.artikelverwaltung.domain.Artikel;
-import de.webshop.artikelverwaltung.service.ArtikelServiceMock;
+import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 import static de.webshop.util.Constants.SELF_LINK;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -28,47 +28,52 @@ import static javax.ws.rs.core.MediaType.TEXT_XML;
 @Consumes
 public class ArtikelResource {
 	
-	/*
-	 * // This method is called if XMLis request
-	 * 
-	 * @Inject private ArtikelServiceMock as;
-	 * 
-	 * @Inject private UriHelper uriHelper;
-	 * 
-	 * @GET
-	 * 
-	 * @Path("{id:[1-9][0-9]*}") public Response
-	 * findArtikelByID(@PathParam("id") long id, @Context UriInfo uriInfo) {
-	 * final Artikel artikel = as.findArtikelByID(id); if (artikel == null) { //
-	 * TODO Sprachabhängige Fehlermeldung throw new NotFoundException(
-	 * "Der angegebene Artikel konnte leider nicht gefunden werden. Bitte überprüfen Sie die ArtikelID."
-	 * ); }
-	 * 
-	 * return Response.ok(artikel).links(getTransitionalLinks(artikel,
-	 * uriInfo)).build(); }
-	 * 
-	 * @POST
-	 * 
-	 * @Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
-	 * 
-	 * @Produces public static Artikel createArtikel(@Valid Artikel artikel) {
-	 * artikel.setID(13L); return artikel; }
-	 * 
-	 * @PUT
-	 * 
-	 * @Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
-	 * 
-	 * @Produces public void updateArtikelbyID(@Valid Artikel artikel) {
-	 * System.out.println("update Artikel"); }
-	 * 
-	 * private Link[] getTransitionalLinks(Artikel artikel, UriInfo uriInfo) {
-	 * final Link self = Link.fromUri(getUriArtikel(artikel,
-	 * uriInfo)).rel(SELF_LINK).build();
-	 * 
-	 * return new Link[] { self }; }
-	 * 
-	 * public URI getUriArtikel(Artikel artikel, UriInfo uriInfo) { return
-	 * uriHelper.getUri(ArtikelResource.class, "findArtikelById",
-	 * artikel.getID(), uriInfo); }
-	 */
+	@Context
+	private UriInfo		uriInfo;
+	
+	@Inject
+	private UriHelper	uriHelper;
+	
+	@GET
+	@Path("{id:[1-9][0-9]*}")
+	public Response findArtikelByID(@PathParam("id") long id) {
+		
+		final Artikel artikel = Mock.findArtikelByID(id);
+		
+		if (artikel == null) {
+			throw new NotFoundException(
+										String.format("Keine Position mit der ID %li gefunden.", id));
+		}
+		
+		// Link-Header setzen
+		final Response response = Response.ok(artikel)
+											.links(getTransitionalLinks(artikel, uriInfo)).build();
+		
+		return response;
+	}
+	
+	private Link[] getTransitionalLinks(Artikel artikel, UriInfo uriInfo) {
+		final Link self = Link.fromUri(getUriArtikel(artikel, uriInfo)).rel(SELF_LINK).build();
+		return new Link[] { self };
+	}
+	
+	public URI getUriArtikel(Artikel artikel, UriInfo uriInfo) {
+		return uriHelper.getUri(ArtikelResource.class, "findArtikelByID", artikel.getID(), uriInfo);
+	}
+	
+	@POST
+	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	@Produces
+	public Response createArtikel(@Valid Artikel artikel) {
+		
+		artikel = Mock.createArtikel(artikel);
+		return Response.created(getUriArtikel(artikel, uriInfo)).build();
+	}
+	
+	@PUT
+	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	@Produces
+	public void updateArtikel(@Valid Artikel artikel) {
+		Mock.updateArtikel(artikel);
+	}
 }

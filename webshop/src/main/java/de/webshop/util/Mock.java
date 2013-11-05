@@ -24,9 +24,36 @@ public final class Mock {
 	private static final int	MAX_KUNDEN			= 8;
 	private static final int	MAX_BESTELLUNGEN	= 4;
 	
+	// Artikel
+	//
+	public static Artikel createArtikel(Artikel artikel) {
+		System.out.println("create Artikel");
+		
+		artikel.setID(12L);
+		
+		return artikel;
+	}
+	
+	public static void updateArtikel(Artikel artikel) {
+		System.out.println("update Artikel");
+	}
+	
+	public static Artikel findArtikelByID(long id) {
+		Artikel artikel = new Artikel();
+		artikel.setID(id);
+		artikel.setArtikelnummer("R2D2uC3PO");
+		artikel.setBezeichnung("Robobike");
+		artikel.setKurzBeschreibung("Das Robobike weiﬂ wohin ...");
+		artikel.setBeschreibung("Lange Robobikebeschreibu...........");
+		artikel.setKategorie(Kategorie.KOMPLETTRAEDER);
+		artikel.setLagerbestand(13);
+		artikel.setPreis(new BigDecimal(1300.50));
+		
+		return artikel;
+	}
+	
 	// Bestellung
 	//
-	
 	public static Bestellung createBestellung(Bestellung bestellung) {
 		System.out.println("create Betsellung");
 		
