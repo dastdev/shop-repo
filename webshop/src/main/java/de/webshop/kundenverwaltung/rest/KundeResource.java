@@ -6,8 +6,11 @@ import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
 import static de.webshop.util.Constants.FIRST_LINK;
 import static de.webshop.util.Constants.LAST_LINK;
+
 import java.net.URI;
 import java.util.List;
+
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -25,17 +28,20 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.util.Constants;
 import de.webshop.util.Mock;
+import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
-//TESTTESTTESTTESTTEST
+@RequestScoped
 @Path("/kunde")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.75" })
 @Consumes
+@Log
 public class KundeResource {
 	
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
@@ -56,7 +62,7 @@ public class KundeResource {
 	// Kunde über ID suchen
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Response findKundeByID(@PathParam("id") long id) {
+	public Response findKundeByID(@PathParam("id") Long id) {
 		final Kunde kunde = Mock.findKundeByID(id);
 		if (kunde == null) {
 			throw new NotFoundException(String.format("Kein Kunde mit der ID %d gefunden.", id));
@@ -64,7 +70,9 @@ public class KundeResource {
 		
 		setStructuralLinks(kunde, uriInfo);
 		// Link-Header setzen
-		return Response.ok(kunde).links(getTransitionalLinks(kunde, uriInfo)).build();
+		return Response	.ok(kunde)
+					 	.links(getTransitionalLinks(kunde, uriInfo))
+					 	.build();
 	}
 	
 	public void setStructuralLinks(Kunde kunde, UriInfo uriInfo) {
@@ -80,18 +88,22 @@ public class KundeResource {
 	
 	private Link[] getTransitionalLinks(Kunde kunde, UriInfo uriInfo) {
 		// FIXME LINK_LIST einfügen?
-		final Link self = Link.fromUri(getUriKunde(kunde, uriInfo)).rel(Constants.SELF_LINK)
+		final Link self = 	Link.fromUri(getUriKunde(kunde, uriInfo))
+								.rel(Constants.SELF_LINK)
 								.build();
 		
-		final Link add = Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
-								.rel(Constants.ADD_LINK).build();
+		final Link add = 	Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
+								.rel(Constants.ADD_LINK)
+								.build();
 		
 		final Link update = Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
-								.rel(Constants.UPDATE_LINK).build();
+								.rel(Constants.UPDATE_LINK)
+								.build();
 		
-		final Link remove = Link.fromUri(	uriHelper.getUri(	KundeResource.class, "deleteKunde",
+		final Link remove = Link.fromUri(uriHelper.getUri(KundeResource.class, "deleteKunde",
 																kunde.getID(), uriInfo))
-								.rel(Constants.REMOVE_LINK).build();
+								.rel(Constants.REMOVE_LINK)
+								.build();
 		
 		// TODO "list" einfügen
 		return new Link[] { self, add, update, remove };
@@ -101,6 +113,7 @@ public class KundeResource {
 		return uriHelper.getUri(KundeResource.class, "findKundeByID", kunde.getID(), uriInfo);
 	}
 	
+	@GET
 	public Response findKundeByNachname(@QueryParam(KUNDEN_NACHNAME_QUERY_PARAM) String nachname) {
 		List<Kunde> kunden = null;
 		if (nachname != null) {
@@ -122,8 +135,9 @@ public class KundeResource {
 			setStructuralLinks(k, uriInfo);
 		}
 		
-		return Response.ok(new GenericEntity<List<Kunde>>(kunden) {})
-						.links(getTransitionalLinksKunden(kunden, uriInfo)).build();
+		return 	Response.ok(new GenericEntity<List<Kunde>>(kunden) {})
+						.links(getTransitionalLinksKunden(kunden, uriInfo))
+						.build();
 	}
 	
 	private Link[] getTransitionalLinksKunden(List<Kunde> kunden, UriInfo uriInfo2) {
@@ -131,10 +145,12 @@ public class KundeResource {
 			return null;
 		}
 		
-		final Link first = Link.fromUri(getUriKunde(kunden.get(0), uriInfo)).rel(FIRST_LINK)
+		final Link first = 	Link.fromUri(getUriKunde(kunden.get(0), uriInfo))
+								.rel(FIRST_LINK)
 								.build();
 		final int lastPos = kunden.size() - 1;
-		final Link last = Link.fromUri(getUriKunde(kunden.get(lastPos), uriInfo)).rel(LAST_LINK)
+		final Link last = 	Link.fromUri(getUriKunde(kunden.get(lastPos), uriInfo))
+								.rel(LAST_LINK)
 								.build();
 		
 		return new Link[] { first, last };
@@ -159,7 +175,7 @@ public class KundeResource {
 			}
 		}
 		
-		return Response.ok(new GenericEntity<List<Bestellung>>(bestellungen) {})
+		return	Response.ok(new GenericEntity<List<Bestellung>>(bestellungen) {})
 						.links(getTransitionalLinksBestellungen(bestellungen, kunde, uriInfo))
 						.build();
 	}
@@ -170,16 +186,20 @@ public class KundeResource {
 			return new Link[0];
 		}
 		
-		final Link self = Link.fromUri(getUriBestellung(kunde, uriInfo)).rel(SELF_LINK).build();
+		final Link self = 	Link.fromUri(getUriBestellung(kunde, uriInfo))
+								.rel(SELF_LINK)
+								.build();
 		
-		final Link first = Link.fromUri(bestellungResource.getUriBestellung(bestellungen.get(0),
+		final Link first = 	Link.fromUri(bestellungResource.getUriBestellung(bestellungen.get(0),
 																			uriInfo))
-								.rel(FIRST_LINK).build();
+								.rel(FIRST_LINK)
+								.build();
 		
 		final int lastPos = bestellungen.size() - 1;
-		final Link last = Link.fromUri(	bestellungResource.getUriBestellung(bestellungen.get(lastPos),
+		final Link last = 	Link.fromUri(	bestellungResource.getUriBestellung(bestellungen.get(lastPos),
 																			uriInfo))
-								.rel(LAST_LINK).build();
+								.rel(LAST_LINK)
+								.build();
 		
 		return new Link[] { self, first, last };
 	}
@@ -190,7 +210,8 @@ public class KundeResource {
 	public Response createKunde(@Valid Kunde kunde) {
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		kunde = Mock.createKunde(kunde);
-		return Response.created(getUriKunde(kunde, uriInfo)).build();
+		return 	Response.created(getUriKunde(kunde, uriInfo))
+						.build();
 	}
 	
 	@PUT

@@ -3,6 +3,7 @@ package de.webshop.kundenverwaltung.domain;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -10,6 +11,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.validator.constraints.Email;
+
 import de.webshop.bestellverwaltung.domain.Bestellung;
 
 @XmlRootElement
@@ -32,7 +36,7 @@ public class Kunde {
 	@Size(min = 4, max = 16)
 	private String				passwort;
 	@NotNull
-	@Pattern(regexp = "[\\w.%-]+@[\\w.%-]+\\.[A-Za-z]{2,4}")
+	@Email
 	private String				email;
 	@NotNull
 	private Kundentyp			typ;

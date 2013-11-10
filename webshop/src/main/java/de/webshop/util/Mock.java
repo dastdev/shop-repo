@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 import de.webshop.bestellverwaltung.domain.Bestellung;
@@ -11,6 +12,7 @@ import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Adresse;
 import de.webshop.kundenverwaltung.domain.Adresse.Land;
 import de.webshop.kundenverwaltung.domain.Kunde;
+import de.webshop.kundenverwaltung.domain.Kundentyp;
 
 public final class Mock {
 	
@@ -136,10 +138,11 @@ public final class Mock {
 		final Kunde kunde = new Kunde();
 		kunde.setID(id);
 		kunde.setVorname("Vorname");
-		kunde.setName("Nachname" + id);
+		kunde.setName("Nachname");
 		kunde.setPasswort("Texttest");
+		kunde.setTyp(Kundentyp.PRIVATKUNDE);
 		kunde.setGeloescht(false);
-		kunde.setEmail("" + id + "@hska.de");
+		kunde.setEmail("Mock"+ id + "@hska.de");
 		
 		final Adresse adresse = new Adresse();
 		
