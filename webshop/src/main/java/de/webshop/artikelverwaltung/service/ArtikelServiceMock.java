@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 
-
 public class ArtikelServiceMock {
 
 	public Artikel findArtikelByID(Long id) {
@@ -13,7 +12,7 @@ public class ArtikelServiceMock {
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
 		artikel.setBezeichnung("Robobike");
-		artikel.setKurzBeschreibung("Das Robobike weiﬂ wohin ...");
+		artikel.setKurzBeschreibung("Das Robobike weiss wohin ...");
 		artikel.setBeschreibung("Lange Robobikebeschreibu...........");
 		artikel.setKategorie(Kategorie.KOMPLETTRAEDER);
 		artikel.setLagerbestand(13);
@@ -23,13 +22,13 @@ public class ArtikelServiceMock {
 
 	public Artikel updateArtikel(Artikel artikel) {
 
-			if (artikel == null) {
-				return null;
-			}
-			
-			// TODO Datenbanzugriffsschicht statt Mock
-						
-			return artikel;
+		if (artikel == null) {
+			return null;
+		}
+
+		// TODO Datenbanzugriffsschicht statt Mock
+
+		return artikel;
 	}
-	
+
 }
