@@ -18,7 +18,6 @@ import de.webshop.kundenverwaltung.domain.Kunde;
 public final class Mock {
 	
 	// private static final Logger logger =
-	// Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private static final int	MAX_ID				= 99;
 	private static final int	MAX_KUNDEN			= 8;
@@ -160,21 +159,22 @@ public final class Mock {
 	}
 	
 	public static void updateKunde(Kunde kunde) {
-		// TODO: Logger benutzen?
 		System.out.println("Aktualisierter Kunde: " + kunde);
 	}
 	
 	public static void deleteKunde(Long kundeId) {
-		// logger.infof("Kunde gelöscht mit Id: %li", kundeId);
 		System.out.println("Delete Kunde");
 	}
 	
 	public static Position createPosition(Position position) {
-		// logger.infof("Position erstellt: %s", position);
-		System.out.println("create Position");
+		
 		// TODO: position anpassen
 		if (position == null) {
 			position = new Position();
+			System.out.println("uebergebene Position ungueltig");
+		}
+		else {
+			System.out.println(String.format("Create Position %d", position.getID()));
 		}
 		
 		position.setID(12L);
@@ -185,12 +185,16 @@ public final class Mock {
 		// gespeicherte Position finden
 		// gesp. Position mir Werten aus Parameter überschreiben
 		
-		// logger.infof("Aktualisierte Position: %s", position);
-		System.out.println("updatePosition");
+		if (position == null) {
+			System.out.println("Update fehlgeschlagen");
+		}
+		else {
+			System.out.println(String.format("Update position %d", position.getID()));
+		}
 	}
 	
 	public static void deletePosition(long positionId) {
-		System.out.println("deletePosition");
+		System.out.println(String.format("Delete Position %d", positionId));
 	}
 	
 	private Mock() { /**/

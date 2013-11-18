@@ -5,11 +5,11 @@
 	     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.shop</groupId>
-	<artifactId>shop</artifactId>
+	<groupId>de.webshop</groupId>
+	<artifactId>webshop</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>shop</name>
+	<name>webshop</name>
 	
 	<url>http://www.iwi.hs-karlsruhe.de</url>
 	<inceptionYear>2009</inceptionYear>

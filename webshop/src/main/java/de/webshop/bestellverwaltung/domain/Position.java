@@ -1,7 +1,7 @@
 package de.webshop.bestellverwaltung.domain;
 
 import java.net.URI;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import de.webshop.artikelverwaltung.domain.Artikel;
@@ -15,7 +15,7 @@ public class Position {
 	private Artikel	artikel;
 	private URI		artikelUri;
 	
-	@Size(min = 0)
+	@NotNull
 	private Integer	anzahl;
 	
 	public Long getID() {
