@@ -31,6 +31,13 @@ public final class Mock {
 		final Position position = new Position();
 		position.setAnzahl(new Integer(2));
 		
+		position.setArtikel(Mock.findArtikelById(id));
+		position.setID(id);
+		
+		return position;
+	}
+	
+	public static Artikel findArtikelById(Long id) {
 		Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
@@ -41,10 +48,7 @@ public final class Mock {
 		artikel.setLagerbestand(13);
 		artikel.setPreis(new BigDecimal(1300.50));
 		
-		position.setArtikel(artikel);
-		position.setID(id);
-		
-		return position;
+		return artikel;
 	}
 	
 	public static List<Position> findPositionenByBestellung(Bestellung bestellung) {

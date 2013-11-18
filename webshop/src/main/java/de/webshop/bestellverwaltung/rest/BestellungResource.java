@@ -9,6 +9,7 @@ import static de.webshop.util.Constants.LAST_LINK;
 import static de.webshop.util.Constants.SELF_LINK;
 import java.net.URI;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -28,6 +29,7 @@ import de.webshop.kundenverwaltung.rest.KundeResource;
 import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 
+@ApplicationScoped
 @Path("/bestellung")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes

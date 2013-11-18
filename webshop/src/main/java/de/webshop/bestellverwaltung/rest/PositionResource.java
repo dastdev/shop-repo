@@ -5,6 +5,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
 import java.net.URI;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -23,13 +24,12 @@ import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.rest.ArtikelResource;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.util.Mock;
-import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
+@ApplicationScoped
 @Path("/position")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
-@Log
 public class PositionResource {
 	
 	@Context

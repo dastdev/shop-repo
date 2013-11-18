@@ -5,6 +5,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import java.net.URI;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -26,9 +27,9 @@ import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.util.Constants;
 import de.webshop.util.Mock;
-import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
+@ApplicationScoped
 @Path("/kunde")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.75" })
 @Consumes
@@ -77,6 +78,11 @@ public class KundeResource {
 	}
 	
 	private URI getUriBestellung(Kunde kunde, UriInfo uriInfo) {
+		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeId", kunde.getID(),
+								uriInfo);
+	}
+	
+	private URI getUriBestellungen(Kunde kunde, UriInfo uriInfo) {
 		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeId", kunde.getID(),
 								uriInfo);
 	}
@@ -173,7 +179,7 @@ public class KundeResource {
 			return new Link[0];
 		}
 		
-		final Link self = Link.fromUri(getUriBestellung(kunde, uriInfo)).rel(SELF_LINK).build();
+		final Link self = Link.fromUri(getUriBestellungen(kunde, uriInfo)).rel(SELF_LINK).build();
 		
 		final Link first = Link.fromUri(bestellungResource.getUriBestellung(bestellungen.get(0),
 																			uriInfo))
