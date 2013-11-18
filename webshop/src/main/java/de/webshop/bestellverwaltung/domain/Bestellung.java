@@ -20,7 +20,6 @@ public class Bestellung {
 	@NotNull
 	private Date			bestelldatum;
 	
-	// FIXME: welche @Xml Annotation? PostitionUri's speichern?
 	@XmlTransient
 	private List<Position>	positionen;
 	

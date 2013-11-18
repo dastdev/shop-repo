@@ -15,21 +15,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Artikel {
 	
+	// TODO: VALIDATION!!!!
 	// Eigenschaften
-	@Min(1)
+	// @Min(1)
 	private Long		id;
-	@Pattern(regexp = "\\d{8}")
+	// @Pattern(regexp = "\\d{8}")
 	private String		artikelnummer;
 	private URI			artikelbild;
 	private String		bezeichnung;
-	@Size(max = 200)
+	// @Size(max = 200)
 	private String		kurzBeschreibung;
 	private String		beschreibung;
-	@DecimalMin("0.0")
+	// @DecimalMin("0.0")
 	private BigDecimal	preis;
-	@Min(0)
+	// @Min(0)
 	private Integer		lagerbestand;
-	@Min(1)
+	// @Min(1)
 	private Long		parentID;
 	private Kategorie	kategorie;
 	
