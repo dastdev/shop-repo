@@ -1,14 +1,22 @@
 package de.webshop.bestellverwaltung.domain;
 
+import java.io.Serializable;
 import java.net.URI;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
 import de.webshop.artikelverwaltung.domain.Artikel;
 
 @XmlRootElement
-public class Position {
+public class Position implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3474235149599204012L;
+
 	private Long	id;
 	
 	@XmlTransient
