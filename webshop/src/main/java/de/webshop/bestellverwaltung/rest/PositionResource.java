@@ -4,13 +4,16 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
+
+import java.io.Serializable;
 import java.net.URI;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -20,19 +23,21 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.rest.ArtikelResource;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.util.Mock;
-import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
+@ApplicationScoped
 @Path("/position")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
-@Log
-public class PositionResource {
+public class PositionResource implements Serializable {
 	
+	private static final long serialVersionUID = -5839644821875097527L;
+
 	@Context
 	private UriInfo			uriInfo;
 	
@@ -98,12 +103,5 @@ public class PositionResource {
 	@Produces
 	public void updateKunde(@Valid Position position) {
 		Mock.updatePosition(position);
-	}
-	
-	@DELETE
-	@Path("{id:[1-9][0-9]*}")
-	@Produces
-	public void deletePosition(@PathParam("id") Long positionId) {
-		Mock.deletePosition(positionId);
 	}
 }

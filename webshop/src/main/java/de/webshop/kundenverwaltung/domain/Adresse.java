@@ -1,13 +1,16 @@
 package de.webshop.kundenverwaltung.domain;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Adresse {
+public class Adresse implements Serializable {
 	
+	private static final long serialVersionUID = -6129881639235747224L;
 	// Eigenschaften
 	@Min(1)
 	private Long	id;

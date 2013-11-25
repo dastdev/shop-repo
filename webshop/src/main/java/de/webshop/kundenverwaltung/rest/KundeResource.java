@@ -7,8 +7,10 @@ import static de.webshop.util.Constants.SELF_LINK;
 import static de.webshop.util.Constants.FIRST_LINK;
 import static de.webshop.util.Constants.LAST_LINK;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
+
 
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
@@ -34,21 +36,26 @@ import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.util.Constants;
 import de.webshop.util.Mock;
-import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
+
 
 @RequestScoped
 @Path("/kunde")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.75" })
 @Consumes
 @Log
-public class KundeResource {
+public class KundeResource implements Serializable {
 	
+	private static final long serialVersionUID = -3183019727204066374L;
+
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
 	public static final String	KUNDEN_ID_PATH_PARAM		= "id";
 	
 	// TODO Kundensuche nach PLZ implementieren
 	// private static final String KUNDEN_PLZ_QUERY_PARAM = "plz";
+	private static final String	SELF_LINK					= null;
+	private static final String	FIRST_LINK					= null;
+	private static final String	LAST_LINK					= null;
 	
 	@Context
 	private UriInfo				uriInfo;
@@ -82,8 +89,7 @@ public class KundeResource {
 	}
 	
 	private URI getUriBestellung(Kunde kunde, UriInfo uriInfo) {
-		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeID", kunde.getID(),
-								uriInfo);
+		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeID", kunde.getID(), uriInfo);
 	}
 	
 	private Link[] getTransitionalLinks(Kunde kunde, UriInfo uriInfo) {
@@ -189,6 +195,7 @@ public class KundeResource {
 		final Link self = 	Link.fromUri(getUriBestellung(kunde, uriInfo))
 								.rel(SELF_LINK)
 								.build();
+
 		
 		final Link first = 	Link.fromUri(bestellungResource.getUriBestellung(bestellungen.get(0),
 																			uriInfo))

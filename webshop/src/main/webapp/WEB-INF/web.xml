@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+  <display-name>webshop</display-name>
+  <context-param>
+    <description>Mapping fuer accept in einem Webbrowser</description>
+    <param-name>resteasy.media.type.mappings</param-name>
+    <param-value>json : application/json, xml : application/xml, image : image/*, text : text/plain</param-value>
+  </context-param>
+</web-app>

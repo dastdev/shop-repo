@@ -16,26 +16,27 @@ import org.hibernate.validator.constraints.NotEmpty;
 // JAX-RS supports an automatic mapping from JAXB annotated class to XML and
 // JSON
 public class Artikel {
-
+	
+	// TODO: VALIDATION!!!!
 	// Eigenschaften
-	@NotEmpty
-	private Long id;
-	@Pattern(regexp = "\\d{8}")
-	private String artikelnummer;
-	private URI artikelbild;
-	private String bezeichnung;
-	@Size(max = 200)
-	private String kurzBeschreibung;
-	private String beschreibung;
-	@DecimalMin("0.0")
-	@NotNull
-	private BigDecimal preis;
-	@Min(0)
-	private Integer lagerbestand;
-	@Min(1)
-	private Long parentID;
-	private Kategorie kategorie;
 
+	// @Min(1)
+	private Long		id;
+	// @Pattern(regexp = "\\d{8}")
+	private String		artikelnummer;
+	private URI			artikelbild;
+	private String		bezeichnung;
+	// @Size(max = 200)
+	private String		kurzBeschreibung;
+	private String		beschreibung;
+	// @DecimalMin("0.0")
+	private BigDecimal	preis;
+	// @Min(0)
+	private Integer		lagerbestand;
+	// @Min(1)
+	private Long		parentID;
+	private Kategorie	kategorie;
+	
 	public enum Kategorie {
 		KOMPLETTRAEDER, RADTEILE, ERSATZTEILE, ZUBEHOER
 	}

@@ -9,7 +9,7 @@
 	<artifactId>webshop</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>shop</name>
+	<name>webshop</name>
 	
 	<url>http://www.iwi.hs-karlsruhe.de</url>
 	<inceptionYear>2009</inceptionYear>

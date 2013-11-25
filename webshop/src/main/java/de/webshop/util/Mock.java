@@ -21,6 +21,7 @@ public final class Mock {
 	// UPDATE
 	// DELETE
 	// Sonstiges...
+	// private static final Logger logger =
 	
 	private static final int	MAX_ID				= 99;
 	private static final int	MAX_KUNDEN			= 8;
@@ -28,17 +29,6 @@ public final class Mock {
 	
 	// Artikel
 	//
-	public static Artikel createArtikel(Artikel artikel) {
-		System.out.println("create Artikel");
-		
-		artikel.setID(12L);
-		
-		return artikel;
-	}
-	
-	public static void updateArtikel(Artikel artikel) {
-		System.out.println("update Artikel");
-	}
 	
 	public static Artikel findArtikelByID(long id) {
 		final Artikel artikel = new Artikel();
@@ -215,6 +205,13 @@ public final class Mock {
 		final Position position = new Position();
 		position.setAnzahl(2);
 		
+		position.setArtikel(Mock.findArtikelById(id));
+		position.setID(id);
+		
+		return position;
+	}
+	
+	public static Artikel findArtikelById(Long id) {
 		Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
@@ -225,17 +222,44 @@ public final class Mock {
 		artikel.setLagerbestand(13);
 		artikel.setPreis(new BigDecimal(1300.50));
 		
-		position.setArtikel(artikel);
-		position.setID(id);
-		
-		return position;
+		return artikel;
 	}
 	
 	public static List<Position> findPositionenByBestellung(Bestellung bestellung) {
 		final List<Position> positionen = bestellung.getPositionen();
 		return positionen;
+
 	}
 	
 	private Mock() { /**/
+	}
+	
+	public static Artikel updateArtikel(Artikel artikel) {
+		if (artikel == null) {
+			System.out.println("Update fehlgeschlagen");
+			
+			artikel = new Artikel();
+		}
+		else {
+			System.out.println(String.format("Update artikel %d", artikel.getID()));
+		}
+		
+		return artikel;
+	}
+	
+	public static Artikel createArtikel(Artikel artikel) {
+		if (artikel == null) {
+			System.out.println("Create fehlgeschlagen");
+			
+			artikel = new Artikel();
+		}
+		else {
+			System.out.println("Create artikel");
+		}
+		
+		// TODO: calc ID
+		artikel.setID(13L);
+		
+		return artikel;
 	}
 }
