@@ -8,9 +8,12 @@ import static de.webshop.util.Constants.SELF_LINK;
 import java.net.URI;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -60,5 +63,21 @@ public class ArtikelResource {
 	
 	public URI getUriArtikel(Artikel artikel, UriInfo uriInfo) {
 		return uriHelper.getUri(ArtikelResource.class, "findArtikelById", artikel.getID(), uriInfo);
+	}
+	
+	@POST
+	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	@Produces
+	public Response createArtikel(@Valid Artikel artikel) {
+		
+		artikel = Mock.createArtikel(artikel);
+		return Response.created(getUriArtikel(artikel, uriInfo)).build();
+	}
+	
+	@PUT
+	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	@Produces
+	public void updateKunde(@Valid Artikel artikel) {
+		Mock.updateArtikel(artikel);
 	}
 }

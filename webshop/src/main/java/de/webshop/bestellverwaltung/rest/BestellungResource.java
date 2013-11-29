@@ -7,8 +7,11 @@ import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.FIRST_LINK;
 import static de.webshop.util.Constants.LAST_LINK;
 import static de.webshop.util.Constants.SELF_LINK;
+
+import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -22,6 +25,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Kunde;
@@ -33,8 +37,10 @@ import de.webshop.util.rest.UriHelper;
 @Path("/bestellung")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
-public class BestellungResource {
+public class BestellungResource implements Serializable {
 	
+	private static final long serialVersionUID = 7649051701994670170L;
+
 	@Context
 	private UriInfo				uriInfo;
 	

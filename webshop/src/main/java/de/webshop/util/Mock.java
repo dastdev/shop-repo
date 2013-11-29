@@ -203,4 +203,33 @@ public final class Mock {
 	
 	private Mock() { /**/
 	}
+	
+	public static Artikel updateArtikel(Artikel artikel) {
+		if (artikel == null) {
+			System.out.println("Update fehlgeschlagen");
+			
+			artikel = new Artikel();
+		}
+		else {
+			System.out.println(String.format("Update artikel %d", artikel.getID()));
+		}
+		
+		return artikel;
+	}
+	
+	public static Artikel createArtikel(Artikel artikel) {
+		if (artikel == null) {
+			System.out.println("Create fehlgeschlagen");
+			
+			artikel = new Artikel();
+		}
+		else {
+			System.out.println("Create artikel");
+		}
+		
+		// TODO: calc ID
+		artikel.setID(13L);
+		
+		return artikel;
+	}
 }

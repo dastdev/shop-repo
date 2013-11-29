@@ -3,8 +3,11 @@ package de.webshop.kundenverwaltung.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
+
+import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -22,6 +25,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.kundenverwaltung.domain.Kunde;
@@ -34,17 +38,17 @@ import de.webshop.util.rest.UriHelper;
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.75" })
 @Consumes
 // @Log
-public class KundeResource {
+public class KundeResource implements Serializable {
 	
+	private static final long serialVersionUID = -3183019727204066374L;
+
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
 	
 	// FIXME Kundensuche nach PLZ implementieren
 	// private static final String KUNDEN_PLZ_QUERY_PARAM = "plz";
 	
 	private static final String	SELF_LINK					= null;
-	
 	private static final String	FIRST_LINK					= null;
-	
 	private static final String	LAST_LINK					= null;
 	
 	@Context
