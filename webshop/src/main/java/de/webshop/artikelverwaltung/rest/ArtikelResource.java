@@ -5,7 +5,10 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
+
+import java.io.Serializable;
 import java.net.URI;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -21,21 +24,27 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
 import de.webshop.artikelverwaltung.domain.Artikel;
-import de.webshop.util.Mock;
+import de.webshop.artikelverwaltung.service.ArtikelService;
 import de.webshop.util.rest.UriHelper;
 
 @ApplicationScoped
 @Path("/artikel")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
-public class ArtikelResource {
+public class ArtikelResource implements Serializable {
 	
+	private static final long serialVersionUID = -8511705638924554310L;
+
 	@Context
 	private UriInfo		uriInfo;
 	
 	@Inject
 	private UriHelper	uriHelper;
+	
+	//@Inject
+	//private ArtikelService as;
 	
 	@GET
 	@Produces({ TEXT_PLAIN, APPLICATION_JSON })
@@ -47,7 +56,7 @@ public class ArtikelResource {
 	@GET
 	@Path("{id:[1-9][0-9]{0,7}}")
 	public Response findArtikelById(@PathParam("id") Long id) {
-		final Artikel artikel = Mock.findArtikelById(id);
+		final Artikel artikel = ArtikelService.findArtikelById(id);
 		if (artikel == null) {
 			throw new NotFoundException("dmy");
 		}
@@ -70,7 +79,7 @@ public class ArtikelResource {
 	@Produces
 	public Response createArtikel(@Valid Artikel artikel) {
 		
-		artikel = Mock.createArtikel(artikel);
+		artikel = ArtikelService.createArtikel(artikel);
 		return Response.created(getUriArtikel(artikel, uriInfo)).build();
 	}
 	
@@ -78,6 +87,6 @@ public class ArtikelResource {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public void updateKunde(@Valid Artikel artikel) {
-		Mock.updateArtikel(artikel);
+		ArtikelService.updateArtikel(artikel);
 	}
 }
