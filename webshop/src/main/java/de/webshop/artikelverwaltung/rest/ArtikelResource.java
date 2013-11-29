@@ -27,7 +27,6 @@ import javax.ws.rs.core.UriInfo;
 
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.service.ArtikelService;
-import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 
 @ApplicationScoped
@@ -80,7 +79,7 @@ public class ArtikelResource implements Serializable {
 	@Produces
 	public Response createArtikel(@Valid Artikel artikel) {
 		
-		artikel = Mock.createArtikel(artikel);
+		artikel = ArtikelService.createArtikel(artikel);
 		return Response.created(getUriArtikel(artikel, uriInfo)).build();
 	}
 	
@@ -88,6 +87,6 @@ public class ArtikelResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public void updateKunde(@Valid Artikel artikel) {
-		Mock.updateArtikel(artikel);
+		ArtikelService.updateArtikel(artikel);
 	}
 }
