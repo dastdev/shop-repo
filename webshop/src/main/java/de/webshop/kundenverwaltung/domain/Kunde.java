@@ -1,8 +1,10 @@
 package de.webshop.kundenverwaltung.domain;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -10,10 +12,13 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
 import de.webshop.bestellverwaltung.domain.Bestellung;
 
 @XmlRootElement
-public class Kunde {
+public class Kunde implements Serializable {
+	
+	private static final long serialVersionUID = -8937961791375017L;
 	
 	// Validierung, um Plausibilitätsprüfungen einzusparen
 	@Min(1)

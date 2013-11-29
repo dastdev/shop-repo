@@ -1,16 +1,21 @@
 package de.webshop.bestellverwaltung.domain;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
 import de.webshop.kundenverwaltung.domain.Kunde;
 
 @XmlRootElement
-public class Bestellung {
+public class Bestellung implements Serializable {
 	
+	private static final long serialVersionUID = 8645031681820165535L;
+
 	private Long			id;
 	
 	@XmlTransient
