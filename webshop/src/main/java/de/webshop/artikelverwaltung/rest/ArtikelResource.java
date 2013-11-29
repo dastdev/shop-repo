@@ -26,6 +26,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import de.webshop.artikelverwaltung.domain.Artikel;
+import de.webshop.artikelverwaltung.service.ArtikelService;
 import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 
@@ -43,6 +44,9 @@ public class ArtikelResource implements Serializable {
 	@Inject
 	private UriHelper	uriHelper;
 	
+	//@Inject
+	//private ArtikelService as;
+	
 	@GET
 	@Produces({ TEXT_PLAIN, APPLICATION_JSON })
 	@Path("version")
@@ -53,7 +57,7 @@ public class ArtikelResource implements Serializable {
 	@GET
 	@Path("{id:[1-9][0-9]{0,7}}")
 	public Response findArtikelById(@PathParam("id") Long id) {
-		final Artikel artikel = Mock.findArtikelById(id);
+		final Artikel artikel = ArtikelService.findArtikelById(id);
 		if (artikel == null) {
 			throw new NotFoundException("dmy");
 		}
