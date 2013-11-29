@@ -1,20 +1,17 @@
 package de.webshop.kundenverwaltung.domain;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Adresse implements Serializable {
+public class Adresse {
 	
-	private static final long serialVersionUID = -6129881639235747224L;
 	// Eigenschaften
 	@Min(1)
 	private Long	id;
-	private String	strasse;
+	private String	straße;
 	@Size(max = 4)
 	@Pattern(regexp = "\\d+")
 	private String	hausnummer;
@@ -39,12 +36,12 @@ public class Adresse implements Serializable {
 		this.id = id;
 	}
 	
-	public String getStrasse() {
-		return strasse;
+	public String getStraße() {
+		return straße;
 	}
 	
-	public void setStrasse(String strasse) {
-		this.strasse = strasse;
+	public void setStraße(String straße) {
+		this.straße = straße;
 	}
 	
 	public String getHausnummer() {
@@ -79,16 +76,17 @@ public class Adresse implements Serializable {
 		this.land = land;
 	}
 	
+	// Basismethoden
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((hausnummer == null) ? 0 : hausnummer.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((land == null) ? 0 : land.hashCode());
 		result = prime * result + ((plz == null) ? 0 : plz.hashCode());
 		result = prime * result + ((stadt == null) ? 0 : stadt.hashCode());
-		result = prime * result + ((strasse == null) ? 0 : strasse.hashCode());
+		result = prime * result + ((straße == null) ? 0 : straße.hashCode());
 		return result;
 	}
 	
@@ -100,18 +98,14 @@ public class Adresse implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Adresse other = (Adresse) obj;
+		Adresse other = (Adresse) obj;
 		if (hausnummer == null) {
 			if (other.hausnummer != null)
 				return false;
 		}
 		else if (!hausnummer.equals(other.hausnummer))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		}
-		else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (land != other.land)
 			return false;
@@ -127,18 +121,18 @@ public class Adresse implements Serializable {
 		}
 		else if (!stadt.equals(other.stadt))
 			return false;
-		if (strasse == null) {
-			if (other.strasse != null)
+		if (straße == null) {
+			if (other.straße != null)
 				return false;
 		}
-		else if (!strasse.equals(other.strasse))
+		else if (!straße.equals(other.straße))
 			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
-		return "Adresse [id=" + id + ", strasse=" + strasse + ", hausnummer=" + hausnummer
-				+ ", plz=" + plz + ", stadt=" + stadt + ", land=" + land + "]";
+		return "Adresse [id=" + id + ", straße=" + straße + ", hausnummer=" + hausnummer + ", plz="
+				+ plz + ", stadt=" + stadt + ", land=" + land + "]";
 	}
 }

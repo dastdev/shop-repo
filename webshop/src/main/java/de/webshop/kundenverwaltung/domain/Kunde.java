@@ -1,10 +1,8 @@
 package de.webshop.kundenverwaltung.domain;
 
-import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -12,14 +10,11 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import org.hibernate.validator.constraints.Email;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 
 @XmlRootElement
-public class Kunde implements Serializable {
+public class Kunde {
 	
-	private static final long serialVersionUID = -8937961791375017L;
 	// Validierung, um Plausibilitätsprüfungen einzusparen
 	@Min(1)
 	private Long				id;
@@ -37,7 +32,7 @@ public class Kunde implements Serializable {
 	@Size(min = 4, max = 16)
 	private String				passwort;
 	@NotNull
-	@Email
+	@Pattern(regexp = "[\\w.%-]+@[\\w.%-]+\\.[A-Za-z]{2,4}")
 	private String				email;
 	@NotNull
 	private Kundentyp			typ;
@@ -45,9 +40,24 @@ public class Kunde implements Serializable {
 	@XmlTransient
 	private List<Bestellung>	bestellungen;
 	private URI					uriBestellung;
-	private Adresse				adresse;
 	
 	public Kunde() {
+	}
+	
+	public Kunde(Long id, String name, String vorname, Date geburtstag, String passwort,
+			String email, Kundentyp typ, boolean geloescht, List<Bestellung> bestellungen,
+			URI bestellungUri) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.vorname = vorname;
+		this.geburtstag = geburtstag;
+		this.passwort = passwort;
+		this.email = email;
+		this.typ = typ;
+		this.geloescht = geloescht;
+		this.bestellungen = bestellungen;
+		this.uriBestellung = bestellungUri;
 	}
 	
 	/**
@@ -135,14 +145,6 @@ public class Kunde implements Serializable {
 		this.uriBestellung = uri;
 	}
 	
-	public Adresse getAdresse() {
-		return adresse;
-	}
-	
-	public void setAdresse(Adresse adresse) {
-		this.adresse = adresse;
-	}
-	
 	/**
 	 * Geerbte Object-Methoden
 	 */
@@ -177,7 +179,7 @@ public class Kunde implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Kunde other = (Kunde) obj;
+		Kunde other = (Kunde) obj;
 		if (bestellungen == null) {
 			if (other.bestellungen != null)
 				return false;

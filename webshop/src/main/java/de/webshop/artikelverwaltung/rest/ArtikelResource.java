@@ -1,10 +1,12 @@
 package de.webshop.artikelverwaltung.rest;
 
-
-import java.io.Serializable;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
+import static javax.ws.rs.core.MediaType.TEXT_XML;
+import static de.webshop.util.Constants.SELF_LINK;
 import java.net.URI;
-
-import javax.faces.bean.ApplicationScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -19,25 +21,16 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML;
-import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
-import static javax.ws.rs.core.MediaType.TEXT_XML;
-import static de.webshop.util.Constants.SELF_LINK;
-
 
 @ApplicationScoped
 @Path("/artikel")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
-public class ArtikelResource implements Serializable {
+public class ArtikelResource {
 	
-	private static final long serialVersionUID = -6459320654424521991L;
-
 	@Context
 	private UriInfo		uriInfo;
 	
@@ -45,29 +38,31 @@ public class ArtikelResource implements Serializable {
 	private UriHelper	uriHelper;
 	
 	@GET
-	@Path("{id:[1-9][0-9]*}")
-	public Response findArtikelByID(@PathParam("id") long id) {
-		
-		final Artikel artikel = Mock.findArtikelByID(id);
-		
+	@Produces({ TEXT_PLAIN, APPLICATION_JSON })
+	@Path("version")
+	public String getVersion() {
+		return "1.5";
+	}
+	
+	@GET
+	@Path("{id:[1-9][0-9]{0,7}}")
+	public Response findArtikelById(@PathParam("id") Long id) {
+		final Artikel artikel = Mock.findArtikelById(id);
 		if (artikel == null) {
-			throw new NotFoundException(String.format("Keine Position mit der ID %d gefunden.", id));
+			throw new NotFoundException("dmy");
 		}
 		
-		// Link-Header setzen
-		final Response response = Response.ok(artikel)
-											.links(getTransitionalLinks(artikel, uriInfo)).build();
-		
-		return response;
+		return Response.ok(artikel).links(getTransitionalLinks(artikel, uriInfo)).build();
 	}
 	
 	private Link[] getTransitionalLinks(Artikel artikel, UriInfo uriInfo) {
 		final Link self = Link.fromUri(getUriArtikel(artikel, uriInfo)).rel(SELF_LINK).build();
+		
 		return new Link[] { self };
 	}
 	
 	public URI getUriArtikel(Artikel artikel, UriInfo uriInfo) {
-		return uriHelper.getUri(ArtikelResource.class, "findArtikelByID", artikel.getID(), uriInfo);
+		return uriHelper.getUri(ArtikelResource.class, "findArtikelById", artikel.getID(), uriInfo);
 	}
 	
 	@POST
@@ -82,7 +77,7 @@ public class ArtikelResource implements Serializable {
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateArtikel(@Valid Artikel artikel) {
+	public void updateKunde(@Valid Artikel artikel) {
 		Mock.updateArtikel(artikel);
 	}
 }

@@ -3,18 +3,10 @@ package de.webshop.kundenverwaltung.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
-import static de.webshop.util.Constants.SELF_LINK;
-import static de.webshop.util.Constants.FIRST_LINK;
-import static de.webshop.util.Constants.LAST_LINK;
-
-import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
-
-
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,7 +22,6 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.kundenverwaltung.domain.Kunde;
@@ -38,23 +29,22 @@ import de.webshop.util.Constants;
 import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 
-
-@RequestScoped
+@ApplicationScoped
 @Path("/kunde")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.75" })
 @Consumes
-@Log
-public class KundeResource implements Serializable {
+// @Log
+public class KundeResource {
 	
-	private static final long serialVersionUID = -3183019727204066374L;
-
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
-	public static final String	KUNDEN_ID_PATH_PARAM		= "id";
 	
-	// TODO Kundensuche nach PLZ implementieren
+	// FIXME Kundensuche nach PLZ implementieren
 	// private static final String KUNDEN_PLZ_QUERY_PARAM = "plz";
+	
 	private static final String	SELF_LINK					= null;
+	
 	private static final String	FIRST_LINK					= null;
+	
 	private static final String	LAST_LINK					= null;
 	
 	@Context
@@ -66,20 +56,19 @@ public class KundeResource implements Serializable {
 	@Inject
 	private UriHelper			uriHelper;
 	
-	// Kunde über ID suchen
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Response findKundeByID(@PathParam("id") Long id) {
-		final Kunde kunde = Mock.findKundeByID(id);
+	// Kunde über ID suchen
+	public Response findKundeById(@PathParam("id") Long id) {
+		final Kunde kunde = Mock.findKundeById(id);
 		if (kunde == null) {
-			throw new NotFoundException(String.format("Kein Kunde mit der ID %d gefunden.", id));
+			throw new NotFoundException(String.format("Kein Kunde mit der ID {0] gefunden.", id));
 		}
-		
 		setStructuralLinks(kunde, uriInfo);
 		// Link-Header setzen
-		return Response	.ok(kunde)
-					 	.links(getTransitionalLinks(kunde, uriInfo))
-					 	.build();
+		final Response response = Response.ok(kunde).links(getTransitionalLinks(kunde, uriInfo))
+											.build();
+		return response;
 	}
 	
 	public void setStructuralLinks(Kunde kunde, UriInfo uriInfo) {
@@ -89,37 +78,38 @@ public class KundeResource implements Serializable {
 	}
 	
 	private URI getUriBestellung(Kunde kunde, UriInfo uriInfo) {
-		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeID", kunde.getID(), uriInfo);
+		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeId", kunde.getID(),
+								uriInfo);
+	}
+	
+	private URI getUriBestellungen(Kunde kunde, UriInfo uriInfo) {
+		return uriHelper.getUri(KundeResource.class, "findBestellungenByKundeId", kunde.getID(),
+								uriInfo);
 	}
 	
 	private Link[] getTransitionalLinks(Kunde kunde, UriInfo uriInfo) {
 		// FIXME LINK_LIST einfügen?
-		final Link self = 	Link.fromUri(getUriKunde(kunde, uriInfo))
-								.rel(Constants.SELF_LINK)
+		final Link self = Link.fromUri(getUriKunde(kunde, uriInfo)).rel(Constants.SELF_LINK)
 								.build();
 		
-		final Link add = 	Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
-								.rel(Constants.ADD_LINK)
-								.build();
+		final Link add = Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
+								.rel(Constants.ADD_LINK).build();
 		
 		final Link update = Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
-								.rel(Constants.UPDATE_LINK)
-								.build();
+								.rel(Constants.UPDATE_LINK).build();
 		
-		final Link remove = Link.fromUri(uriHelper.getUri(KundeResource.class, "deleteKunde",
+		final Link remove = Link.fromUri(	uriHelper.getUri(	KundeResource.class, "deleteKunde",
 																kunde.getID(), uriInfo))
-								.rel(Constants.REMOVE_LINK)
-								.build();
+								.rel(Constants.REMOVE_LINK).build();
 		
 		// TODO "list" einfügen
 		return new Link[] { self, add, update, remove };
 	}
 	
-	public URI getUriKunde(Kunde kunde, UriInfo uriInfo) {
-		return uriHelper.getUri(KundeResource.class, "findKundeByID", kunde.getID(), uriInfo);
+	private URI getUriKunde(Kunde kunde, UriInfo uriInfo) {
+		return uriHelper.getUri(KundeResource.class, "findKundeById", kunde.getID(), uriInfo);
 	}
 	
-	@GET
 	public Response findKundeByNachname(@QueryParam(KUNDEN_NACHNAME_QUERY_PARAM) String nachname) {
 		List<Kunde> kunden = null;
 		if (nachname != null) {
@@ -141,9 +131,8 @@ public class KundeResource implements Serializable {
 			setStructuralLinks(k, uriInfo);
 		}
 		
-		return 	Response.ok(new GenericEntity<List<Kunde>>(kunden) {})
-						.links(getTransitionalLinksKunden(kunden, uriInfo))
-						.build();
+		return Response.ok(new GenericEntity<List<Kunde>>(kunden) {})
+						.links(getTransitionalLinksKunden(kunden, uriInfo)).build();
 	}
 	
 	private Link[] getTransitionalLinksKunden(List<Kunde> kunden, UriInfo uriInfo2) {
@@ -151,12 +140,10 @@ public class KundeResource implements Serializable {
 			return null;
 		}
 		
-		final Link first = 	Link.fromUri(getUriKunde(kunden.get(0), uriInfo))
-								.rel(FIRST_LINK)
+		final Link first = Link.fromUri(getUriKunde(kunden.get(0), uriInfo)).rel(FIRST_LINK)
 								.build();
 		final int lastPos = kunden.size() - 1;
-		final Link last = 	Link.fromUri(getUriKunde(kunden.get(lastPos), uriInfo))
-								.rel(LAST_LINK)
+		final Link last = Link.fromUri(getUriKunde(kunden.get(lastPos), uriInfo)).rel(LAST_LINK)
 								.build();
 		
 		return new Link[] { first, last };
@@ -164,12 +151,12 @@ public class KundeResource implements Serializable {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}/bestellungen")
-	public Response findBestellungenByKundeID(@PathParam("id") Long kundeId) {
+	public Response findBestellungenByKundeId(@PathParam("id") Long kundeId) {
 		// FIXME Referenz auf Klasse KundeService
-		final Kunde kunde = Mock.findKundeByID(kundeId);
+		final Kunde kunde = Mock.findKundeById(kundeId);
 		if (kunde == null) {
 			throw new NotFoundException(
-										String.format(	"Es wurden keine Bestellungen für den Kunden %d gefunden",
+										String.format(	"Es wurden keine Bestellungen für den Kunden {0} gefunden",
 														kundeId));
 		}
 		// FIXME Referenz auf Klasse BestellungService
@@ -181,32 +168,27 @@ public class KundeResource implements Serializable {
 			}
 		}
 		
-		return	Response.ok(new GenericEntity<List<Bestellung>>(bestellungen) {})
+		return Response.ok(new GenericEntity<List<Bestellung>>(bestellungen) {})
 						.links(getTransitionalLinksBestellungen(bestellungen, kunde, uriInfo))
 						.build();
 	}
 	
 	private Link[] getTransitionalLinksBestellungen(List<Bestellung> bestellungen, Kunde kunde,
-			UriInfo uriInfo) {
+			UriInfo uriInfo2) {
 		if (bestellungen == null || bestellungen.isEmpty()) {
 			return new Link[0];
 		}
 		
-		final Link self = 	Link.fromUri(getUriBestellung(kunde, uriInfo))
-								.rel(SELF_LINK)
-								.build();
-
+		final Link self = Link.fromUri(getUriBestellungen(kunde, uriInfo)).rel(SELF_LINK).build();
 		
-		final Link first = 	Link.fromUri(bestellungResource.getUriBestellung(bestellungen.get(0),
+		final Link first = Link.fromUri(bestellungResource.getUriBestellung(bestellungen.get(0),
 																			uriInfo))
-								.rel(FIRST_LINK)
-								.build();
+								.rel(FIRST_LINK).build();
 		
 		final int lastPos = bestellungen.size() - 1;
-		final Link last = 	Link.fromUri(	bestellungResource.getUriBestellung(bestellungen.get(lastPos),
+		final Link last = Link.fromUri(	bestellungResource.getUriBestellung(bestellungen.get(lastPos),
 																			uriInfo))
-								.rel(LAST_LINK)
-								.build();
+								.rel(LAST_LINK).build();
 		
 		return new Link[] { self, first, last };
 	}
@@ -214,17 +196,16 @@ public class KundeResource implements Serializable {
 	@POST
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public Response createKunde(@Valid Kunde kunde) {
+	public Response createKunde(Kunde kunde) {
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		kunde = Mock.createKunde(kunde);
-		return 	Response.created(getUriKunde(kunde, uriInfo))
-						.build();
+		return Response.created(getUriKunde(kunde, uriInfo)).build();
 	}
 	
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateKunde(@Valid Kunde kunde) {
+	public void updateKunde(Kunde kunde) {
 		// TODO Anwendungskern statt Mock, Locale
 		Mock.updateKunde(kunde);
 	}
@@ -232,7 +213,7 @@ public class KundeResource implements Serializable {
 	@DELETE
 	@Path("{id:[1-9][0-9]*}")
 	@Produces
-	public void deleteKunde(@PathParam("id") long kundeId) {
+	public void deleteKunde(@PathParam("id") Long kundeId) {
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		Mock.deleteKunde(kundeId);
 	}

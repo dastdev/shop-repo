@@ -7,19 +7,13 @@ import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.FIRST_LINK;
 import static de.webshop.util.Constants.LAST_LINK;
 import static de.webshop.util.Constants.SELF_LINK;
-
-import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -28,7 +22,6 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Kunde;
@@ -40,10 +33,8 @@ import de.webshop.util.rest.UriHelper;
 @Path("/bestellung")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
-public class BestellungResource implements Serializable {
+public class BestellungResource {
 	
-	private static final long serialVersionUID = 7649051701994670170L;
-
 	@Context
 	private UriInfo				uriInfo;
 	
@@ -65,12 +56,13 @@ public class BestellungResource implements Serializable {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Response findBestellungByID(@PathParam("id") long id) {
+	public Response findBestellungById(@PathParam("id") long id) {
 		
-		final Bestellung bestellung = Mock.findBestellungByID(id);
+		final Bestellung bestellung = Mock.findBestellungById(id);
 		
 		if (bestellung == null) {
-			throw new NotFoundException(String.format(	"Keine Bestellung mit der ID %d gefunden.",
+			throw new NotFoundException(
+										String.format(	"Keine Bestellung mit der ID %li gefunden.",
 														id));
 		}
 		setStructuralLinks(bestellung, uriInfo);
@@ -85,10 +77,10 @@ public class BestellungResource implements Serializable {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}/positionen")
-	public Response findPositionenByBestellungID(@PathParam("id") long id) {
+	public Response findPositionenByBestellungId(@PathParam("id") long id) {
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		final Bestellung bestellung = Mock.findBestellungByID(id);
+		final Bestellung bestellung = Mock.findBestellungById(id);
 		final List<Position> positionen = Mock.findPositionenByBestellung(bestellung);
 		
 		if (positionen.isEmpty()) {
@@ -109,7 +101,9 @@ public class BestellungResource implements Serializable {
 		// URI fuer Kunde setzen
 		final Kunde kunde = bestellung.getKunde();
 		if (kunde != null) {
-			final URI kundeUri = kundeResource.getUriKunde(bestellung.getKunde(), uriInfo);
+			// FIXME: kundeResource.getUriKunde(...)
+			final URI kundeUri = null; // kundeResource.getUriKunde(bestellung.getKunde(),
+										// uriInfo);
 			bestellung.setKundeUri(kundeUri);
 		}
 		
@@ -149,28 +143,13 @@ public class BestellungResource implements Serializable {
 	}
 	
 	private URI getUriPositionen(Bestellung bestellung, UriInfo uriInfo) {
-		return uriHelper.getUri(BestellungResource.class, "findPositionenByBestellungID",
+		return uriHelper.getUri(BestellungResource.class, "findPositionenByBestellungId",
 								bestellung.getID(), uriInfo);
 	}
 	
 	public URI getUriBestellung(Bestellung bestellung, UriInfo uriInfo) {
-		return uriHelper.getUri(BestellungResource.class, "findBestellungByID", bestellung.getID(),
+		return uriHelper.getUri(BestellungResource.class, "findBestellungById", bestellung.getID(),
 								uriInfo);
 	}
 	
-	@POST
-	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
-	@Produces
-	public Response createBestellung(@Valid Bestellung bestellung) {
-		
-		bestellung = Mock.createBestellung(bestellung);
-		return Response.created(getUriBestellung(bestellung, uriInfo)).build();
-	}
-	
-	@PUT
-	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
-	@Produces
-	public void updateBestellung(@Valid Bestellung bestellung) {
-		Mock.updateBestellung(bestellung);
-	}
 }

@@ -4,10 +4,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
-
-import java.io.Serializable;
 import java.net.URI;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -23,7 +20,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.rest.ArtikelResource;
 import de.webshop.bestellverwaltung.domain.Position;
@@ -34,10 +30,8 @@ import de.webshop.util.rest.UriHelper;
 @Path("/position")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
-public class PositionResource implements Serializable {
+public class PositionResource {
 	
-	private static final long serialVersionUID = -5839644821875097527L;
-
 	@Context
 	private UriInfo			uriInfo;
 	
@@ -49,12 +43,13 @@ public class PositionResource implements Serializable {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Response findPositionByID(@PathParam("id") long id) {
+	public Response findPositionById(@PathParam("id") long id) {
 		
-		final Position position = Mock.findPositionByID(id);
+		final Position position = Mock.findPositionById(id);
 		
 		if (position == null) {
-			throw new NotFoundException(String.format("Keine Position mit der ID %d gefunden.", id));
+			throw new NotFoundException(
+										String.format("Keine Position mit der ID %li gefunden.", id));
 		}
 		setStructuralLinks(position, uriInfo);
 		
@@ -69,7 +64,9 @@ public class PositionResource implements Serializable {
 		// URI fuer Artikel setzen
 		final Artikel artikel = position.getArtikel();
 		if (artikel != null) {
-			final URI artikelUri = artikelResource.getUriArtikel(position.getArtikel(), uriInfo);
+			// FIXME: ArtikelResource.getUriArtikel
+			final URI artikelUri = null; // artikelResource.getUriArtikel(position.getArtikel(),
+											// uriInfo);
 			position.setArtikelUri(artikelUri);
 		}
 	}
@@ -85,7 +82,7 @@ public class PositionResource implements Serializable {
 	}
 	
 	public URI getUriPosition(Position position, UriInfo uriInfo) {
-		return uriHelper.getUri(PositionResource.class, "findPositionByID", position.getID(),
+		return uriHelper.getUri(PositionResource.class, "findPositionById", position.getID(),
 								uriInfo);
 	}
 	

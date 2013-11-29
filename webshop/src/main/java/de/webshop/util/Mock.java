@@ -1,10 +1,10 @@
 package de.webshop.util;
 
+//import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 import de.webshop.bestellverwaltung.domain.Bestellung;
@@ -12,26 +12,33 @@ import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Adresse;
 import de.webshop.kundenverwaltung.domain.Adresse.Land;
 import de.webshop.kundenverwaltung.domain.Kunde;
-import de.webshop.kundenverwaltung.domain.Kundentyp;
+
+//import org.jboss.logging.Logger;
 
 public final class Mock {
 	
-	// Reihenfolge pro Themenbereich:
-	// CREATE
-	// UPDATE
-	// DELETE
-	// Sonstiges...
 	// private static final Logger logger =
 	
 	private static final int	MAX_ID				= 99;
 	private static final int	MAX_KUNDEN			= 8;
 	private static final int	MAX_BESTELLUNGEN	= 4;
 	
-	// Artikel
-	//
+	public static Position findPositionById(Long id) {
+		if (id > MAX_ID) {
+			return null;
+		}
+		
+		final Position position = new Position();
+		position.setAnzahl(new Integer(2));
+		
+		position.setArtikel(Mock.findArtikelById(id));
+		position.setID(id);
+		
+		return position;
+	}
 	
-	public static Artikel findArtikelByID(long id) {
-		final Artikel artikel = new Artikel();
+	public static Artikel findArtikelById(Long id) {
+		Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
 		artikel.setBezeichnung("Robobike");
@@ -44,18 +51,62 @@ public final class Mock {
 		return artikel;
 	}
 	
-	// Bestellung
-	//
-	public static Bestellung createBestellung(Bestellung bestellung) {
-		System.out.println("create Betsellung");
-		
-		bestellung.setID(12L);
-		
-		return bestellung;
+	public static List<Position> findPositionenByBestellung(Bestellung bestellung) {
+		List<Position> positionen = bestellung.getPositionen();
+		return positionen;
 	}
 	
-	public static void updateBestellung(Bestellung bestellung) {
-		System.out.println("update Bestellung");
+	public static Kunde findKundeById(Long id) {
+		if (id > MAX_ID) {
+			return null;
+		}
+		
+		final Kunde kunde = new Kunde();
+		kunde.setID(id);
+		kunde.setName("Nachname" + id);
+		kunde.setEmail("" + id + "@hska.de");
+		
+		final Adresse adresse = new Adresse();
+		
+		if (id % 2 == 0) {
+			adresse.setHausnummer("L4D");
+			adresse.setID(id + 1);
+			adresse.setLand(Land.DE);
+			adresse.setPlz("76133");
+			adresse.setStadt("Megashophausen");
+			adresse.setStraﬂe("Bikestraﬂe");
+		}
+		else {
+			adresse.setHausnummer("B2B");
+			adresse.setID(id + 1);
+			adresse.setLand(Land.AT);
+			adresse.setPlz("1885");
+			adresse.setStadt("Weizen");
+			adresse.setStraﬂe("Naturtr¸bweg");
+		}
+		
+		return kunde;
+	}
+	
+	public static List<Kunde> findAllKunden() {
+		final int anzahl = MAX_KUNDEN;
+		final List<Kunde> kunden = new ArrayList<>(anzahl);
+		for (int i = 1; i <= anzahl; i++) {
+			final Kunde kunde = findKundeById(Long.valueOf(i));
+			kunden.add(kunde);
+		}
+		return kunden;
+	}
+	
+	public static List<Kunde> findKundenByNachname(String nachname) {
+		final int anzahl = nachname.length();
+		final List<Kunde> kunden = new ArrayList<>(anzahl);
+		for (int i = 1; i <= anzahl; i++) {
+			final Kunde kunde = findKundeById(Long.valueOf(i));
+			kunde.setName(nachname);
+			kunden.add(kunde);
+		}
+		return kunden;
 	}
 	
 	public static List<Bestellung> findBestellungenByKunde(Kunde kunde) {
@@ -64,21 +115,22 @@ public final class Mock {
 		// 1 2 3 oder 4 Bestellungen
 		final List<Bestellung> bestellungen = new ArrayList<>(anzahl);
 		for (int i = 1; i <= anzahl; i++) {
-			final Bestellung bestellung = findBestellungByID(Long.valueOf(i));
+			final Bestellung bestellung = findBestellungById(Long.valueOf(i));
 			bestellung.setKunde(kunde);
 			bestellungen.add(bestellung);
 		}
-		kunde.setBestellungen(bestellungen);
+		
+		// kunde.setBestellungen(bestellungen);
 		
 		return bestellungen;
 	}
 	
-	public static Bestellung findBestellungByID(Long id) {
+	public static Bestellung findBestellungById(Long id) {
 		if (id > MAX_ID) {
 			return null;
 		}
 		
-		final Kunde kunde = findKundeByID(id + 1); // andere ID fuer den
+		final Kunde kunde = findKundeById(id + 1); // andere ID fuer den
 													// Kunden
 		
 		final Bestellung bestellung = new Bestellung();
@@ -87,16 +139,14 @@ public final class Mock {
 		bestellung.setBestelldatum(new Date(1234567890));
 		
 		// FIXME: setPositionen
-		final List<Position> positionen = new ArrayList<>();
-		positionen.add(findPositionByID((long) 1));
-		positionen.add(findPositionByID((long) 2));
+		List<Position> positionen = new ArrayList<>();
+		positionen.add(findPositionById((long) 1));
+		positionen.add(findPositionById((long) 2));
 		bestellung.setPositionen(positionen);
 		
 		return bestellung;
 	}
 	
-	// Kunde
-	//
 	public static Kunde createKunde(Kunde kunde) {
 		// Neue IDs fuer Kunde und zugehoerige Adresse
 		// Ein neuer Kunde hat auch keine Bestellungen
@@ -120,115 +170,35 @@ public final class Mock {
 		System.out.println("Delete Kunde");
 	}
 	
-	public static Kunde findKundeByID(Long id) {
-		if (id > MAX_ID) {
-			return null;
-		}
-		
-		final Kunde kunde = new Kunde();
-		kunde.setID(id);
-		kunde.setVorname("Vorname");
-		kunde.setName("Nachname");
-		kunde.setPasswort("Texttest");
-		kunde.setTyp(Kundentyp.PRIVATKUNDE);
-		kunde.setGeloescht(false);
-		kunde.setEmail("Mock"+ id + "@hska.de");
-		
-		final Adresse adresse = new Adresse();
-		
-		if (id % 2 == 0) {
-			adresse.setHausnummer("L4D");
-			adresse.setID(id + 1);
-			adresse.setLand(Land.DE);
-			adresse.setPlz("76133");
-			adresse.setStadt("Megashophausen");
-			adresse.setStrasse("Bikestraﬂe");
-		}
-		else {
-			adresse.setHausnummer("B2B");
-			adresse.setID(id + 1);
-			adresse.setLand(Land.AT);
-			adresse.setPlz("1885");
-			adresse.setStadt("Weizen");
-			adresse.setStrasse("Naturtr¸bweg");
-		}
-		kunde.setAdresse(adresse);
-		
-		return kunde;
-	}
-	
-	public static List<Kunde> findAllKunden() {
-		final int anzahl = MAX_KUNDEN;
-		final List<Kunde> kunden = new ArrayList<>(anzahl);
-		for (int i = 1; i <= anzahl; i++) {
-			final Kunde kunde = findKundeByID(Long.valueOf(i));
-			kunden.add(kunde);
-		}
-		return kunden;
-	}
-	
-	public static List<Kunde> findKundenByNachname(String nachname) {
-		final int anzahl = nachname.length();
-		final List<Kunde> kunden = new ArrayList<>(anzahl);
-		for (int i = 1; i <= anzahl; i++) {
-			final Kunde kunde = findKundeByID(Long.valueOf(i));
-			kunde.setName(nachname);
-			kunden.add(kunde);
-		}
-		return kunden;
-	}
-	
-	// Position
-	//
 	public static Position createPosition(Position position) {
-		System.out.println("create Position");
 		
 		// TODO: position anpassen
+		if (position == null) {
+			position = new Position();
+			System.out.println("uebergebene Position ungueltig");
+		}
+		else {
+			System.out.println(String.format("Create Position %d", position.getID()));
+		}
 		
 		position.setID(12L);
 		return position;
 	}
 	
 	public static void updatePosition(Position position) {
-		System.out.println("update Position");
+		// gespeicherte Position finden
+		// gesp. Position mir Werten aus Parameter ¸berschreiben
+		
+		if (position == null) {
+			System.out.println("Update fehlgeschlagen");
+		}
+		else {
+			System.out.println(String.format("Update position %d", position.getID()));
+		}
 	}
 	
 	public static void deletePosition(long positionId) {
-		System.out.println("delete Position");
-	}
-	
-	public static Position findPositionByID(Long id) {
-		if (id > MAX_ID) {
-			return null;
-		}
-		
-		final Position position = new Position();
-		position.setAnzahl(2);
-		
-		position.setArtikel(Mock.findArtikelById(id));
-		position.setID(id);
-		
-		return position;
-	}
-	
-	public static Artikel findArtikelById(Long id) {
-		Artikel artikel = new Artikel();
-		artikel.setID(id);
-		artikel.setArtikelnummer("R2D2uC3PO");
-		artikel.setBezeichnung("Robobike");
-		artikel.setKurzBeschreibung("Das Robobike weiﬂ wohin ...");
-		artikel.setBeschreibung("Lange Robobikebeschreibu...........");
-		artikel.setKategorie(Kategorie.KOMPLETTRAEDER);
-		artikel.setLagerbestand(13);
-		artikel.setPreis(new BigDecimal(1300.50));
-		
-		return artikel;
-	}
-	
-	public static List<Position> findPositionenByBestellung(Bestellung bestellung) {
-		final List<Position> positionen = bestellung.getPositionen();
-		return positionen;
-
+		System.out.println(String.format("Delete Position %d", positionId));
 	}
 	
 	private Mock() { /**/
