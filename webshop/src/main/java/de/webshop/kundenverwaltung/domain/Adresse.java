@@ -40,6 +40,7 @@ public class Adresse {
 		return straße;
 	}
 	
+	// TODO ß --> ss
 	public void setStraße(String straße) {
 		this.straße = straße;
 	}

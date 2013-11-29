@@ -42,7 +42,7 @@ public final class Mock {
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
 		artikel.setBezeichnung("Robobike");
-		artikel.setKurzBeschreibung("Das Robobike weiﬂ wohin ...");
+		artikel.setKurzBeschreibung("Das Robobike weiss wohin ...");
 		artikel.setBeschreibung("Lange Robobikebeschreibu...........");
 		artikel.setKategorie(Kategorie.KOMPLETTRAEDER);
 		artikel.setLagerbestand(13);

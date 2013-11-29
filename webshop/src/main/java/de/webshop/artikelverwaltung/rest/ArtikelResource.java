@@ -5,7 +5,10 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
+
+import java.io.Serializable;
 import java.net.URI;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -21,6 +24,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
@@ -29,8 +33,10 @@ import de.webshop.util.rest.UriHelper;
 @Path("/artikel")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
-public class ArtikelResource {
+public class ArtikelResource implements Serializable {
 	
+	private static final long serialVersionUID = -8511705638924554310L;
+
 	@Context
 	private UriInfo		uriInfo;
 	

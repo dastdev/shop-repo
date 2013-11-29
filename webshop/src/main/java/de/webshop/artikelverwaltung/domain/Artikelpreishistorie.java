@@ -3,10 +3,13 @@
  */
 package de.webshop.artikelverwaltung.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,14 +17,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 
  */
 @XmlRootElement
-public class Artikelpreishistorie {
+public class Artikelpreishistorie implements Serializable {
+	
+	private static final long serialVersionUID = -2471255330875233292L;
 	
 	// Eigenschaften
+	@NotNull
 	@Min(1)
 	private long		id;
+	@NotNull
 	@Min(1)
 	private long		artikelID;
+	@NotNull
 	private Date		gueltigVon;
+	@NotNull
 	@DecimalMin("0.0")
 	private BigDecimal	preis;
 	
