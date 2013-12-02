@@ -4,7 +4,9 @@ package de.webshop.util;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 import de.webshop.bestellverwaltung.domain.Bestellung;
@@ -12,6 +14,7 @@ import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Adresse;
 import de.webshop.kundenverwaltung.domain.Adresse.Land;
 import de.webshop.kundenverwaltung.domain.Kunde;
+import de.webshop.kundenverwaltung.domain.Kundentyp;
 
 //import org.jboss.logging.Logger;
 
@@ -107,6 +110,31 @@ public final class Mock {
 			kunden.add(kunde);
 		}
 		return kunden;
+	}
+	
+	public static Kunde findKundeByEmail(String email) {
+		if (email.startsWith("x")) {
+			return null;
+		}
+		
+		final Kunde kunde = new Kunde();
+		kunde.setID(Long.valueOf(email.length()));
+		kunde.setName("Nachname");
+		kunde.setVorname("Vorname");
+		kunde.setEmail(email);
+		kunde.setTyp(Kundentyp.PRIVATKUNDE);
+//		final GregorianCalendar seitCal = new GregorianCalendar(JAHR, MONAT, TAG);
+//		final Date seit = seitCal.getTime();
+//		kunde.setSeit(seit);
+		
+		final Adresse adresse = new Adresse();
+//		adresse.setId(kunde.getId() + 1);        // andere ID fuer die Adresse
+//		adresse.setPlz("12345");
+//		adresse.setOrt("Testort");
+//		adresse.setKunde(kunde);
+//		kunde.setAdresse(adresse);
+
+		return kunde;
 	}
 	
 	public static Bestellung createBestellung(Bestellung bestellung, Kunde kunde) {
