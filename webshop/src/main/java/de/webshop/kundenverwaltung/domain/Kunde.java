@@ -16,13 +16,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import de.webshop.bestellverwaltung.domain.Bestellung;
 
-@Entity
 @XmlRootElement
 public class Kunde implements Serializable {
 	
 	private static final long serialVersionUID = -8937961791375017L;
 	
-	// Validierung, um Plausibilitätsprüfungen einzusparen
 	@Min(1)
 	private Long				id;
 	@NotNull
