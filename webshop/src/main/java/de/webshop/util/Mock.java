@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 import de.webshop.bestellverwaltung.domain.Bestellung;
@@ -107,6 +108,11 @@ public final class Mock {
 			kunden.add(kunde);
 		}
 		return kunden;
+	}
+	
+	public static Kunde findKundeByEmail(String email) {
+		// TODO Kundensuche über Email implementieren
+		return null;
 	}
 	
 	public static List<Bestellung> findBestellungenByKunde(Kunde kunde) {
@@ -232,4 +238,5 @@ public final class Mock {
 		
 		return artikel;
 	}
+
 }

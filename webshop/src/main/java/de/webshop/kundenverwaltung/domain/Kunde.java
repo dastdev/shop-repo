@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -15,6 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import de.webshop.bestellverwaltung.domain.Bestellung;
 
+@Entity
 @XmlRootElement
 public class Kunde implements Serializable {
 	

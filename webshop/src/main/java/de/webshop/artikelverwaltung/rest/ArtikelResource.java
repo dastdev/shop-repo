@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.net.URI;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -29,7 +30,7 @@ import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.service.ArtikelService;
 import de.webshop.util.rest.UriHelper;
 
-@ApplicationScoped
+@RequestScoped
 @Path("/artikel")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes

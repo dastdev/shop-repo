@@ -36,7 +36,7 @@ public class Artikel implements Serializable {
 	//@Min(1)
 	//@NotNull
 	private Long		id;
-	//@NotNull
+	@NotNull
 	private String		artikelnummer;
 	private URI			artikelbild;
 	private String		bezeichnung;
