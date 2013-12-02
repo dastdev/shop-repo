@@ -23,20 +23,15 @@ public class Artikelpreishistorie implements Serializable {
 
 	// Eigenschaften
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.id.notNull}")
-	@Min(1)
-	// FIXME: (1, message = "{artikelverwaltung.artikelpreishistorie.id.min}" )
+	@Min(value = 1, message = "{artikelverwaltung.artikelpreishistorie.id.min}")
 	private Long id;
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.artikelID.notNul}")
-	@Min(1)
-	// FIXME: (1, message =
-	// "{artikelverwaltung.artikelpreishistorie.artikelID.min}" )
+	@Min(value = 1, message = "{artikelverwaltung.artikelpreishistorie.artikelID.min}")
 	private Long artikelID;
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.gueltigVon.notNull}")
 	private Date gueltigVon;
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.preis.notNull}")
-	@DecimalMin("0.0")
-	// FIXME: ("0.0",message =
-	// "{artikelverwaltung.artikelpreishistorie.preis.decimalMin}")
+	@DecimalMin(value = "0.0", message = "{artikelverwaltung.artikelpreishistorie.preis.decimalMin}")
 	private BigDecimal preis;
 
 	// Konstruktor
