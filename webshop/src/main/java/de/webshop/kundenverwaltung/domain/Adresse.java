@@ -13,8 +13,7 @@ public class Adresse implements Serializable {
 
 	private static final long serialVersionUID = -6129881639235747224L;
 	// Eigenschaften
-	@Min(1)
-	// FIXME : (1,message = "{kundenverwaltung.adresse.id.min}")
+	@Min(value = 1, message = "{kundenverwaltung.adresse.id.min}")
 	@NotNull(message = "{kundenverwaltung.adresse.id.notNull }")
 	private Long id;
 	@NotNull(message = "{kundenverwaltung.adresse.strasse.notNull}")
