@@ -38,13 +38,13 @@ public class Artikel implements Serializable {
 	// Eigenschaften
 	@Min(1)				// FIXME: Message für @Min / @Max? --> WIE?
 	@Max(99999999) 		// FIXME
-	@NotNull(message="{artikel.id.notnull}")
+	@NotNull(message="{artikelverwaltung.artikel.id.notnull}")
 	private Long		id;
-	@NotNull(message="{artikel.artikelnummer.notnull}")
+	@NotNull(message="{artikelverwaltung.artikel.artikelnummer.notnull}")
 	private String		artikelnummer;
 	private URI			artikelbild;
 	private String		bezeichnung;
-	@Size(max = 200, message="{artikel.kurzBeschreibung.size}")
+	@Size(max = 200, message="{artikelverwaltung.artikel.kurzBeschreibung.size}")
 	private String		kurzBeschreibung;
 	private String		beschreibung;
 	@DecimalMin("0.0")	// FIXME
