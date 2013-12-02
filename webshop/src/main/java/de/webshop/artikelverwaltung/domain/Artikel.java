@@ -36,23 +36,32 @@ public class Artikel implements Serializable {
 	private static final long serialVersionUID = 2034010908161771924L;
 	
 	// Eigenschaften
-	@Min(1)				// FIXME: Message für @Min / @Max? --> WIE?
-	@Max(99999999) 		// FIXME
+	@Min(value=1, message="{artikelverwaltung.artikel.id.min}")
+	@Max(value=99999999, message="{artikelverwaltung.artikel.id.max}")
 	@NotNull(message="{artikelverwaltung.artikel.id.notnull}")
 	private Long		id;
+	
 	@NotNull(message="{artikelverwaltung.artikel.artikelnummer.notnull}")
 	private String		artikelnummer;
+	
 	private URI			artikelbild;
+	
 	private String		bezeichnung;
+	
 	@Size(max = 200, message="{artikelverwaltung.artikel.kurzBeschreibung.size}")
 	private String		kurzBeschreibung;
+	
 	private String		beschreibung;
-	@DecimalMin("0.0")	// FIXME
+	
+	@DecimalMin(value="0.0", message="{artikelverwaltung.artikel.preis.min}")
 	private BigDecimal	preis;
-	@Min(0) 			// FIXME
+	
+	@Min(value=0, message="{artikelverwaltung.artikel.lagerbestand.min}")
 	private Integer		lagerbestand;
-	@Min(1) 			// FIXME
+	
+	@Min(value=1, message="{artikelverwaltung.artikel.parentid.min}")
 	private Long		parentID;
+	
 	private Kategorie	kategorie;
 	
 	public enum Kategorie {
