@@ -3,9 +3,12 @@ package de.webshop.util.interceptor;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
 import javax.interceptor.InterceptorBinding;
 
 /**
@@ -13,7 +16,7 @@ import javax.interceptor.InterceptorBinding;
  *         Zimmermann</a>
  */
 @InterceptorBinding
-@Target({ TYPE, METHOD })
+@Target({ TYPE, METHOD, CONSTRUCTOR })
 @Retention(RUNTIME)
 @Documented
 public @interface Log {

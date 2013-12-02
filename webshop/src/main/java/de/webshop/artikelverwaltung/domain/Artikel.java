@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.URI;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,27 +29,29 @@ public class Artikel implements Serializable {
 		[x] Serviceklassen anlegen
 		[?] Mock für Datenbankzugriff --> Wie genau?
 		[ ] Logging implementieren
+		[ ] Equals, Hashcode
 		[ ] Evtl. vorbereitende Annotationen für Datenbankzugriffe
 	 */
 	
 	private static final long serialVersionUID = 2034010908161771924L;
 	
 	// Eigenschaften
-	//@Min(1)
-	//@NotNull
+	@Min(1)				// FIXME: Message für @Min / @Max? --> WIE?
+	@Max(99999999) 		// FIXME
+	@NotNull(message="{artikelverwaltung.artikel.id.notnull}")
 	private Long		id;
-	//@NotNull
+	@NotNull(message="{artikelverwaltung.artikel.artikelnummer.notnull}")
 	private String		artikelnummer;
 	private URI			artikelbild;
 	private String		bezeichnung;
-	@Size(max = 200)
+	@Size(max = 200, message="{artikelverwaltung.artikel.kurzBeschreibung.size}")
 	private String		kurzBeschreibung;
 	private String		beschreibung;
-	//@DecimalMin("0.0")
+	@DecimalMin("0.0")	// FIXME
 	private BigDecimal	preis;
-	//@Min(0)
+	@Min(0) 			// FIXME
 	private Integer		lagerbestand;
-	//@Min(1)
+	@Min(1) 			// FIXME
 	private Long		parentID;
 	private Kategorie	kategorie;
 	
@@ -63,20 +67,10 @@ public class Artikel implements Serializable {
 		
 	}
 	
-	public Artikel(Long id, String artikelnummer, URI artikelbild, String bezeichnung,
-			String kurzBeschreibung, String beschreibung, BigDecimal preis, Integer lagerbestand,
-			Long parentID, de.webshop.artikelverwaltung.domain.Artikel.Kategorie kategorie) {
+	public Artikel(Long id, String artikelnummer) {
 		super();
 		this.id = id;
 		this.artikelnummer = artikelnummer;
-		this.artikelbild = artikelbild;
-		this.bezeichnung = bezeichnung;
-		this.kurzBeschreibung = kurzBeschreibung;
-		this.beschreibung = beschreibung;
-		this.preis = preis;
-		this.lagerbestand = lagerbestand;
-		this.parentID = parentID;
-		this.kategorie = kategorie;
 	}
 	
 	// Getter und Setter

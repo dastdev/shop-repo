@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -15,6 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import de.webshop.bestellverwaltung.domain.Bestellung;
 
+@Entity
 @XmlRootElement
 public class Kunde implements Serializable {
 	
@@ -45,8 +47,18 @@ public class Kunde implements Serializable {
 	@XmlTransient
 	private List<Bestellung>	bestellungen;
 	private URI					uriBestellung;
+	private Adresse				adresse;
 	
 	public Kunde() {
+	}
+	
+	public Kunde(String name, String vorname, String passwort, String email, Kundentyp typ) {
+		super();
+		this.name = name;
+		this.vorname = vorname;
+		this.passwort = passwort;
+		this.email = email;
+		this.typ = typ;
 	}
 	
 	public Kunde(Long id, String name, String vorname, Date geburtstag, String passwort,
@@ -232,6 +244,14 @@ public class Kunde implements Serializable {
 		else if (!vorname.equals(other.vorname))
 			return false;
 		return true;
+	}
+
+	public Adresse getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
 	}
 	
 }

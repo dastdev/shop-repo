@@ -74,7 +74,7 @@ public final class Mock {
 			adresse.setLand(Land.DE);
 			adresse.setPlz("76133");
 			adresse.setStadt("Megashophausen");
-			adresse.setStraße("Bikestraße");
+			adresse.setStrasse("Bikestrasse");
 		}
 		else {
 			adresse.setHausnummer("B2B");
@@ -82,7 +82,7 @@ public final class Mock {
 			adresse.setLand(Land.AT);
 			adresse.setPlz("1885");
 			adresse.setStadt("Weizen");
-			adresse.setStraße("Naturtrübweg");
+			adresse.setStrasse("Naturtrübweg");
 		}
 		
 		return kunde;
@@ -176,7 +176,6 @@ public final class Mock {
 	}
 	
 	public static Position createPosition(Position position, Bestellung bestellung) {
-		
 		// TODO: position anpassen
 		if (position == null) {
 			position = new Position();
@@ -237,4 +236,5 @@ public final class Mock {
 		
 		return artikel;
 	}
+	
 }
