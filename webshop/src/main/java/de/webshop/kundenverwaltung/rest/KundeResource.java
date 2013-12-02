@@ -29,6 +29,7 @@ import javax.ws.rs.core.UriInfo;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.kundenverwaltung.domain.Kunde;
+import de.webshop.kundenverwaltung.service.KundeService;
 import de.webshop.util.Constants;
 import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
@@ -55,6 +56,9 @@ public class KundeResource implements Serializable {
 	private UriInfo				uriInfo;
 	
 	@Inject
+	private KundeService ks;
+	
+	@Inject
 	private BestellungResource	bestellungResource;
 	
 	@Inject
@@ -64,7 +68,7 @@ public class KundeResource implements Serializable {
 	@Path("{id:[1-9][0-9]*}")
 	// Kunde über ID suchen
 	public Response findKundeById(@PathParam("id") Long id) {
-		final Kunde kunde = Mock.findKundeById(id);
+		final Kunde kunde = ks.findKundeById(id);
 		if (kunde == null) {
 			throw new NotFoundException(String.format("Kein Kunde mit der ID {0] gefunden.", id));
 		}
@@ -118,14 +122,14 @@ public class KundeResource implements Serializable {
 		List<Kunde> kunden = null;
 		if (nachname != null) {
 			// TODO Anwendungskern statt Mock, Verwendung von Locale
-			kunden = Mock.findKundenByNachname(nachname);
+			kunden = ks.findKundenByNachname(nachname);
 			if (kunden.isEmpty()) {
 				throw new NotFoundException("Kein Kunde mit Nachname " + nachname + " gefunden.");
 			}
 		}
 		else {
 			// TODO Anwendungskern statt Mock, Verwendung von Locale
-			kunden = Mock.findAllKunden();
+			kunden = ks.findAllKunden();
 			if (kunden.isEmpty()) {
 				throw new NotFoundException("Keine Kunden vorhanden.");
 			}
@@ -202,7 +206,7 @@ public class KundeResource implements Serializable {
 	@Produces
 	public Response createKunde(Kunde kunde) {
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		kunde = Mock.createKunde(kunde);
+		kunde = ks.createKunde(kunde);
 		return Response.created(getUriKunde(kunde, uriInfo)).build();
 	}
 	
@@ -211,7 +215,7 @@ public class KundeResource implements Serializable {
 	@Produces
 	public void updateKunde(Kunde kunde) {
 		// TODO Anwendungskern statt Mock, Locale
-		Mock.updateKunde(kunde);
+		ks.updateKunde(kunde);
 	}
 	
 	@DELETE
@@ -219,6 +223,6 @@ public class KundeResource implements Serializable {
 	@Produces
 	public void deleteKunde(@PathParam("id") Long kundeId) {
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		Mock.deleteKunde(kundeId);
+		ks.deleteKunde(kundeId);
 	}
 }
