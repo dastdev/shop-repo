@@ -47,7 +47,6 @@ public class Adresse implements Serializable {
 		return strasse;
 	}
 
-	// TODO ß --> ss
 	public void setStrasse(String strasse) {
 		this.strasse = strasse;
 	}
