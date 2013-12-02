@@ -7,11 +7,9 @@ import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.FIRST_LINK;
 import static de.webshop.util.Constants.LAST_LINK;
 import static de.webshop.util.Constants.SELF_LINK;
-
 import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
-
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -25,27 +23,33 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.domain.Position;
+import de.webshop.bestellverwaltung.service.BestellungService;
+import de.webshop.bestellverwaltung.service.PositionService;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.rest.KundeResource;
 import de.webshop.util.Mock;
+import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
-@RequestScoped
 @Path("/bestellung")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
+@RequestScoped
+@Log
 public class BestellungResource implements Serializable {
 	
-	private static final long serialVersionUID = 7649051701994670170L;
-
+	private static final long	serialVersionUID	= 7649051701994670170L;
+	
 	@Context
 	private UriInfo				uriInfo;
 	
 	@Inject
-	private UriHelper			uriHelper;
+	private BestellungService	bs;
+	
+	@Inject
+	private PositionService		ps;
 	
 	@Inject
 	private KundeResource		kundeResource;
@@ -53,18 +57,14 @@ public class BestellungResource implements Serializable {
 	@Inject
 	private PositionResource	positionResource;
 	
-	@GET
-	@Produces({ TEXT_PLAIN, APPLICATION_JSON })
-	@Path("test")
-	public String getVersion() {
-		return "1.0";
-	}
+	@Inject
+	private UriHelper			uriHelper;
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
 	public Response findBestellungById(@PathParam("id") long id) {
 		
-		final Bestellung bestellung = Mock.findBestellungById(id);
+		final Bestellung bestellung = bs.findBestellungById(id);
 		
 		if (bestellung == null) {
 			throw new NotFoundException(
@@ -86,8 +86,10 @@ public class BestellungResource implements Serializable {
 	public Response findPositionenByBestellungId(@PathParam("id") long id) {
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		final Bestellung bestellung = Mock.findBestellungById(id);
-		final List<Position> positionen = Mock.findPositionenByBestellung(bestellung);
+		final Bestellung bestellung = bs.findBestellungById(id);
+		
+		// TODO: bestellung.getID() etwas anderes als id?
+		final List<Position> positionen = ps.findPositionenByBestellungId(id);
 		
 		if (positionen.isEmpty()) {
 			throw new NotFoundException("Zur ID " + id + " wurden keine Position gefunden");

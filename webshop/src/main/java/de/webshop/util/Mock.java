@@ -109,6 +109,11 @@ public final class Mock {
 		return kunden;
 	}
 	
+	public static Bestellung createBestellung(Bestellung bestellung, Kunde kunde) {
+		System.out.printf("Neue Bestellung: %s fuer Kunde: %s\n", bestellung, kunde);
+		return bestellung;
+	}
+	
 	public static List<Bestellung> findBestellungenByKunde(Kunde kunde) {
 		// Beziehungsgeflecht zwischen Kunde und Bestellungen aufbauen
 		final int anzahl = kunde.getID().intValue() % MAX_BESTELLUNGEN + 1;
@@ -170,7 +175,7 @@ public final class Mock {
 		System.out.println("Delete Kunde");
 	}
 	
-	public static Position createPosition(Position position) {
+	public static Position createPosition(Position position, Bestellung bestellung) {
 		
 		// TODO: position anpassen
 		if (position == null) {

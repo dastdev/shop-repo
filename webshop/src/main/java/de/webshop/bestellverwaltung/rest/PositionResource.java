@@ -4,17 +4,14 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
-
 import java.io.Serializable;
 import java.net.URI;
-
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -23,7 +20,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.rest.ArtikelResource;
 import de.webshop.bestellverwaltung.domain.Position;
@@ -36,16 +32,16 @@ import de.webshop.util.rest.UriHelper;
 @Consumes
 public class PositionResource implements Serializable {
 	
-	private static final long serialVersionUID = -5839644821875097527L;
-
+	private static final long	serialVersionUID	= -5839644821875097527L;
+	
 	@Context
-	private UriInfo			uriInfo;
+	private UriInfo				uriInfo;
 	
 	@Inject
-	private UriHelper		uriHelper;
+	private UriHelper			uriHelper;
 	
 	@Inject
-	private ArtikelResource	artikelResource;
+	private ArtikelResource		artikelResource;
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
@@ -70,9 +66,7 @@ public class PositionResource implements Serializable {
 		// URI fuer Artikel setzen
 		final Artikel artikel = position.getArtikel();
 		if (artikel != null) {
-			// FIXME: ArtikelResource.getUriArtikel
-			final URI artikelUri = null; // artikelResource.getUriArtikel(position.getArtikel(),
-											// uriInfo);
+			final URI artikelUri = artikelResource.getUriArtikel(position.getArtikel(), uriInfo);
 			position.setArtikelUri(artikelUri);
 		}
 	}
@@ -92,14 +86,16 @@ public class PositionResource implements Serializable {
 								uriInfo);
 	}
 	
-	@POST
-	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
-	@Produces
-	public Response createPosition(@Valid Position position) {
-		
-		position = Mock.createPosition(position);
-		return Response.created(getUriPosition(position, uriInfo)).build();
-	}
+	/*
+	 * @POST
+	 * 
+	 * @Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	 * 
+	 * @Produces public Response createPosition(@Valid Position position) {
+	 * 
+	 * position = Mock.createPosition(position); return
+	 * Response.created(getUriPosition(position, uriInfo)).build(); }
+	 */
 	
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
