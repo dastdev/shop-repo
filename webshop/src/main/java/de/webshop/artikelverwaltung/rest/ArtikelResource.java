@@ -77,7 +77,7 @@ public class ArtikelResource implements Serializable {
 	@POST
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public Response createArtikel(Artikel artikel) { // FIXME: @Valid?
+	public Response createArtikel(@Valid Artikel artikel) { // FIXME: @Valid?
 		
 		artikel = ArtikelService.createArtikel(artikel);
 		return Response.created(getUriArtikel(artikel, uriInfo)).build();
