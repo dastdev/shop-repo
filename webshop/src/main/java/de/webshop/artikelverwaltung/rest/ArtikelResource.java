@@ -9,7 +9,7 @@ import static de.webshop.util.Constants.SELF_LINK;
 import java.io.Serializable;
 import java.net.URI;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -29,7 +29,7 @@ import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.service.ArtikelService;
 import de.webshop.util.rest.UriHelper;
 
-@ApplicationScoped
+@RequestScoped
 @Path("/artikel")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
@@ -77,7 +77,7 @@ public class ArtikelResource implements Serializable {
 	@POST
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public Response createArtikel(@Valid Artikel artikel) {
+	public Response createArtikel(Artikel artikel) { // FIXME: @Valid?
 		
 		artikel = ArtikelService.createArtikel(artikel);
 		return Response.created(getUriArtikel(artikel, uriInfo)).build();
@@ -86,7 +86,7 @@ public class ArtikelResource implements Serializable {
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateKunde(@Valid Artikel artikel) {
+	public void updateKunde(Artikel artikel) { // FIXME: @Valid?
 		ArtikelService.updateArtikel(artikel);
 	}
 }
