@@ -3,9 +3,12 @@ package de.webshop.artikelverwaltung.service;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.enterprise.context.Dependent;
+
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 
+@Dependent
 public class ArtikelService implements Serializable {
 
 	private static final long serialVersionUID = -3006652195760480390L;

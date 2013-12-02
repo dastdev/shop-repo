@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.URI;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,21 +34,21 @@ public class Artikel implements Serializable {
 	private static final long serialVersionUID = 2034010908161771924L;
 	
 	// Eigenschaften
-	//@Min(1)
-	//@NotNull
+	@Min(1)
+	@NotNull
 	private Long		id;
-	//@NotNull
+	@NotNull
 	private String		artikelnummer;
 	private URI			artikelbild;
 	private String		bezeichnung;
 	@Size(max = 200)
 	private String		kurzBeschreibung;
 	private String		beschreibung;
-	//@DecimalMin("0.0")
+	@DecimalMin("0.0")
 	private BigDecimal	preis;
-	//@Min(0)
+	@Min(0)
 	private Integer		lagerbestand;
-	//@Min(1)
+	@Min(1)
 	private Long		parentID;
 	private Kategorie	kategorie;
 	
