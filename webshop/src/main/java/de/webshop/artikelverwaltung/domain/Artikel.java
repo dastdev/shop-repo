@@ -28,6 +28,7 @@ public class Artikel implements Serializable {
 		[x] Serviceklassen anlegen
 		[?] Mock für Datenbankzugriff --> Wie genau?
 		[ ] Logging implementieren
+		[ ] Equals, Hashcode
 		[ ] Evtl. vorbereitende Annotationen für Datenbankzugriffe
 	 */
 	
@@ -64,20 +65,10 @@ public class Artikel implements Serializable {
 		
 	}
 	
-	public Artikel(Long id, String artikelnummer, URI artikelbild, String bezeichnung,
-			String kurzBeschreibung, String beschreibung, BigDecimal preis, Integer lagerbestand,
-			Long parentID, de.webshop.artikelverwaltung.domain.Artikel.Kategorie kategorie) {
+	public Artikel(Long id, String artikelnummer) {
 		super();
 		this.id = id;
 		this.artikelnummer = artikelnummer;
-		this.artikelbild = artikelbild;
-		this.bezeichnung = bezeichnung;
-		this.kurzBeschreibung = kurzBeschreibung;
-		this.beschreibung = beschreibung;
-		this.preis = preis;
-		this.lagerbestand = lagerbestand;
-		this.parentID = parentID;
-		this.kategorie = kategorie;
 	}
 	
 	// Getter und Setter
