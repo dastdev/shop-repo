@@ -28,7 +28,7 @@ public class Artikel implements Serializable {
 			-> ValidationMessages-Dateien anlegen und füllen
 		[x] Serviceklassen anlegen
 		[?] Mock für Datenbankzugriff --> Wie genau?
-		[ ] Logging implementieren
+		[x] Logging implementieren
 		[ ] Equals, Hashcode
 		[ ] Evtl. vorbereitende Annotationen für Datenbankzugriffe
 	 */
@@ -36,22 +36,23 @@ public class Artikel implements Serializable {
 	private static final long serialVersionUID = 2034010908161771924L;
 	
 	// Eigenschaften
-	@Min(1)				// FIXME: Message für @Min / @Max? --> WIE?
-	@Max(99999999) 		// FIXME
-	@NotNull(message="{artikelverwaltung.artikel.id.notnull}")
+	@Min(value=1, message="{artikelverwaltung.artikel.id.min}")
+	@Max(value=99999999, message="{artikelverwaltung.artikel.id.max}")
+	@NotNull(message="{artikelverwaltung.artikel.id.notNull}")
 	private Long		id;
-	@NotNull(message="{artikelverwaltung.artikel.artikelnummer.notnull}")
+	@NotNull(message="{artikelverwaltung.artikel.artikelnummer.notNull}")
 	private String		artikelnummer;
 	private URI			artikelbild;
 	private String		bezeichnung;
 	@Size(max = 200, message="{artikelverwaltung.artikel.kurzBeschreibung.size}")
 	private String		kurzBeschreibung;
 	private String		beschreibung;
-	@DecimalMin("0.0")	// FIXME
+	@DecimalMin(value="0.0", message="{artikelverwaltung.artikel.preis.min}")
+	@NotNull(message="{artikelverwaltung.artikel.preis.notNull}")
 	private BigDecimal	preis;
-	@Min(0) 			// FIXME
+	@Min(value=0, message="{artikelverwaltung.artikel.lagerbestand.min}")
 	private Integer		lagerbestand;
-	@Min(1) 			// FIXME
+	@Min(value=1, message="{artikelverwaltung.artikel.parentID.min}")
 	private Long		parentID;
 	private Kategorie	kategorie;
 	

@@ -29,7 +29,6 @@ import de.webshop.bestellverwaltung.service.BestellungService;
 import de.webshop.bestellverwaltung.service.PositionService;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.rest.KundeResource;
-import de.webshop.util.Mock;
 import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 

@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Entity;
+//import javax.persistence.Entity;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -13,7 +12,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
+import org.hibernate.validator.constraints.Email;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 
 @XmlRootElement
@@ -21,30 +20,31 @@ public class Kunde implements Serializable {
 	
 	private static final long serialVersionUID = -8937961791375017L;
 	
-	@Min(1)
+	@Min(value=1, message="{kundenverwaltung.kunde.id.min}")
 	private Long				id;
-	@NotNull
-	@Size(min = 2, max = 32)
-	@Pattern(regexp = "[A-Z][a-z]+")
+	@NotNull(message="{kundenverwaltung.kunde.name.notNull}")
+	@Size(min = 2, max = 32, message="{kundenverwaltung.kunde.name.length}")
+	@Pattern(regexp = "[A-Z][a-z]+[-]{0,1}[A-Z][a-z]+", message="{kundenverwaltung.kunde.name.pattern}")
 	private String				name;
-	@NotNull
-	@Size(min = 2, max = 32)
-	@Pattern(regexp = "[A-Z][a-z]+")
+	@NotNull(message="{kundenverwaltung.kunde.vorname.notNull}")
+	@Size(min = 2, max = 32, message="{kundenverwaltung.kunde.vorname.length}")
+	@Pattern(regexp = "[A-Z][a-z]+[-]{0,1}[A-Z]", message="{kundenverwaltung.kunde.vorname.pattern}")
 	private String				vorname;
-	@Past
+	@Past(message="{kundenverwaltung.kunde.geburtstag.date}")
 	private Date				geburtstag;
-	@NotNull
-	@Size(min = 4, max = 16)
+	@NotNull(message="{kundenverwaltung.kunde.passwort.notNull}")
+	@Size(min = 4, max = 16, message="{kundenverwaltung.kunde.passwort.length}")
 	private String				passwort;
-	@NotNull
-	@Pattern(regexp = "[\\w.%-]+@[\\w.%-]+\\.[A-Za-z]{2,4}")
+	@NotNull(message="{kundenverwaltung.kunde.email.notNull}")
+	@Email(message="{kundenverwaltung.kunde.email.pattern}")
 	private String				email;
-	@NotNull
+	@NotNull(message="{kundenverwaltung.kunde.typ.notNull}")
 	private Kundentyp			typ;
 	private boolean				geloescht;
 	@XmlTransient
 	private List<Bestellung>	bestellungen;
 	private URI					uriBestellung;
+	@NotNull(message="{kundenverwaltung.kunde.adresse.notNull}")
 	private Adresse				adresse;
 	
 	public Kunde() {
