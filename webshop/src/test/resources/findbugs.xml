@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<FindBugsFilter> 
+	<Match>
+		<!-- Die durch das JPA-Metamodell generierten Klassen herausfiltern: Dateiname endet mit _ -->
+		<!-- ~ bedeutet, dass ein regulaerer Ausdruck folgt -->
+		<Class name="~.*\..*_" />
+	</Match>
+</FindBugsFilter> 

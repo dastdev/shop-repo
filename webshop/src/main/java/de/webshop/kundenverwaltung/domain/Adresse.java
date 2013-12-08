@@ -14,8 +14,11 @@ public class Adresse implements Serializable {
 	private static final long serialVersionUID = -6129881639235747224L;
 	// Eigenschaften
 	@Min(value = 1, message = "{kundenverwaltung.adresse.id.min}")
-	@NotNull(message = "{kundenverwaltung.adresse.id.notNull }")
+	@NotNull(message = "{kundenverwaltung.adresse.id.notNull}")
 	private Long id;
+	@Min(value=1, message = "{kundenverwaltung.kunde.id.min}")
+	@NotNull(message="{kundenverwaltung.adresse.kundeid.notNull}")
+	private Long kundeID;
 	@NotNull(message = "{kundenverwaltung.adresse.strasse.notNull}")
 	private String strasse;
 	@Size(max = 4, message = "{kundenverwaltung.adresse.hausnummer.size}")
@@ -82,6 +85,15 @@ public class Adresse implements Serializable {
 		this.land = land;
 	}
 
+	//Rückverweis auf Kunden, zu dem die Adresse gehört
+	public Long getKundeID() {
+		return kundeID;
+	}
+	
+	public void setKundeID(Long kundeID) {
+		this.kundeID = kundeID;
+	}
+	
 	// Basismethoden
 	@Override
 	public int hashCode() {
@@ -139,4 +151,5 @@ public class Adresse implements Serializable {
 				+ hausnummer + ", plz=" + plz + ", stadt=" + stadt + ", land="
 				+ land + "]";
 	}
+
 }
