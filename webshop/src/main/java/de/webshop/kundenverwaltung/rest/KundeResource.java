@@ -117,7 +117,7 @@ public class KundeResource implements Serializable {
 				.rel(Constants.REMOVE_LINK).build();
 
 		// TODO "list" einfuegen
-		return new Link[] { self, add, update, remove };
+		return new Link[] {self, add, update, remove };
 	}
 
 	private URI getUriKunde(Kunde kunde, UriInfo uriInfo) {
@@ -134,7 +134,8 @@ public class KundeResource implements Serializable {
 				throw new NotFoundException("Kein Kunde mit Nachname "
 						+ nachname + " gefunden.");
 			}
-		} else {
+		}
+		else {
 			kunden = ks.findAllKunden();
 			if (kunden.isEmpty()) {
 				throw new NotFoundException("Keine Kunden vorhanden.");
@@ -162,7 +163,7 @@ public class KundeResource implements Serializable {
 				.fromUri(getUriKunde(kunden.get(lastPos), uriInfo))
 				.rel(LAST_LINK).build();
 
-		return new Link[] { first, last };
+		return new Link[] {first, last};
 	}
 
 	@GET
@@ -212,7 +213,7 @@ public class KundeResource implements Serializable {
 								bestellungen.get(lastPos), uriInfo))
 				.rel(LAST_LINK).build();
 
-		return new Link[] { self, first, last };
+		return new Link[] {self, first, last};
 	}
 
 	@POST

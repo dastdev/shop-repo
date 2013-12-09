@@ -43,6 +43,7 @@ public final class Mock {
 	}
 
 	public static Artikel findArtikelById(Long id) {
+		// Checkstyle TODO: Variable "artikel" sollte als final deklariert werden
 		Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
@@ -58,6 +59,7 @@ public final class Mock {
 
 	public static List<Position> findPositionenByBestellung(
 			Bestellung bestellung) {
+		// Checkstyle TODO: Variable "positionen" sollte als final deklariert werden
 		List<Position> positionen = bestellung.getPositionen();
 		return positionen;
 	}
@@ -82,7 +84,8 @@ public final class Mock {
 			adresse.setStadt("Megashophausen");
 			adresse.setStrasse("Bikestrasse");
 			adresse.setKundeID(id);
-		} else {
+		}
+		else {
 			adresse.setHausnummer("B2B");
 			adresse.setID(id + 1);
 			adresse.setLand(Land.AT);
@@ -181,6 +184,7 @@ public final class Mock {
 		bestellung.setBestelldatum(new Date(1234567890));
 
 		// FIXME: setPositionen
+		// Checkstyle TODO: Variable "positionen" sollte als final deklariert werden
 		List<Position> positionen = new ArrayList<Position>();
 		positionen.add(findPositionById(1L));
 		positionen.add(findPositionById(2L));
@@ -218,7 +222,8 @@ public final class Mock {
 		if (position == null) {
 			position = new Position();
 			System.out.println("uebergebene Position ungueltig");
-		} else {
+		}
+		else {
 			System.out.println(String.format("Create Position %d",
 					position.getID()));
 		}
@@ -233,7 +238,8 @@ public final class Mock {
 
 		if (position == null) {
 			System.out.println("Update fehlgeschlagen");
-		} else {
+		}
+		else {
 			System.out.println(String.format("Update position %d",
 					position.getID()));
 		}
@@ -251,7 +257,8 @@ public final class Mock {
 			System.out.println("Update fehlgeschlagen");
 
 			artikel = new Artikel();
-		} else {
+		}
+		else {
 			System.out.println(String.format("Update artikel %d",
 					artikel.getID()));
 		}
@@ -264,7 +271,8 @@ public final class Mock {
 			System.out.println("Create fehlgeschlagen");
 
 			artikel = new Artikel();
-		} else {
+		}
+		else {
 			System.out.println("Create artikel");
 		}
 

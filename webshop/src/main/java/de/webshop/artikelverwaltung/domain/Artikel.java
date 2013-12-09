@@ -192,26 +192,31 @@ public class Artikel implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		// Checkstyle TODO: Variable "other" sollte als final deklariert werden
 		Artikel other = (Artikel) obj;
 		if (artikelbild == null) {
 			if (other.artikelbild != null)
 				return false;
-		} else if (!artikelbild.equals(other.artikelbild))
+		}
+		else if (!artikelbild.equals(other.artikelbild))
 			return false;
 		if (artikelnummer == null) {
 			if (other.artikelnummer != null)
 				return false;
-		} else if (!artikelnummer.equals(other.artikelnummer))
+		}
+		else if (!artikelnummer.equals(other.artikelnummer))
 			return false;
 		if (beschreibung == null) {
 			if (other.beschreibung != null)
 				return false;
-		} else if (!beschreibung.equals(other.beschreibung))
+		}
+		else if (!beschreibung.equals(other.beschreibung))
 			return false;
 		if (bezeichnung == null) {
 			if (other.bezeichnung != null)
 				return false;
-		} else if (!bezeichnung.equals(other.bezeichnung))
+		}
+		else if (!bezeichnung.equals(other.bezeichnung))
 			return false;
 		if (id != other.id)
 			return false;
@@ -220,7 +225,8 @@ public class Artikel implements Serializable {
 		if (kurzBeschreibung == null) {
 			if (other.kurzBeschreibung != null)
 				return false;
-		} else if (!kurzBeschreibung.equals(other.kurzBeschreibung))
+		}
+		else if (!kurzBeschreibung.equals(other.kurzBeschreibung))
 			return false;
 		if (lagerbestand != other.lagerbestand)
 			return false;
@@ -229,7 +235,8 @@ public class Artikel implements Serializable {
 		if (preis == null) {
 			if (other.preis != null)
 				return false;
-		} else if (!preis.equals(other.preis))
+		}
+		else if (!preis.equals(other.preis))
 			return false;
 		return true;
 	}

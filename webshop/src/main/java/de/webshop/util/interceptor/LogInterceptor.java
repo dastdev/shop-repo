@@ -122,6 +122,7 @@ public class LogInterceptor implements Serializable {
 		return obj.toString();
 	}
 	
+	// Checkstyle TODO: Methode hat 177 Zeilen, erlaubt sind höchstens 150.
 	/**
 	 * Array in einen String konvertieren
 	 */

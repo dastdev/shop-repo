@@ -33,6 +33,7 @@ public class PositionServiceImpl implements PositionService, Serializable {
 	@NotNull(message = "{position.notFound.bestellung.id}")
 	public List<Position> findPositionenByBestellungId(Long id) {
 		// TODO Auto-generated method stub
+		// Checkstyle TODO: Variable "bestellung" sollte als final deklariert werden
 		Bestellung bestellung = Mock.findBestellungById(id);
 		return Mock.findPositionenByBestellung(bestellung);
 	}

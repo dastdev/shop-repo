@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.enterprise.context.Dependent;
+//Checkstyle TODO: Nicht benutzt javax.valid....
 import javax.validation.Valid;
 
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 
+//Checkstyle TODO: Utility classes should not have a public or default constructor
 @SuppressWarnings("unused")
 @Dependent
 public class ArtikelService implements Serializable {
@@ -17,6 +19,7 @@ public class ArtikelService implements Serializable {
 
 	// / Gibt eine Artikelinstanz des gesuchten Artikels via ID zurueck
 	public static Artikel findArtikelById(Long id) {
+		// Checkstyle TODO: Variable "artikel" sollte als final deklariert werden
 		Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
@@ -37,7 +40,8 @@ public class ArtikelService implements Serializable {
 			System.out.println("[ERROR] UPDATE ARTIKEL fehlgeschlagen.");
 
 			artikel = new Artikel();
-		} else {
+		}
+		else {
 			System.out.println(String.format("Artikel %d updated.",
 					artikel.getID()));
 		}
@@ -51,7 +55,8 @@ public class ArtikelService implements Serializable {
 			System.out.println("[ERROR] CREATE ARTIKEL fehlgeschlagen.");
 
 			artikel = new Artikel();
-		} else {
+		}
+		else {
 			System.out.println("Artikel created.");
 		}
 

@@ -67,7 +67,7 @@ public class ArtikelResource implements Serializable {
 	private Link[] getTransitionalLinks(Artikel artikel, UriInfo uriInfo) {
 		final Link self = Link.fromUri(getUriArtikel(artikel, uriInfo)).rel(SELF_LINK).build();
 		
-		return new Link[] { self };
+		return new Link[] { self } ;
 	}
 	
 	public URI getUriArtikel(Artikel artikel, UriInfo uriInfo) {
