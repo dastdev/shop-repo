@@ -2,26 +2,26 @@ package de.webshop.bestellverwaltung.domain;
 
 import java.io.Serializable;
 import java.net.URI;
-
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
 import de.webshop.artikelverwaltung.domain.Artikel;
 
 @XmlRootElement
 public class Position implements Serializable {
 	
-	private static final long serialVersionUID = -3474235149599204012L;
-
-	private Long	id;
+	private static final long	serialVersionUID	= -3474235149599204012L;
+	
+	@Min(value = 1, message = "{bestellverwaltung.position.id.min}")
+	private Long				id;
 	
 	@XmlTransient
-	private Artikel	artikel;
-	private URI		artikelUri;
+	private Artikel				artikel;
+	private URI					artikelUri;
 	
-	@NotNull
-	private Integer	anzahl;
+	@NotNull(message = "{bestellverwaltung.position.anzahl.notNull}")
+	private Integer				anzahl;
 	
 	public Long getID() {
 		return id;

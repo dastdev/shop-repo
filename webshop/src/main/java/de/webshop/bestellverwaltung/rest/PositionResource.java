@@ -6,7 +6,7 @@ import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
 import java.io.Serializable;
 import java.net.URI;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -102,7 +102,7 @@ public class PositionResource implements Serializable {
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateKunde(@Valid Position position) {
+	public void updatePosition(@Valid Position position) {
 		Mock.updatePosition(position);
 	}
 }

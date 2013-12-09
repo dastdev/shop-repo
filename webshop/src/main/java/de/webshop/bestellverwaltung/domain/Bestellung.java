@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.validator.constraints.NotEmpty;
 import de.webshop.kundenverwaltung.domain.Kunde;
 
 @XmlRootElement
@@ -14,16 +17,19 @@ public class Bestellung implements Serializable {
 	
 	private static final long	serialVersionUID	= 8645031681820165535L;
 	
-	private Long				id;
+	@Min(value = 1, message = "{bestellverwaltung.bestellung.id.min}")
+	private Long id;
 	
 	@XmlTransient
-	private Kunde				kunde;
-	private URI					kundeUri;
+	private Kunde kunde;
+	private URI	kundeUri;
 	
-	@NotNull
-	private Date				bestelldatum;
+	@NotNull(message = "{bestellverwaltung.bestellung.date.notNull}")
+	private Date bestelldatum;
 	
-	private List<Position>		positionen;
+	@NotEmpty(message = "{bestellverwaltung.bestellung.positionen.notEmpty}")
+	@Valid
+	private List<Position> positionen;
 	
 	public Long getID() {
 		return id;
