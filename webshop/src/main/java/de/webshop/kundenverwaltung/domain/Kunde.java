@@ -17,40 +17,41 @@ import de.webshop.bestellverwaltung.domain.Bestellung;
 
 @XmlRootElement
 public class Kunde implements Serializable {
-	
+
 	private static final long serialVersionUID = -8937961791375017L;
-	
-	@Min(value=1, message="{kundenverwaltung.kunde.id.min}")
-	private Long				id;
-	@NotNull(message="{kundenverwaltung.kunde.name.notNull}")
-	@Size(min = 2, max = 32, message="{kundenverwaltung.kunde.name.length}")
-	@Pattern(regexp = "[A-Z][a-z]+[-]{0,1}[A-Z][a-z]+", message="{kundenverwaltung.kunde.name.pattern}")
-	private String				name;
-	@NotNull(message="{kundenverwaltung.kunde.vorname.notNull}")
-	@Size(min = 2, max = 32, message="{kundenverwaltung.kunde.vorname.length}")
-	@Pattern(regexp = "[A-Z][a-z]+[-]{0,1}[A-Z]", message="{kundenverwaltung.kunde.vorname.pattern}")
-	private String				vorname;
-	@Past(message="{kundenverwaltung.kunde.geburtstag.date}")
-	private Date				geburtstag;
-	@NotNull(message="{kundenverwaltung.kunde.passwort.notNull}")
-	@Size(min = 4, max = 16, message="{kundenverwaltung.kunde.passwort.length}")
-	private String				passwort;
-	@NotNull(message="{kundenverwaltung.kunde.email.notNull}")
-	@Email(message="{kundenverwaltung.kunde.email.pattern}")
-	private String				email;
-	@NotNull(message="{kundenverwaltung.kunde.typ.notNull}")
-	private Kundentyp			typ;
-	private boolean				geloescht;
+
+	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
+	private Long id;
+	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
+	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
+	@Pattern(regexp = "[A-Z][a-z]+[-]{0,1}[A-Z][a-z]+", message = "{kundenverwaltung.kunde.name.pattern}")
+	private String name;
+	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
+	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
+	@Pattern(regexp = "[A-Z][a-z]+[-]{0,1}[A-Z]", message = "{kundenverwaltung.kunde.vorname.pattern}")
+	private String vorname;
+	@Past(message = "{kundenverwaltung.kunde.geburtstag.date}")
+	private Date geburtstag;
+	@NotNull(message = "{kundenverwaltung.kunde.passwort.notNull}")
+	@Size(min = 4, max = 16, message = "{kundenverwaltung.kunde.passwort.length}")
+	private String passwort;
+	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
+	@Email(message = "{kundenverwaltung.kunde.email.pattern}")
+	private String email;
+	@NotNull(message = "{kundenverwaltung.kunde.typ.notNull}")
+	private Kundentyp typ;
+	private boolean geloescht;
 	@XmlTransient
-	private List<Bestellung>	bestellungen;
-	private URI					uriBestellung;
-	@NotNull(message="{kundenverwaltung.kunde.adresse.notNull}")
-	private Adresse				adresse;
-	
+	private List<Bestellung> bestellungen;
+	private URI uriBestellung;
+	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
+	private Adresse adresse;
+
 	public Kunde() {
 	}
-	
-	public Kunde(String name, String vorname, String passwort, String email, Kundentyp typ) {
+
+	public Kunde(String name, String vorname, String passwort, String email,
+			Kundentyp typ) {
 		super();
 		this.name = name;
 		this.vorname = vorname;
@@ -58,10 +59,10 @@ public class Kunde implements Serializable {
 		this.email = email;
 		this.typ = typ;
 	}
-	
-	public Kunde(Long id, String name, String vorname, Date geburtstag, String passwort,
-			String email, Kundentyp typ, boolean geloescht, List<Bestellung> bestellungen,
-			URI bestellungUri) {
+
+	public Kunde(Long id, String name, String vorname, Date geburtstag,
+			String passwort, String email, Kundentyp typ, boolean geloescht,
+			List<Bestellung> bestellungen, URI bestellungUri) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -74,118 +75,122 @@ public class Kunde implements Serializable {
 		this.bestellungen = bestellungen;
 		this.uriBestellung = bestellungUri;
 	}
-	
+
 	/**
 	 * Get- und Set-Methoden
 	 * 
-	 * @return: Jeweils Rückgabe des entspr. Attributs (get-Methode)
+	 * @return: Jeweils Rueckgabe des entspr. Attributs (get-Methode)
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getVorname() {
 		return vorname;
 	}
-	
+
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
-	
+
 	public void setID(Long id) {
 		this.id = id;
 	}
-	
+
 	public Long getID() {
 		return id;
 	}
-	
+
 	public Date getGeburtstag() {
 		return geburtstag;
 	}
-	
+
 	public void setGeburtstag(Date geburtstag) {
 		this.geburtstag = geburtstag;
 	}
-	
+
 	public String getPasswort() {
 		return passwort;
 	}
-	
+
 	public void setPasswort(String passwort) {
 		this.passwort = passwort;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public Kundentyp getTyp() {
 		return typ;
 	}
-	
+
 	public void setTyp(Kundentyp typ) {
 		this.typ = typ;
 	}
-	
+
 	public boolean isGeloescht() {
 		return geloescht;
 	}
-	
+
 	public void setGeloescht(boolean geloescht) {
 		this.geloescht = geloescht;
 	}
-	
+
 	public List<Bestellung> getBestellungen() {
 		return bestellungen;
 	}
-	
+
 	public void setBestellungen(List<Bestellung> bestellungen) {
 		this.bestellungen = bestellungen;
 	}
-	
+
 	public URI getUriBestellung() {
 		return uriBestellung;
 	}
-	
+
 	public void setUriBestellung(URI uri) {
 		this.uriBestellung = uri;
 	}
-	
+
 	/**
 	 * Geerbte Object-Methoden
 	 */
 	@Override
 	public String toString() {
-		return "Kunde " + id + ":\nNachname: " + name + " , Vorname: " + vorname + "\nGeburtstag: "
-				+ geburtstag + "\nEmail: " + email + "\nTyp: " + typ + "\nGeloescht: " + geloescht
+		return "Kunde " + id + ":\nNachname: " + name + " , Vorname: "
+				+ vorname + "\nGeburtstag: " + geburtstag + "\nEmail: " + email
+				+ "\nTyp: " + typ + "\nGeloescht: " + geloescht
 				+ "\nBestellungen: " + uriBestellung;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bestellungen == null) ? 0 : bestellungen.hashCode());
+		result = prime * result
+				+ ((bestellungen == null) ? 0 : bestellungen.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((geburtstag == null) ? 0 : geburtstag.hashCode());
+		result = prime * result
+				+ ((geburtstag == null) ? 0 : geburtstag.hashCode());
 		result = prime * result + (geloescht ? 1231 : 1237);
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((passwort == null) ? 0 : passwort.hashCode());
+		result = prime * result
+				+ ((passwort == null) ? 0 : passwort.hashCode());
 		result = prime * result + ((typ == null) ? 0 : typ.hashCode());
 		result = prime * result + ((vorname == null) ? 0 : vorname.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -198,48 +203,41 @@ public class Kunde implements Serializable {
 		if (bestellungen == null) {
 			if (other.bestellungen != null)
 				return false;
-		}
-		else if (!bestellungen.equals(other.bestellungen))
+		} else if (!bestellungen.equals(other.bestellungen))
 			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
-		}
-		else if (!email.equals(other.email))
+		} else if (!email.equals(other.email))
 			return false;
 		if (geburtstag == null) {
 			if (other.geburtstag != null)
 				return false;
-		}
-		else if (!geburtstag.equals(other.geburtstag))
+		} else if (!geburtstag.equals(other.geburtstag))
 			return false;
 		if (geloescht != other.geloescht)
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		}
-		else if (!id.equals(other.id))
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
-		}
-		else if (!name.equals(other.name))
+		} else if (!name.equals(other.name))
 			return false;
 		if (passwort == null) {
 			if (other.passwort != null)
 				return false;
-		}
-		else if (!passwort.equals(other.passwort))
+		} else if (!passwort.equals(other.passwort))
 			return false;
 		if (typ != other.typ)
 			return false;
 		if (vorname == null) {
 			if (other.vorname != null)
 				return false;
-		}
-		else if (!vorname.equals(other.vorname))
+		} else if (!vorname.equals(other.vorname))
 			return false;
 		return true;
 	}
@@ -251,5 +249,5 @@ public class Kunde implements Serializable {
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
 	}
-	
+
 }

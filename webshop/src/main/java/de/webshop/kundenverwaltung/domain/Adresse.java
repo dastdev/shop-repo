@@ -16,8 +16,8 @@ public class Adresse implements Serializable {
 	@Min(value = 1, message = "{kundenverwaltung.adresse.id.min}")
 	@NotNull(message = "{kundenverwaltung.adresse.id.notNull}")
 	private Long id;
-	@Min(value=1, message = "{kundenverwaltung.kunde.id.min}")
-	@NotNull(message="{kundenverwaltung.adresse.kundeid.notNull}")
+	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
+	@NotNull(message = "{kundenverwaltung.adresse.kundeid.notNull}")
 	private Long kundeID;
 	@NotNull(message = "{kundenverwaltung.adresse.strasse.notNull}")
 	private String strasse;
@@ -31,7 +31,7 @@ public class Adresse implements Serializable {
 	private String stadt;
 	private Land land;
 
-	// Länderkürzel nach ISO 3166
+	// Laenderkuerzel nach ISO 3166
 	public enum Land {
 		AT, CH, DE
 	}
@@ -85,15 +85,15 @@ public class Adresse implements Serializable {
 		this.land = land;
 	}
 
-	//Rückverweis auf Kunden, zu dem die Adresse gehört
+	// Rueckverweis auf Kunden, zu dem die Adresse gehoert
 	public Long getKundeID() {
 		return kundeID;
 	}
-	
+
 	public void setKundeID(Long kundeID) {
 		this.kundeID = kundeID;
 	}
-	
+
 	// Basismethoden
 	@Override
 	public int hashCode() {
