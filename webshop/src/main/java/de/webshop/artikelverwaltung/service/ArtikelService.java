@@ -4,20 +4,24 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.enterprise.context.Dependent;
+
 import javax.validation.Valid;
 
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
+import de.webshop.util.interceptor.Log;
 
-@SuppressWarnings("unused")
+//Checkstyle TODO: Utility classes should not have a public or default constructor
+@Log
 @Dependent
 public class ArtikelService implements Serializable {
 
 	private static final long serialVersionUID = -3006652195760480390L;
 
 	// / Gibt eine Artikelinstanz des gesuchten Artikels via ID zurueck
-	public static Artikel findArtikelById(Long id) {
-		Artikel artikel = new Artikel();
+	public Artikel findArtikelById(Long id) {
+		// Checkstyle TODO: Variable "artikel" sollte als final deklariert werden
+		final Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
 		artikel.setBezeichnung("Robobike");
@@ -32,12 +36,13 @@ public class ArtikelService implements Serializable {
 
 	// / Ersetzt den angegebenen Artikel und gibt die neue Version als Instanz
 	// zurueck
-	public static Artikel updateArtikel(Artikel artikel) {
+	public Artikel updateArtikel(Artikel artikel) {
 		if (artikel == null) {
 			System.out.println("[ERROR] UPDATE ARTIKEL fehlgeschlagen.");
 
 			artikel = new Artikel();
-		} else {
+		}
+		else {
 			System.out.println(String.format("Artikel %d updated.",
 					artikel.getID()));
 		}
@@ -46,12 +51,13 @@ public class ArtikelService implements Serializable {
 	}
 
 	// / Erstellt einen neuen Artikel und gibt diesen als Instanz zurueck
-	public static Artikel createArtikel(Artikel artikel) {
+	public Artikel createArtikel(Artikel artikel) {
 		if (artikel == null) {
 			System.out.println("[ERROR] CREATE ARTIKEL fehlgeschlagen.");
 
 			artikel = new Artikel();
-		} else {
+		}
+		else {
 			System.out.println("Artikel created.");
 		}
 

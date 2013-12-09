@@ -39,6 +39,7 @@ public final class Mock {
 	}
 	
 	public static Artikel findArtikelById(Long id) {
+		// Checkstyle TODO: Variable "artikel" sollte als final deklariert werden
 		Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
@@ -51,8 +52,9 @@ public final class Mock {
 		
 		return artikel;
 	}
-	
+
 	public static List<Position> findPositionenByBestellung(Bestellung bestellung) {
+		// Checkstyle TODO: Variable "positionen" sollte als final deklariert werden
 		List<Position> positionen = bestellung.getPositionen();
 		return positionen;
 	}
@@ -176,6 +178,7 @@ public final class Mock {
 		bestellung.setBestelldatum(new Date(1234567890));
 		
 		// FIXME: setPositionen
+		// Checkstyle TODO: Variable "positionen" sollte als final deklariert werden
 		List<Position> positionen = new ArrayList<Position>();
 		positionen.add(findPositionById(1L));
 		positionen.add(findPositionById(2L));

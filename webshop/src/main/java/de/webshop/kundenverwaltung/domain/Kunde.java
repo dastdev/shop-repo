@@ -60,6 +60,7 @@ public class Kunde implements Serializable {
 		this.typ = typ;
 	}
 
+	// Checkstyle TODO: Mehr als 7 Parameter
 	public Kunde(Long id, String name, String vorname, Date geburtstag,
 			String passwort, String email, Kundentyp typ, boolean geloescht,
 			List<Bestellung> bestellungen, URI bestellungUri) {
@@ -199,45 +200,53 @@ public class Kunde implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		// Checkstyle TODO: Variable "other" sollte als final deklariert werden
 		Kunde other = (Kunde) obj;
 		if (bestellungen == null) {
 			if (other.bestellungen != null)
 				return false;
-		} else if (!bestellungen.equals(other.bestellungen))
+		}
+		else if (!bestellungen.equals(other.bestellungen))
 			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
-		} else if (!email.equals(other.email))
+		}
+		else if (!email.equals(other.email))
 			return false;
 		if (geburtstag == null) {
 			if (other.geburtstag != null)
 				return false;
-		} else if (!geburtstag.equals(other.geburtstag))
+		}
+		else if (!geburtstag.equals(other.geburtstag))
 			return false;
 		if (geloescht != other.geloescht)
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		}
+		else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
-		} else if (!name.equals(other.name))
+		}
+		else if (!name.equals(other.name))
 			return false;
 		if (passwort == null) {
 			if (other.passwort != null)
 				return false;
-		} else if (!passwort.equals(other.passwort))
+		}
+		else if (!passwort.equals(other.passwort))
 			return false;
 		if (typ != other.typ)
 			return false;
 		if (vorname == null) {
 			if (other.vorname != null)
 				return false;
-		} else if (!vorname.equals(other.vorname))
+		}
+		else if (!vorname.equals(other.vorname))
 			return false;
 		return true;
 	}

@@ -52,8 +52,8 @@ public class BestellungResource implements Serializable {
 	@Context
 	private UriInfo				uriInfo;
 	
-	// @Inject
-	// private ArtikelService as;
+	@Inject
+	private ArtikelService as;
 	
 	@Inject
 	private BestellungService	bs;
@@ -81,7 +81,7 @@ public class BestellungResource implements Serializable {
 		
 		if (bestellung == null) {
 			throw new NotFoundException(
-										String.format(	"Keine Bestellung mit der ID %li gefunden.",
+										String.format("Keine Bestellung mit der ID %li gefunden.",
 														id));
 		}
 		setStructuralLinks(bestellung, uriInfo);
@@ -112,7 +112,7 @@ public class BestellungResource implements Serializable {
 			positionResource.setStructuralLinks(position, uriInfo);
 		}
 		
-		return Response.ok(new GenericEntity<List<Position>>(positionen) {})
+		return Response.ok(new GenericEntity<List<Position>>(positionen) {  })
 						.links(getTransitionalLinksPositionen(positionen, bestellung, uriInfo))
 						.build();
 	}
@@ -140,7 +140,7 @@ public class BestellungResource implements Serializable {
 	private Link[] getTransitionalLinks(Bestellung bestellung, UriInfo uriInfo) {
 		final Link self = Link.fromUri(getUriBestellung(bestellung, uriInfo)).rel(SELF_LINK)
 								.build();
-		return new Link[] { self };
+		return new Link[] {self};
 	}
 	
 	private Link[] getTransitionalLinksPositionen(List<Position> positionen, Bestellung bestellung,
@@ -156,11 +156,11 @@ public class BestellungResource implements Serializable {
 								.rel(FIRST_LINK).build();
 		final int lastPos = positionen.size() - 1;
 		
-		final Link last = Link.fromUri(	positionResource.getUriPosition(positionen.get(lastPos),
+		final Link last = Link.fromUri(positionResource.getUriPosition(positionen.get(lastPos),
 																		uriInfo)).rel(LAST_LINK)
 								.build();
 		
-		return new Link[] { self, first, last };
+		return new Link[] {self, first, last};
 	}
 	
 	private URI getUriPositionen(Bestellung bestellung, UriInfo uriInfo) {
@@ -216,15 +216,10 @@ public class BestellungResource implements Serializable {
 			// keine einzige Artikel-ID als gueltige Zahl
 			artikelIdsInvalid();
 		}
-		
-		// TODO: ArtikelService-Klasse benutzen!!
-		// final Collection<Artikel> gefundeneArtikel =
-		// as.findfindArtikelByIds(artikelIds);
+
 		final Collection<Artikel> gefundeneArtikel = new ArrayList<Artikel>();
-		long nId = 13;
-		gefundeneArtikel.add(ArtikelService.findArtikelById(nId));
-		gefundeneArtikel.add(ArtikelService.findArtikelById(++nId));
-		gefundeneArtikel.add(ArtikelService.findArtikelById(++nId));
+		for(Long artikelId : artikelIds)
+			gefundeneArtikel.add(as.findArtikelById(artikelId));
 		
 		int i = 0;
 		final List<Position> neuePositionen = new ArrayList<Position>();
