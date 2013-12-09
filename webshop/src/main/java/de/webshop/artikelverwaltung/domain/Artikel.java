@@ -22,8 +22,8 @@ public class Artikel implements Serializable {
 	 * TODO ARTIKEL, ARTIKELRESOURCE, ARTIKELSERVICE [x] Bean-Validation [x]
 	 * Serialisierung aller Klassen [ ] Internationalisierung -> Fehlermeldungen
 	 * -> Exceptionmapper -> ValidationMessages-Dateien anlegen und fuellen [x]
-	 * Serviceklassen anlegen [?] Mock fuer Datenbankzugriff --> Wie genau? [x]
-	 * Logging implementieren [ ] Equals, Hashcode [ ] Evtl. vorbereitende
+	 * Serviceklassen anlegen [x] Mock fuer Datenbankzugriff --> Wie genau? [x]
+	 * Logging implementieren [x] Equals, Hashcode [ ] Evtl. vorbereitende
 	 * Annotationen fuer Datenbankzugriffe
 	 */
 
