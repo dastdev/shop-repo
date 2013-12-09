@@ -31,7 +31,7 @@ import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
 @Log
-@RequestScoped // FIXME: import über bean oder anderen import? --> Er hat es im Bsp. gar nicht benutzt
+@RequestScoped
 @Path("/artikel")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
@@ -79,7 +79,7 @@ public class ArtikelResource implements Serializable {
 	@POST
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public Response createArtikel(@Valid Artikel artikel) { // FIXME: @Valid?
+	public Response createArtikel(@Valid Artikel artikel) {
 		
 		artikel = as.createArtikel(artikel);
 		return Response.created(getUriArtikel(artikel, uriInfo)).build();
@@ -88,7 +88,7 @@ public class ArtikelResource implements Serializable {
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateArtikel(@Valid Artikel artikel) { // FIXME: @Valid?
+	public void updateArtikel(@Valid Artikel artikel) {
 		as.updateArtikel(artikel);
 	}
 }
