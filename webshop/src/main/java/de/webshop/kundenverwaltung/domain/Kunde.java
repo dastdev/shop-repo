@@ -24,11 +24,11 @@ public class Kunde implements Serializable {
 	private Long id;
 	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
-	@Pattern(regexp = "[A-Z][a-z]+[-]{0,1}[A-Z][a-z]+", message = "{kundenverwaltung.kunde.name.pattern}")
+	@Pattern(regexp = "[A-Z][a-z]+", message = "{kundenverwaltung.kunde.name.pattern}")
 	private String name;
 	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
-	@Pattern(regexp = "[A-Z][a-z]+[-]{0,1}[A-Z]", message = "{kundenverwaltung.kunde.vorname.pattern}")
+	@Pattern(regexp = "[A-Z][a-z]+", message = "{kundenverwaltung.kunde.vorname.pattern}")
 	private String vorname;
 	@Past(message = "{kundenverwaltung.kunde.geburtstag.date}")
 	private Date geburtstag;

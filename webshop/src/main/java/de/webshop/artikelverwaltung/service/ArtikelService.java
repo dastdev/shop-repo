@@ -37,6 +37,7 @@ public class ArtikelService implements Serializable {
 	public Artikel updateArtikel(Artikel artikel) {
 		if (artikel == null) {
 			System.out.println("[ERROR] UPDATE ARTIKEL fehlgeschlagen.");
+			
 
 			artikel = new Artikel();
 		}
@@ -51,8 +52,7 @@ public class ArtikelService implements Serializable {
 	// / Erstellt einen neuen Artikel und gibt diesen als Instanz zurueck
 	public Artikel createArtikel(Artikel artikel) {
 		if (artikel == null) {
-			System.out.println("[ERROR] CREATE ARTIKEL fehlgeschlagen.");
-
+			System.out.println("[ERROR] CREATE ARTIKEL fehlgeschlagen.");			
 			artikel = new Artikel();
 		}
 		else {

@@ -6,6 +6,9 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import java.io.Serializable;
 
 import javax.faces.bean.ApplicationScoped;
+import javax.inject.Inject;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -20,6 +23,12 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
 	
 	private static final long serialVersionUID = -1565047628264777739L;
 
+	@Context
+	private HttpHeaders headers;
+	
+	@Inject
+	private Messages messages;
+	
 	@Override
 	public Response toResponse(NotFoundException e) {
 		final String msg = e.getMessage();

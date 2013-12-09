@@ -1,6 +1,8 @@
 package de.webshop.util.rest;
 
+import java.io.Serializable;
 import java.net.URI;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.UriInfo;
 
@@ -9,8 +11,10 @@ import javax.ws.rs.core.UriInfo;
  *         Zimmermann</a>
  */
 @ApplicationScoped
-public class UriHelper {
+public class UriHelper implements Serializable {
 	
+	private static final long serialVersionUID = -6300713312190086184L;
+
 	public URI getUri(Class<?> clazz, UriInfo uriInfo) {
 		return uriInfo.getBaseUriBuilder().path(clazz).build();
 	}
