@@ -1,9 +1,11 @@
 package de.webshop.bestellverwaltung.domain;
 
+//import static javax.persistence.TemporalType.DATE;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+//import javax.persistence.Temporal;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -25,6 +27,7 @@ public class Bestellung implements Serializable {
 	private URI	kundeUri;
 	
 	@NotNull(message = "{bestellverwaltung.bestellung.date.notNull}")
+	//@Temporal(DATE)
 	private Date bestelldatum;
 	
 	@NotEmpty(message = "{bestellverwaltung.bestellung.positionen.notEmpty}")
@@ -56,6 +59,7 @@ public class Bestellung implements Serializable {
 	}
 	
 	public Date getBestelldatum() {
+		
 		return bestelldatum;
 	}
 	

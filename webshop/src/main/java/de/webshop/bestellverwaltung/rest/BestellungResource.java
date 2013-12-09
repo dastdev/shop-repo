@@ -80,9 +80,7 @@ public class BestellungResource implements Serializable {
 		final Bestellung bestellung = bs.findBestellungById(id);
 		
 		if (bestellung == null) {
-			throw new NotFoundException(
-										String.format("Keine Bestellung mit der ID %li gefunden.",
-														id));
+			// TODO throw new NotFoundException("bestellung.notFound.id",id));
 		}
 		setStructuralLinks(bestellung, uriInfo);
 		
