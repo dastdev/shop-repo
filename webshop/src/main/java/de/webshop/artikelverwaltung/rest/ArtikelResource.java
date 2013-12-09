@@ -59,7 +59,7 @@ public class ArtikelResource implements Serializable {
 	@GET
 	@Path("{id:[1-9][0-9]*}")
 	public Response findArtikelById(@PathParam("id") Long id) {
-		Artikel artikel = as.findArtikelById(id);
+		final Artikel artikel = as.findArtikelById(id);
 		if (artikel == null) {
 			throw new NotFoundException("artikel.notFound.id", id);
 		}

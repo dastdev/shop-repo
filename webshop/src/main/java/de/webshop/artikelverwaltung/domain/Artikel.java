@@ -23,7 +23,7 @@ public class Artikel implements Serializable {
 	 * Serialisierung aller Klassen [ ] Internationalisierung -> Fehlermeldungen
 	 * -> Exceptionmapper -> ValidationMessages-Dateien anlegen und fuellen [x]
 	 * Serviceklassen anlegen [x] Mock fuer Datenbankzugriff --> Wie genau? [x]
-	 * Logging implementieren [x] Equals, Hashcode [ ] Evtl. vorbereitende
+	 * Logging implementieren [x] Equals, Hashcode [x] Evtl. vorbereitende
 	 * Annotationen fuer Datenbankzugriffe
 	 */
 
