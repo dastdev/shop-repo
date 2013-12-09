@@ -111,7 +111,7 @@ public class KundeResource implements Serializable {
 								.rel(Constants.REMOVE_LINK).build();
 		
 		// TODO "list" einfuegen
-		return new Link[] { self, add, update, remove };
+		return new Link[] {self, add, update, remove };
 	}
 	
 	public URI getUriKunde(Kunde kunde, UriInfo uriInfo) {
@@ -149,10 +149,11 @@ public class KundeResource implements Serializable {
 		final Link first = Link.fromUri(getUriKunde(kunden.get(0), uriInfo)).rel(FIRST_LINK)
 								.build();
 		final int lastPos = kunden.size() - 1;
+		
 		final Link last = Link.fromUri(getUriKunde(kunden.get(lastPos), uriInfo)).rel(LAST_LINK)
 								.build();
 		
-		return new Link[] { first, last };
+		return new Link[] {first, last};
 	}
 	
 	@GET
@@ -190,11 +191,11 @@ public class KundeResource implements Serializable {
 								.rel(FIRST_LINK).build();
 		
 		final int lastPos = bestellungen.size() - 1;
-		final Link last = Link.fromUri(	bestellungResource.getUriBestellung(bestellungen.get(lastPos),
+		final Link last = Link.fromUri(bestellungResource.getUriBestellung(bestellungen.get(lastPos),
 																			uriInfo))
 								.rel(LAST_LINK).build();
 		
-		return new Link[] { self, first, last };
+		return new Link[] {self, first, last};
 	}
 	
 	@POST
