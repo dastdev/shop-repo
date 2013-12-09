@@ -80,6 +80,7 @@ public final class Mock {
 			adresse.setPlz("76133");
 			adresse.setStadt("Megashophausen");
 			adresse.setStrasse("Bikestrasse");
+			adresse.setKundeID(id);
 		}
 		else {
 			adresse.setHausnummer("B2B");
@@ -88,7 +89,9 @@ public final class Mock {
 			adresse.setPlz("1885");
 			adresse.setStadt("Weizen");
 			adresse.setStrasse("Naturtrübweg");
+			adresse.setKundeID(id);
 		}
+		kunde.setAdresse(adresse);
 		
 		return kunde;
 	}
@@ -131,11 +134,11 @@ public final class Mock {
 		// kunde.setSeit(seit);
 		
 		final Adresse adresse = new Adresse();
-		// adresse.setId(kunde.getId() + 1); // andere ID fuer die Adresse
-		// adresse.setPlz("12345");
-		// adresse.setOrt("Testort");
-		// adresse.setKunde(kunde);
-		// kunde.setAdresse(adresse);
+		adresse.setID(kunde.getID() + 1); // andere ID fuer die Adresse
+		adresse.setPlz("12345");
+		adresse.setStadt("Testort");
+		adresse.setKundeID(kunde.getID());
+		kunde.setAdresse(adresse);
 		
 		return kunde;
 	}
@@ -190,9 +193,9 @@ public final class Mock {
 		kunde.setID(Long.valueOf(nachname.length() ^ kunde.hashCode()));
 		
 		// FIXME: Kundenadresse
-		// final Adresse adresse = kunde.getAdresse();
-		// adresse.setId((Long.valueOf(nachname.length())) + 1);
-		// adresse.setKunde(kunde);
+		final Adresse adresse = kunde.getAdresse();
+		adresse.setID((Long.valueOf(nachname.length())) + 1);
+		adresse.setKundeID(kunde.getID());
 		
 		System.out.println("Neuer Kunde: " + kunde);
 		return kunde;

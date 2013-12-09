@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.enterprise.context.Dependent;
+import javax.validation.Valid;
 
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 
+@SuppressWarnings("unused")
 @Dependent
 public class ArtikelService implements Serializable {
 

@@ -3,11 +3,9 @@ package de.webshop.kundenverwaltung.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
-
 import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
-
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -25,13 +23,12 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.rest.BestellungResource;
+import de.webshop.bestellverwaltung.service.BestellungService;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.service.KundeService;
 import de.webshop.util.Constants;
-import de.webshop.util.Mock;
 import de.webshop.util.rest.UriHelper;
 
 @RequestScoped
@@ -60,6 +57,9 @@ public class KundeResource implements Serializable {
 	
 	@Inject
 	private BestellungResource	bestellungResource;
+	
+	@Inject
+	private BestellungService bs;
 	
 	@Inject
 	private UriHelper			uriHelper;
@@ -121,14 +121,12 @@ public class KundeResource implements Serializable {
 	public Response findKundeByNachname(@QueryParam(KUNDEN_NACHNAME_QUERY_PARAM) String nachname) {
 		List<Kunde> kunden = null;
 		if (nachname != null) {
-			// TODO Anwendungskern statt Mock, Verwendung von Locale
 			kunden = ks.findKundenByNachname(nachname);
 			if (kunden.isEmpty()) {
 				throw new NotFoundException("Kein Kunde mit Nachname " + nachname + " gefunden.");
 			}
 		}
 		else {
-			// TODO Anwendungskern statt Mock, Verwendung von Locale
 			kunden = ks.findAllKunden();
 			if (kunden.isEmpty()) {
 				throw new NotFoundException("Keine Kunden vorhanden.");
@@ -160,15 +158,13 @@ public class KundeResource implements Serializable {
 	@GET
 	@Path("{id:[1-9][0-9]*}/bestellungen")
 	public Response findBestellungenByKundeId(@PathParam("id") Long kundeId) {
-		// FIXME Referenz auf Klasse KundeService
-		final Kunde kunde = Mock.findKundeById(kundeId);
+		final Kunde kunde = ks.findKundeById(kundeId);
 		if (kunde == null) {
 			throw new NotFoundException(
 										String.format(	"Es wurden keine Bestellungen für den Kunden {0} gefunden",
 														kundeId));
 		}
-		// FIXME Referenz auf Klasse BestellungService
-		final List<Bestellung> bestellungen = Mock.findBestellungenByKunde(kunde);
+		final List<Bestellung> bestellungen = bs.findBestellungenByKunde(kunde);
 		// URIs innerhalb der gefundenen Bestellungen anpassen
 		if (bestellungen != null) {
 			for (Bestellung bestellung : bestellungen) {
@@ -205,7 +201,6 @@ public class KundeResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public Response createKunde(Kunde kunde) {
-		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		kunde = ks.createKunde(kunde);
 		return Response.created(getUriKunde(kunde, uriInfo)).build();
 	}
@@ -214,7 +209,6 @@ public class KundeResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public void updateKunde(Kunde kunde) {
-		// TODO Anwendungskern statt Mock, Locale
 		ks.updateKunde(kunde);
 	}
 	
@@ -222,7 +216,6 @@ public class KundeResource implements Serializable {
 	@Path("{id:[1-9][0-9]*}")
 	@Produces
 	public void deleteKunde(@PathParam("id") Long kundeId) {
-		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		ks.deleteKunde(kundeId);
 	}
 }

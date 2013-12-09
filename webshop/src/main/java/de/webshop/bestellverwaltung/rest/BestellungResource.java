@@ -40,7 +40,6 @@ import de.webshop.bestellverwaltung.service.BestellungService;
 import de.webshop.bestellverwaltung.service.PositionService;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.rest.KundeResource;
-import de.webshop.util.Mock;
 import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
@@ -229,9 +228,9 @@ public class BestellungResource implements Serializable {
 		// as.findfindArtikelByIds(artikelIds);
 		final Collection<Artikel> gefundeneArtikel = new ArrayList<Artikel>();
 		long nId = 13;
-		gefundeneArtikel.add(Mock.findArtikelById(nId));
-		gefundeneArtikel.add(Mock.findArtikelById(++nId));
-		gefundeneArtikel.add(Mock.findArtikelById(++nId));
+		gefundeneArtikel.add(as.findArtikelById(nId));
+		gefundeneArtikel.add(as.findArtikelById(++nId));
+		gefundeneArtikel.add(as.findArtikelById(++nId));
 		
 		int i = 0;
 		final List<Position> neuePositionen = new ArrayList<Position>();

@@ -9,7 +9,9 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import org.jboss.logging.Logger;
@@ -19,7 +21,7 @@ import org.jboss.logging.Logger;
  */
 @Provider
 @ApplicationScoped
-public class JaxRsLogFilter implements ContainerRequestFilter, ContainerResponseFilter {
+public class JaxRsLogFilter implements ContainerRequestFilter, ContainerResponseFilter, ExceptionMapper<Throwable> {
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Override
@@ -46,5 +48,11 @@ public class JaxRsLogFilter implements ContainerRequestFilter, ContainerResponse
 	public void filter(ContainerRequestContext requestCtx, ContainerResponseContext responseCtx) throws IOException {
 		LOGGER.debugf("Status Info: %d %s", responseCtx.getStatus(), responseCtx.getStatusInfo());
 		LOGGER.debugf("Location: %s", responseCtx.getLocation());		
+	}
+
+	@Override
+	public Response toResponse(Throwable exception) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
