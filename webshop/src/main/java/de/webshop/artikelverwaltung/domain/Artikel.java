@@ -185,8 +185,7 @@ public class Artikel implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -194,29 +193,25 @@ public class Artikel implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		final Artikel other = (Artikel) obj;
-		if (artikelbild == null)
-		{
+		if (artikelbild == null) {
 			if (other.artikelbild != null)
 				return false;
 		}
 		else if (!artikelbild.equals(other.artikelbild))
 			return false;
-		if (artikelnummer == null)
-		{
+		if (artikelnummer == null) {
 			if (other.artikelnummer != null)
 				return false;
 		}
 		else if (!artikelnummer.equals(other.artikelnummer))
 			return false;
-		if (beschreibung == null)
-		{
+		if (beschreibung == null) {
 			if (other.beschreibung != null)
 				return false;
 		}
 		else if (!beschreibung.equals(other.beschreibung))
 			return false;
-		if (bezeichnung == null)
-		{
+		if (bezeichnung == null) {
 			if (other.bezeichnung != null)
 				return false;
 		}
@@ -226,8 +221,7 @@ public class Artikel implements Serializable {
 			return false;
 		if (kategorie != other.kategorie)
 			return false;
-		if (kurzBeschreibung == null)
-		{
+		if (kurzBeschreibung == null) {
 			if (other.kurzBeschreibung != null)
 				return false;
 		}
@@ -237,8 +231,7 @@ public class Artikel implements Serializable {
 			return false;
 		if (parentID != other.parentID)
 			return false;
-		if (preis == null)
-		{
+		if (preis == null) {
 			if (other.preis != null)
 				return false;
 		}

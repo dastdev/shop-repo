@@ -11,6 +11,7 @@ import java.net.URI;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
@@ -68,7 +69,7 @@ public class ArtikelResource implements Serializable {
 	private Link[] getTransitionalLinks(Artikel artikel, UriInfo uriInfo) {
 		final Link self = Link.fromUri(getUriArtikel(artikel, uriInfo)).rel(SELF_LINK).build();
 		
-		return new Link[] { self } ;
+		return new Link[] {self};
 	}
 	
 	public URI getUriArtikel(Artikel artikel, UriInfo uriInfo) {
@@ -78,7 +79,7 @@ public class ArtikelResource implements Serializable {
 	@POST
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public Response createArtikel(Artikel artikel) { // FIXME: @Valid?
+	public Response createArtikel(@Valid Artikel artikel) { // FIXME: @Valid?
 		
 		artikel = as.createArtikel(artikel);
 		return Response.created(getUriArtikel(artikel, uriInfo)).build();
@@ -87,7 +88,7 @@ public class ArtikelResource implements Serializable {
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateKunde(Artikel artikel) { // FIXME: @Valid?
+	public void updateKunde(@Valid Artikel artikel) { // FIXME: @Valid?
 		as.updateArtikel(artikel);
 	}
 }
