@@ -27,8 +27,10 @@ import javax.ws.rs.core.UriInfo;
 
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.service.ArtikelService;
+import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
+@Log
 @RequestScoped
 @Path("/artikel")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
@@ -43,8 +45,8 @@ public class ArtikelResource implements Serializable {
 	@Inject
 	private UriHelper	uriHelper;
 	
-	//@Inject
-	//private ArtikelService as;
+	@Inject
+	private ArtikelService as;
 	
 	@GET
 	@Produces({ TEXT_PLAIN, APPLICATION_JSON })
@@ -54,9 +56,9 @@ public class ArtikelResource implements Serializable {
 	}
 	
 	@GET
-	@Path("{id:[1-9][0-9]{0,7}}")
+	@Path("{id:[1-9][0-9]*}")
 	public Response findArtikelById(@PathParam("id") Long id) {
-		final Artikel artikel = ArtikelService.findArtikelById(id);
+		final Artikel artikel = as.findArtikelById(id);
 		if (artikel == null) {
 			throw new NotFoundException("dmy");
 		}
@@ -77,9 +79,9 @@ public class ArtikelResource implements Serializable {
 	@POST
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public Response createArtikel(@Valid Artikel artikel) { // FIXME: @Valid?
+	public Response createArtikel(Artikel artikel) { // FIXME: @Valid?
 		
-		artikel = ArtikelService.createArtikel(artikel);
+		artikel = as.createArtikel(artikel);
 		return Response.created(getUriArtikel(artikel, uriInfo)).build();
 	}
 	
@@ -87,6 +89,6 @@ public class ArtikelResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public void updateKunde(Artikel artikel) { // FIXME: @Valid?
-		ArtikelService.updateArtikel(artikel);
+		as.updateArtikel(artikel);
 	}
 }
