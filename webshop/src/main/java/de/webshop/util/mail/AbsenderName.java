@@ -1,4 +1,4 @@
-package de.webshop.bestellverwaltung.service;
+package de.webshop.util.mail;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.PARAMETER;
@@ -10,8 +10,9 @@ import java.lang.annotation.Target;
 import javax.inject.Qualifier;
 
 @Qualifier
-@Target({ FIELD, PARAMETER })
+@Target({ FIELD, PARAMETER})
 @Retention(RUNTIME)
 @Documented
-public @interface NeueBestellung {
+public @interface AbsenderName {
+	
 }

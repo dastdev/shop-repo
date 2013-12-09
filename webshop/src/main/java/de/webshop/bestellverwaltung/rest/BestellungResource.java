@@ -56,22 +56,22 @@ public class BestellungResource implements Serializable {
 	private ArtikelService as;
 	
 	@Inject
-	private BestellungService	bs;
+	private BestellungService bs;
 	
 	@Inject
-	private PositionService		ps;
+	private PositionService ps;
 	
 	@Inject
-	private ArtikelResource		artikelResource;
+	private ArtikelResource artikelResource;
 	
 	@Inject
-	private KundeResource		kundeResource;
+	private KundeResource kundeResource;
 	
 	@Inject
-	private PositionResource	positionResource;
+	private PositionResource positionResource;
 	
 	@Inject
-	private UriHelper			uriHelper;
+	private UriHelper uriHelper;
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
