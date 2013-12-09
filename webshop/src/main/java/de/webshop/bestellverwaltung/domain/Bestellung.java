@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -85,6 +86,7 @@ public class Bestellung implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		// Checkstyle TODO: Variable "other" sollte als final deklariert werden
 		Bestellung other = (Bestellung) obj;
 		if (bestelldatum == null) {
 			if (other.bestelldatum != null)

@@ -75,7 +75,7 @@ public class PositionResource implements Serializable {
 	
 	private Link[] getTransitionalLinks(Position position, UriInfo uriInfo) {
 		final Link self = Link.fromUri(getUriPosition(position, uriInfo)).rel(SELF_LINK).build();
-		return new Link[] { self };
+		return new Link[] {self };
 	}
 	
 	public URI getUriPositionen(Position position, UriInfo uriInfo) {

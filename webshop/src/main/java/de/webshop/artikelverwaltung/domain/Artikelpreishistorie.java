@@ -97,20 +97,23 @@ public class Artikelpreishistorie implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		// Checkstyle TODO: Variable "other" sollte als final deklariert werden
 		Artikelpreishistorie other = (Artikelpreishistorie) obj;
 		if (artikelID != other.artikelID)
 			return false;
 		if (gueltigVon == null) {
 			if (other.gueltigVon != null)
 				return false;
-		} else if (!gueltigVon.equals(other.gueltigVon))
+		}
+		else if (!gueltigVon.equals(other.gueltigVon))
 			return false;
 		if (id != other.id)
 			return false;
 		if (preis == null) {
 			if (other.preis != null)
 				return false;
-		} else if (!preis.equals(other.preis))
+		}
+		else if (!preis.equals(other.preis))
 			return false;
 		return true;
 	}
