@@ -198,12 +198,12 @@ public final class Mock {
 		adresse.setID((Long.valueOf(nachname.length())) + 1);
 		adresse.setKundeID(kunde.getID());
 		
-		System.out.println("Neuer Kunde: " + kunde);
+		System.out.printf("Neuer Kunde: %s" , kunde);
 		return kunde;
 	}
 	
 	public static void updateKunde(Kunde kunde) {
-		System.out.println("Aktualisierter Kunde: " + kunde);
+		System.out.printf("Aktualisierter Kunde: %s" , kunde);
 	}
 	
 	public static void deleteKunde(Long kundeId) {

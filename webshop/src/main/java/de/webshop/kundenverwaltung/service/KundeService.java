@@ -50,8 +50,10 @@ public class KundeService implements Serializable {
 	}
 
 	public Kunde createKunde(Kunde kunde) {
-		if (kunde == null)
-			return kunde;
+		if (kunde == null) {
+		System.out.println("Kein anzulegender Kunde angegeben");
+		return kunde;
+		}
 
 		final Kunde tmpKunde = Mock.findKundeByEmail(kunde.getEmail());
 		if (tmpKunde != null)
