@@ -12,10 +12,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * @author Stephan-PC
- * 
- */
 @XmlRootElement
 public class Artikelpreishistorie implements Serializable {
 
@@ -25,11 +21,14 @@ public class Artikelpreishistorie implements Serializable {
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.id.notNull}")
 	@Min(value = 1, message = "{artikelverwaltung.artikelpreishistorie.id.min}")
 	private Long id;
+	
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.artikelID.notNul}")
 	@Min(value = 1, message = "{artikelverwaltung.artikelpreishistorie.artikelID.min}")
 	private Long artikelID;
+	
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.gueltigVon.notNull}")
 	private Date gueltigVon;
+	
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.preis.notNull}")
 	@DecimalMin(value = "0.0", message = "{artikelverwaltung.artikelpreishistorie.preis.decimalMin}")
 	private BigDecimal preis;
@@ -97,8 +96,8 @@ public class Artikelpreishistorie implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		// Checkstyle TODO: Variable "other" sollte als final deklariert werden
-		Artikelpreishistorie other = (Artikelpreishistorie) obj;
+
+		final Artikelpreishistorie other = (Artikelpreishistorie) obj;
 		if (artikelID != other.artikelID)
 			return false;
 		if (gueltigVon == null) {

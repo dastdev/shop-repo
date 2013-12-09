@@ -11,17 +11,17 @@ import de.webshop.artikelverwaltung.domain.Artikel;
 @XmlRootElement
 public class Position implements Serializable {
 	
-	private static final long	serialVersionUID	= -3474235149599204012L;
+	private static final long serialVersionUID	= -3474235149599204012L;
 	
 	@Min(value = 1, message = "{bestellverwaltung.position.id.min}")
-	private Long				id;
+	private Long id;
 	
 	@XmlTransient
-	private Artikel				artikel;
-	private URI					artikelUri;
+	private Artikel artikel;
+	private URI artikelUri;
 	
 	@NotNull(message = "{bestellverwaltung.position.anzahl.notNull}")
-	private Integer				anzahl;
+	private Integer anzahl;
 	
 	public Long getID() {
 		return id;

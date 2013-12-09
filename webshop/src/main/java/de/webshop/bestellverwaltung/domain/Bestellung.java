@@ -17,7 +17,7 @@ import de.webshop.kundenverwaltung.domain.Kunde;
 @XmlRootElement
 public class Bestellung implements Serializable {
 	
-	private static final long	serialVersionUID	= 8645031681820165535L;
+	private static final long serialVersionUID = 8645031681820165535L;
 	
 	@Min(value = 1, message = "{bestellverwaltung.bestellung.id.min}")
 	private Long id;

@@ -25,7 +25,7 @@ import org.jboss.logging.Logger;
 @Log
 public class BestellungObserver implements Serializable {
 
-	private static final long	serialVersionUID	= -3681804367549323893L;
+	private static final long serialVersionUID = -3681804367549323893L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	private static final String NEWLINE = System.getProperty("line.separator");
 	

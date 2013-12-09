@@ -16,11 +16,11 @@ import de.webshop.util.interceptor.Log;
 @Log
 public class PositionServiceImpl implements PositionService, Serializable {
 	
-	private static final long			serialVersionUID	= 1817223035927828153L;
+	private static final long serialVersionUID	= 1817223035927828153L;
 	
 	@Inject
 	@NeuePosition
-	private transient Event<Position>	event;
+	private transient Event<Position> event;
 	
 	@Override
 	@NotNull(message = "{position.notFound.id}")

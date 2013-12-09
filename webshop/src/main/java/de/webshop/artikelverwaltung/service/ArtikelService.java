@@ -25,8 +25,10 @@ public class ArtikelService implements Serializable {
 		artikel.setKurzBeschreibung("Das Robobike weiss wohin ...");
 		artikel.setBeschreibung("Lange Robobikebeschreibu...........");
 		artikel.setKategorie(Kategorie.KOMPLETTRAEDER);
-		artikel.setLagerbestand(13);
-		artikel.setPreis(new BigDecimal(1300.50));
+		final Integer tempLaBe = new Integer(11);
+		artikel.setLagerbestand(tempLaBe);
+		final BigDecimal tempPreis = new BigDecimal(1337.55);
+		artikel.setPreis(tempPreis);
 
 		return artikel;
 	}
@@ -57,8 +59,9 @@ public class ArtikelService implements Serializable {
 		else {
 			System.out.println("Artikel created.");
 		}
-
-		artikel.setID(13L);
+		
+		final Long tempId = new Long(66);
+		artikel.setID(tempId);
 
 		return artikel;
 	}

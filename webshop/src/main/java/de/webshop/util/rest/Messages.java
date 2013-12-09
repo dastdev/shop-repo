@@ -91,7 +91,6 @@ public class Messages {
 	}
 	
 	public String getMessage(HttpHeaders headers, String key, Object... args) {
-		// Checkstyle TODO: Folgende Zeile zu lang (>120 Zeichen):
 		final List<Locale> acceptableLocales = headers == null ? new ArrayList<Locale>(0) : headers.getAcceptableLanguages();
 		final ResourceBundle bundle = getBundle(acceptableLocales);
 		
