@@ -9,11 +9,19 @@ import static de.webshop.util.Constants.LAST_LINK;
 import static de.webshop.util.Constants.SELF_LINK;
 import java.io.Serializable;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -23,6 +31,8 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import de.webshop.artikelverwaltung.domain.Artikel;
+import de.webshop.artikelverwaltung.service.ArtikelService;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.bestellverwaltung.service.BestellungService;
@@ -44,6 +54,9 @@ public class BestellungResource implements Serializable {
 	
 	@Context
 	private UriInfo				uriInfo;
+	
+	@Inject
+	private ArtikelService		as;
 	
 	@Inject
 	private BestellungService	bs;
@@ -160,4 +173,97 @@ public class BestellungResource implements Serializable {
 								uriInfo);
 	}
 	
+	@POST
+	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
+	@Produces
+	public Response createBestellung(@Valid Bestellung bestellung) {
+		// Kunden-ID ermitteln
+		// TODO: eingeloggter Kunde
+		
+		final String kundeUriStr = bestellung.getKundeUri().toString();
+		int startPos = kundeUriStr.lastIndexOf('/') + 1;
+		final String kundeIdStr = kundeUriStr.substring(startPos);
+		Long kundeId = null;
+		try {
+			kundeId = Long.valueOf(kundeIdStr);
+		}
+		catch (NumberFormatException e) {
+			kundeIdInvalid();
+		}
+		
+		// IDs der Artikel ermitteln
+		final Collection<Position> positionen = bestellung.getPositionen();
+		final List<Long> artikelIds = new ArrayList<>(positionen.size());
+		for (Position p : positionen) {
+			final URI artikelUri = p.getArtikelUri();
+			if (artikelUri == null) {
+				continue;
+			}
+			final String artikelUriStr = artikelUri.toString();
+			startPos = artikelUriStr.lastIndexOf('/') + 1;
+			final String artikelIdStr = artikelUriStr.substring(startPos);
+			Long artikelId = null;
+			try {
+				artikelId = Long.valueOf(artikelIdStr);
+			}
+			catch (NumberFormatException e) {
+				continue;
+			}
+			artikelIds.add(artikelId);
+		}
+		
+		if (artikelIds.isEmpty()) {
+			// keine einzige Artikel-ID als gueltige Zahl
+			artikelIdsInvalid();
+		}
+		
+		// TODO: ArtikelService-Klasse benutzen!!
+		// final Collection<Artikel> gefundeneArtikel =
+		// as.findfindArtikelByIds(artikelIds);
+		final Collection<Artikel> gefundeneArtikel = new ArrayList<Artikel>();
+		long nId = 13;
+		gefundeneArtikel.add(Mock.findArtikelById(nId));
+		gefundeneArtikel.add(Mock.findArtikelById(++nId));
+		gefundeneArtikel.add(Mock.findArtikelById(++nId));
+		
+		int i = 0;
+		final List<Position> neuePositionen = new ArrayList<Position>();
+		for (Position p : positionen) {
+			// Artikel-ID der aktuellen Bestellposition (s.o.):
+			// artikelIds haben gleiche Reihenfolge wie bestellpositionen
+			final long artikelId = artikelIds.get(i++);
+			
+			// Wurde der Artikel beim DB-Zugriff gefunden?
+			for (Artikel artikel : gefundeneArtikel) {
+				if (artikel.getID().longValue() == artikelId) {
+					// Der Artikel wurde gefunden
+					p.setArtikel(artikel);
+					neuePositionen.add(p);
+					break;
+				}
+			}
+		}
+		
+		bestellung.setPositionen(neuePositionen);
+		
+		if (kundeId == null) {
+			// TODO: Kann kundeId == null sein?
+			kundeId = -1L;
+		}
+		
+		bestellung = bs.createBestellung(bestellung, kundeId, Locale.GERMANY);
+		
+		final URI bestellungUri = getUriBestellung(bestellung, uriInfo);
+		return Response.created(bestellungUri).build();
+	}
+	
+	@NotNull(message = "{bestellung.artikelIds.invalid}")
+	public List<Long> artikelIdsInvalid() {
+		return null;
+	}
+	
+	@NotNull(message = "{bestellung.kunde.id.invalid}")
+	public Long kundeIdInvalid() {
+		return null;
+	}
 }

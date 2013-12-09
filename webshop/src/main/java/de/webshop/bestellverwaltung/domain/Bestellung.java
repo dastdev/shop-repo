@@ -4,31 +4,32 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
 import de.webshop.kundenverwaltung.domain.Kunde;
 
 @XmlRootElement
 public class Bestellung implements Serializable {
 	
-	private static final long serialVersionUID = 8645031681820165535L;
-
-	private Long			id;
+	private static final long	serialVersionUID	= 8645031681820165535L;
+	
+	private Long				id;
 	
 	@XmlTransient
-	private Kunde			kunde;
-	private URI				kundeUri;
+	private Kunde				kunde;
+	private URI					kundeUri;
 	
 	@NotNull
-	private Date			bestelldatum;
+	private Date				bestelldatum;
 	
 	@XmlTransient
-	private List<Position>	positionen;
+	// TODO: @XmlTransient ausbauen damit Positionen per POST übergeben werden
+	// können!
+	private List<Position>		positionen;
 	
-	private URI				positionenUri;
+	private URI					positionenUri;
 	
 	public Long getID() {
 		return id;

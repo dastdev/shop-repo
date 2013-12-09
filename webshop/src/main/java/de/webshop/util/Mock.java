@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
+import java.util.TreeSet;
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 import de.webshop.bestellverwaltung.domain.Bestellung;
@@ -123,22 +125,23 @@ public final class Mock {
 		kunde.setVorname("Vorname");
 		kunde.setEmail(email);
 		kunde.setTyp(Kundentyp.PRIVATKUNDE);
-//		final GregorianCalendar seitCal = new GregorianCalendar(JAHR, MONAT, TAG);
-//		final Date seit = seitCal.getTime();
-//		kunde.setSeit(seit);
+		// final GregorianCalendar seitCal = new GregorianCalendar(JAHR, MONAT,
+		// TAG);
+		// final Date seit = seitCal.getTime();
+		// kunde.setSeit(seit);
 		
 		final Adresse adresse = new Adresse();
-//		adresse.setId(kunde.getId() + 1);        // andere ID fuer die Adresse
-//		adresse.setPlz("12345");
-//		adresse.setOrt("Testort");
-//		adresse.setKunde(kunde);
-//		kunde.setAdresse(adresse);
-
+		// adresse.setId(kunde.getId() + 1); // andere ID fuer die Adresse
+		// adresse.setPlz("12345");
+		// adresse.setOrt("Testort");
+		// adresse.setKunde(kunde);
+		// kunde.setAdresse(adresse);
+		
 		return kunde;
 	}
 	
-	public static Bestellung createBestellung(Bestellung bestellung, Kunde kunde) {
-		System.out.printf("Neue Bestellung: %s fuer Kunde: %s\n", bestellung, kunde);
+	public static Bestellung createBestellung(Bestellung bestellung, long kundeId) {
+		System.out.printf("Neue Bestellung: %s fuer Kunde: %d\n", bestellung, kundeId);
 		return bestellung;
 	}
 	
@@ -172,9 +175,9 @@ public final class Mock {
 		bestellung.setBestelldatum(new Date(1234567890));
 		
 		// FIXME: setPositionen
-		List<Position> positionen = new ArrayList<>();
-		positionen.add(findPositionById((long) 1));
-		positionen.add(findPositionById((long) 2));
+		List<Position> positionen = new ArrayList<Position>();
+		positionen.add(findPositionById(1L));
+		positionen.add(findPositionById(2L));
 		bestellung.setPositionen(positionen);
 		
 		return bestellung;

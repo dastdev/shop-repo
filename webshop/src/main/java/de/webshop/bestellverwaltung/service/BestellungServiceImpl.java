@@ -38,9 +38,9 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	}
 	
 	@Override
-	public Bestellung createBestellung(Bestellung bestellung, Kunde kunde, Locale locale) {
+	public Bestellung createBestellung(Bestellung bestellung, long kundeId, Locale locale) {
 		// TODO Datenbankzugriffsschicht
-		bestellung = Mock.createBestellung(bestellung, kunde);
+		bestellung = Mock.createBestellung(bestellung, kundeId);
 		event.fire(bestellung);
 		
 		return bestellung;
