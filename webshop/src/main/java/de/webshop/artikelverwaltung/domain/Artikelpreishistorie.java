@@ -97,23 +97,33 @@ public class Artikelpreishistorie implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 
+
 		final Artikelpreishistorie other = (Artikelpreishistorie) obj;
-		if (artikelID != other.artikelID)
+		if (artikelID != other.artikelID) {
 			return false;
-		if (gueltigVon == null) {
-			if (other.gueltigVon != null)
-				return false;
 		}
-		else if (!gueltigVon.equals(other.gueltigVon))
+		
+		if (gueltigVon == null) {
+			if (other.gueltigVon != null) {
+				return false;
+			}
+		}
+		else if (!gueltigVon.equals(other.gueltigVon)) {
 			return false;
-		if (id != other.id)
+		}
+		
+		if (id != other.id.longValue()) {
 			return false;
+		}
+		
 		if (preis == null) {
 			if (other.preis != null)
 				return false;
 		}
-		else if (!preis.equals(other.preis))
+		else if (!preis.equals(other.preis)) {
 			return false;
+		}
+		
 		return true;
 	}
 

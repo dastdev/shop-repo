@@ -20,9 +20,9 @@ public final class Mock {
 	
 	// private static final Logger logger =
 	
-	private static final int	MAX_ID				= 99;
-	private static final int	MAX_KUNDEN			= 8;
-	private static final int	MAX_BESTELLUNGEN	= 4;
+	private static final int MAX_ID = 99;
+	private static final int MAX_KUNDEN = 8;
+	private static final int MAX_BESTELLUNGEN = 4;
 	
 	public static Position findPositionById(Long id) {
 		if (id > MAX_ID) {

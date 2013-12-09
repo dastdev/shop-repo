@@ -117,15 +117,14 @@ public class Adresse implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		// Checkstyle TODO: Variable "other" sollte als final deklariert werden
-		Adresse other = (Adresse) obj;
+		final Adresse other = (Adresse) obj;
 		if (hausnummer == null) {
 			if (other.hausnummer != null)
 				return false;
 		}
 		else if (!hausnummer.equals(other.hausnummer))
 			return false;
-		if (id != other.id)
+		if (id != other.id.longValue())
 			return false;
 		if (land != other.land)
 			return false;

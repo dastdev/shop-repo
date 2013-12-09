@@ -55,7 +55,7 @@ public class ArtikelResource implements Serializable {
 		return "1.5";
 	}
 	
-	@SuppressWarnings("unused")
+	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
 	public Response findArtikelById(@PathParam("id") Long id) {

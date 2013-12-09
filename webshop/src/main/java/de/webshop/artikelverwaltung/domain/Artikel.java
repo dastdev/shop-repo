@@ -217,7 +217,7 @@ public class Artikel implements Serializable {
 		}
 		else if (!bezeichnung.equals(other.bezeichnung))
 			return false;
-		if (id != other.id)
+		if (id != other.id.longValue())
 			return false;
 		if (kategorie != other.kategorie)
 			return false;
@@ -227,9 +227,9 @@ public class Artikel implements Serializable {
 		}
 		else if (!kurzBeschreibung.equals(other.kurzBeschreibung))
 			return false;
-		if (lagerbestand != other.lagerbestand)
+		if (lagerbestand != other.lagerbestand.intValue())
 			return false;
-		if (parentID != other.parentID)
+		if (parentID != other.parentID.longValue())
 			return false;
 		if (preis == null) {
 			if (other.preis != null)

@@ -128,7 +128,7 @@ public class KundeResource implements Serializable {
 		if (nachname != null) {
 			kunden = ks.findKundenByNachname(nachname);
 			if (kunden.isEmpty()) {
-				throw new NotFoundException(String.format(	"Kein Kunde mit Nachname %d gefunden.",
+				throw new NotFoundException(String.format(	"Kein Kunde mit Nachname %s gefunden.",
 															nachname));
 			}
 		}
