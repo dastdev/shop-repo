@@ -50,12 +50,14 @@ public class KundeService implements Serializable {
 	}
 
 	public Kunde createKunde(Kunde kunde) {
-		if (kunde == null)
-			return kunde;
+		if (kunde == null) {
+		System.out.println("Kein anzulegender Kunde angegeben");
+		return kunde;
+		}
 
-		final Kunde tmpKunde = Mock.findKundeByEmail(kunde.getEmail());
-		if (tmpKunde != null)
-			throw new EmailExistsException(kunde.getEmail());
+//		final Kunde tmpKunde = Mock.findKundeByEmail(kunde.getEmail());
+//		if (tmpKunde != null)
+//			throw new EmailExistsException(kunde.getEmail());
 
 		// TODO Datenbankanbindung statt Mock
 		kunde = Mock.createKunde(kunde);
@@ -63,12 +65,12 @@ public class KundeService implements Serializable {
 	}
 
 	public Kunde updateKunde(Kunde kunde) {
-		if (kunde == null)
-			return null;
+//		if (kunde == null)
+//			return null;
 
-		final Kunde tmpkunde = findKundeByEmail(kunde.getEmail());
-		if (tmpkunde.getID().longValue() != kunde.getID().longValue())
-			throw new EmailExistsException(tmpkunde.getEmail());
+//		final Kunde tmpkunde = findKundeByEmail(kunde.getEmail());
+//		if (tmpkunde.getID().longValue() != kunde.getID().longValue())
+//			throw new EmailExistsException(tmpkunde.getEmail());
 
 		Mock.updateKunde(kunde);
 		return kunde;

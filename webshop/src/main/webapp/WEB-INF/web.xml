@@ -9,4 +9,19 @@
     <param-name>resteasy.media.type.mappings</param-name>
     <param-value>json : application/json, xml : application/xml, image : image/*, text : text/plain</param-value>
   </context-param>
+  <env-entry>
+  	<env-entry-name>absenderMail</env-entry-name>
+  	<env-entry-type>java.lang.String</env-entry-type>
+  	<env-entry-value>MegaShopTeam@hs-karlsruhe.de</env-entry-value>
+  </env-entry>
+  <env-entry>
+  	<env-entry-name>absenderName</env-entry-name>
+  	<env-entry-type>java.lang.String</env-entry-type>
+  	<env-entry-value>Mega Shop Team</env-entry-value>
+  </env-entry>
+  <env-entry>
+  	<env-entry-name>locales</env-entry-name>
+  	<env-entry-type>java.lang.String</env-entry-type>
+  	<env-entry-value>de,en</env-entry-value>
+  </env-entry>
 </web-app>

@@ -4,10 +4,12 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import java.io.Serializable;
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.List;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -23,6 +25,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.jboss.logging.Logger;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.bestellverwaltung.service.BestellungService;
@@ -39,6 +42,8 @@ import de.webshop.util.rest.UriHelper;
 public class KundeResource implements Serializable {
 	
 	private static final long	serialVersionUID			= -3183019727204066374L;
+	
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
 	
@@ -202,16 +207,19 @@ public class KundeResource implements Serializable {
 	@POST
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public Response createKunde(Kunde kunde) {
+	public Response createKunde(@Valid Kunde kunde) {
 		kunde = ks.createKunde(kunde);
+		
+		LOGGER.tracef("Kunde: %s", kunde);
 		return Response.created(getUriKunde(kunde, uriInfo)).build();
 	}
 	
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateKunde(Kunde kunde) {
+	public void updateKunde(@Valid Kunde kunde) {
 		ks.updateKunde(kunde);
+		LOGGER.tracef("Kunde: %s", kunde);
 	}
 	
 	@DELETE

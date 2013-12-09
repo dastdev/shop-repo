@@ -193,17 +193,17 @@ public final class Mock {
 		final String nachname = kunde.getName();
 		kunde.setID(Long.valueOf(nachname.length() ^ kunde.hashCode()));
 		
-		// FIXME: Kundenadresse
+		
 		final Adresse adresse = kunde.getAdresse();
 		adresse.setID((Long.valueOf(nachname.length())) + 1);
 		adresse.setKundeID(kunde.getID());
 		
-		System.out.println("Neuer Kunde: " + kunde);
+		System.out.printf("Neuer Kunde: %s" , kunde);
 		return kunde;
 	}
 	
 	public static void updateKunde(Kunde kunde) {
-		System.out.println("Aktualisierter Kunde: " + kunde);
+		System.out.printf("Aktualisierter Kunde: %s" , kunde);
 	}
 	
 	public static void deleteKunde(Long kundeId) {
