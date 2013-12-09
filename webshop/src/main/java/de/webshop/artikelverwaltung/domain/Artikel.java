@@ -32,7 +32,7 @@ public class Artikel implements Serializable {
 	// Eigenschaften
 	@Min(value = 1, message = "{artikelverwaltung.artikel.id.min}")
 	@Max(value = 99999999, message = "{artikelverwaltung.artikel.id.max}")
-	@NotNull(message = "{artikelverwaltung.artikel.id.notNull}")
+	// @NotNull(message = "{artikelverwaltung.artikel.id.notNull}") // Funktioniert nicht, wenn einkommentiert!
 	private Long id;
 	@NotNull(message = "{artikelverwaltung.artikel.artikelnummer.notNull}")
 	private String artikelnummer;

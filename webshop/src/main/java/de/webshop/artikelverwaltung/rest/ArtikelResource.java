@@ -88,7 +88,7 @@ public class ArtikelResource implements Serializable {
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateKunde(@Valid Artikel artikel) { // FIXME: @Valid?
+	public void updateArtikel(@Valid Artikel artikel) { // FIXME: @Valid?
 		as.updateArtikel(artikel);
 	}
 }
