@@ -142,6 +142,7 @@ public final class Mock {
 	}
 	
 	public static Bestellung createBestellung(Bestellung bestellung, long kundeId) {
+		Kunde k = findKundeById(kundeId);;
 		System.out.printf("Neue Bestellung: %s fuer Kunde: %d\n", bestellung, kundeId);
 		
 		return bestellung;

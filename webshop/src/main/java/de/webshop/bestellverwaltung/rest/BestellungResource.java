@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -53,7 +53,7 @@ public class BestellungResource implements Serializable {
 	private UriInfo				uriInfo;
 	
 	@Inject
-	private ArtikelService		as;
+	private ArtikelService as;
 	
 	@Inject
 	private BestellungService	bs;
@@ -216,15 +216,10 @@ public class BestellungResource implements Serializable {
 			// keine einzige Artikel-ID als gueltige Zahl
 			artikelIdsInvalid();
 		}
-		
-		// TODO: ArtikelService-Klasse benutzen!!
-		// final Collection<Artikel> gefundeneArtikel =
-		// as.findfindArtikelByIds(artikelIds);
+
 		final Collection<Artikel> gefundeneArtikel = new ArrayList<Artikel>();
-		long nId = 13;
-		gefundeneArtikel.add(as.findArtikelById(nId));
-		gefundeneArtikel.add(as.findArtikelById(++nId));
-		gefundeneArtikel.add(as.findArtikelById(++nId));
+		for(Long artikelId : artikelIds)
+			gefundeneArtikel.add(as.findArtikelById(artikelId));
 		
 		int i = 0;
 		final List<Position> neuePositionen = new ArrayList<Position>();
