@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 import javax.inject.Qualifier;
 
 @Qualifier
-@Target({ FIELD, PARAMETER})
+@Target({ FIELD, PARAMETER })
 @Retention(RUNTIME)
 @Documented
 public @interface AbsenderName {

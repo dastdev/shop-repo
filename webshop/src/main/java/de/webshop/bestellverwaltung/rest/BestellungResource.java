@@ -79,9 +79,11 @@ public class BestellungResource implements Serializable {
 		
 		final Bestellung bestellung = bs.findBestellungById(id);
 		
+		/* TODO throw exception
 		if (bestellung == null) {
-			// TODO throw new NotFoundException("bestellung.notFound.id",id));
+			// throw new NotFoundException("bestellung.notFound.id",id));
 		}
+		*/
 		setStructuralLinks(bestellung, uriInfo);
 		
 		// Link-Header setzen
@@ -98,7 +100,7 @@ public class BestellungResource implements Serializable {
 		
 		final Bestellung bestellung = bs.findBestellungById(id);
 		
-		// TODO: bestellung.getID() etwas anderes als id?
+		// TODO bestellung.getID() etwas anderes als id?
 		final List<Position> positionen = ps.findPositionenByBestellungId(id);
 		
 		if (positionen.isEmpty()) {
@@ -176,7 +178,7 @@ public class BestellungResource implements Serializable {
 	@Produces
 	public Response createBestellung(@Valid Bestellung bestellung) {
 		// Kunden-ID ermitteln
-		// TODO: eingeloggter Kunde
+		// TODO eingeloggter Kunde
 		
 		final String kundeUriStr = bestellung.getKundeUri().toString();
 		int startPos = kundeUriStr.lastIndexOf('/') + 1;
@@ -216,8 +218,9 @@ public class BestellungResource implements Serializable {
 		}
 
 		final Collection<Artikel> gefundeneArtikel = new ArrayList<Artikel>();
-		for(Long artikelId : artikelIds)
+		for (Long artikelId : artikelIds) {
 			gefundeneArtikel.add(as.findArtikelById(artikelId));
+		}
 		
 		int i = 0;
 		final List<Position> neuePositionen = new ArrayList<Position>();
@@ -240,7 +243,7 @@ public class BestellungResource implements Serializable {
 		bestellung.setPositionen(neuePositionen);
 		
 		if (kundeId == null) {
-			// TODO: Kann kundeId == null sein?
+			// TODO Kann kundeId == null sein?
 			kundeId = -1L;
 		}
 		

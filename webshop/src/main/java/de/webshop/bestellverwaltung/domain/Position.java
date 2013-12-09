@@ -74,8 +74,7 @@ public class Position implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		// Checkstyle TODO: Variable "other" sollte als final deklariert werden
-		Position other = (Position) obj;
+		final Position other = (Position) obj;
 		if (anzahl == null) {
 			if (other.anzahl != null)
 				return false;

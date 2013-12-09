@@ -32,11 +32,8 @@ public class PositionServiceImpl implements PositionService, Serializable {
 	@Override
 	@NotNull(message = "{position.notFound.bestellung.id}")
 	public List<Position> findPositionenByBestellungId(Long id) {
-		
-		// // TODO Datenbankanbindung statt Mock
-		// TODO Auto-generated method stub
-		// Checkstyle TODO: Variable "bestellung" sollte als final deklariert werden
-		Bestellung bestellung = Mock.findBestellungById(id);
+		// TODO Datenbankanbindung statt Mock
+		final Bestellung bestellung = Mock.findBestellungById(id);
 		return Mock.findPositionenByBestellung(bestellung);
 	}
 	

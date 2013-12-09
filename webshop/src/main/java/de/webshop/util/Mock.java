@@ -39,23 +39,25 @@ public final class Mock {
 	}
 	
 	public static Artikel findArtikelById(Long id) {
-		// Checkstyle TODO: Variable "artikel" sollte als final deklariert werden
-		Artikel artikel = new Artikel();
+		// Checkstyle TODO Variable "artikel" sollte als final deklariert werden
+		final Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
 		artikel.setBezeichnung("Robobike");
 		artikel.setKurzBeschreibung("Das Robobike weiss wohin ...");
 		artikel.setBeschreibung("Lange Robobikebeschreibu...........");
 		artikel.setKategorie(Kategorie.KOMPLETTRAEDER);
-		artikel.setLagerbestand(13);
-		artikel.setPreis(new BigDecimal(1300.50));
+		final Integer tempLaBe = new Integer(13);
+		artikel.setLagerbestand(tempLaBe);
+		final BigDecimal tempPreis = new BigDecimal(1300.50);
+		artikel.setPreis(tempPreis);
 		
 		return artikel;
 	}
 
 	public static List<Position> findPositionenByBestellung(Bestellung bestellung) {
-		// Checkstyle TODO: Variable "positionen" sollte als final deklariert werden
-		List<Position> positionen = bestellung.getPositionen();
+		// Checkstyle TODO Variable "positionen" sollte als final deklariert werden
+		final List<Position> positionen = bestellung.getPositionen();
 		return positionen;
 	}
 	
@@ -142,9 +144,7 @@ public final class Mock {
 	}
 	
 	public static Bestellung createBestellung(Bestellung bestellung, long kundeId) {
-		Kunde k = findKundeById(kundeId);;
 		System.out.printf("Neue Bestellung: %s fuer Kunde: %d\n", bestellung, kundeId);
-		
 		return bestellung;
 	}
 	
@@ -158,8 +158,6 @@ public final class Mock {
 			bestellung.setKunde(kunde);
 			bestellungen.add(bestellung);
 		}
-		
-		// kunde.setBestellungen(bestellungen);
 		
 		return bestellungen;
 	}
@@ -175,11 +173,10 @@ public final class Mock {
 		final Bestellung bestellung = new Bestellung();
 		bestellung.setID(id);
 		bestellung.setKunde(kunde);
-		bestellung.setBestelldatum(new Date(1234567890));
-		
-		// FIXME: setPositionen
-		// Checkstyle TODO: Variable "positionen" sollte als final deklariert werden
-		List<Position> positionen = new ArrayList<Position>();
+		final Date tempBestDatum = new Date(1234567890);
+		bestellung.setBestelldatum(tempBestDatum);
+	
+		final List<Position> positionen = new ArrayList<Position>();
 		positionen.add(findPositionById(1L));
 		positionen.add(findPositionById(2L));
 		bestellung.setPositionen(positionen);
@@ -211,7 +208,7 @@ public final class Mock {
 	}
 	
 	public static Position createPosition(Position position, Bestellung bestellung) {
-		// TODO: position anpassen
+		// TODO position anpassen
 		if (position == null) {
 			position = new Position();
 			System.out.println("uebergebene Position ungueltig");
@@ -220,7 +217,8 @@ public final class Mock {
 			System.out.println(String.format("Create Position %d", position.getID()));
 		}
 		
-		position.setID(12L);
+		final Long tempId = new Long(12);
+		position.setID(tempId);
 		return position;
 	}
 	
@@ -266,8 +264,8 @@ public final class Mock {
 			System.out.println("Create artikel");
 		}
 		
-		// TODO: calc ID
-		artikel.setID(13L);
+		final Long tempId = new Long(13);
+		artikel.setID(tempId);
 		
 		return artikel;
 	}

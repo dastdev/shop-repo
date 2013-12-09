@@ -42,11 +42,11 @@ public class BestellungObserver implements Serializable {
 	
 	@PostConstruct
 	private void postConstruct() {
-		if(absenderMail == null) {
+		if (absenderMail == null) {
 			LOGGER.warn("Absender für Mail nicht gesetzt.");
 			return;
 		}
-		System.out.println("sjsjsjsj");
+		
 		LOGGER.infof("Absender fuer Bestellung-Emails: %s <%s>", absenderName, absenderMail);
 	}
 	

@@ -95,8 +95,8 @@ public class Bestellung implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		// Checkstyle TODO: Variable "other" sollte als final deklariert werden
-		Bestellung other = (Bestellung) obj;
+		// Checkstyle TODO Variable "other" sollte als final deklariert werden
+		final Bestellung other = (Bestellung) obj;
 		if (bestelldatum == null) {
 			if (other.bestelldatum != null)
 				return false;
