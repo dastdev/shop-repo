@@ -32,6 +32,7 @@ import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import de.webshop.artikelverwaltung.domain.Artikel;
+import de.webshop.artikelverwaltung.rest.ArtikelResource;
 import de.webshop.artikelverwaltung.service.ArtikelService;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.domain.Position;
@@ -63,6 +64,9 @@ public class BestellungResource implements Serializable {
 	
 	@Inject
 	private PositionService		ps;
+	
+	@Inject
+	private ArtikelResource		artikelResource;
 	
 	@Inject
 	private KundeResource		kundeResource;
@@ -131,9 +135,12 @@ public class BestellungResource implements Serializable {
 		// URI fuer positionen setzen
 		final List<Position> positionen = bestellung.getPositionen();
 		
-		if (positionen != null) {
-			final URI positionenUri = getUriPositionen(bestellung, uriInfo);
-			bestellung.setPositionenUri(positionenUri);
+		if (positionen != null && !positionen.isEmpty()) {
+			for (Position p : positionen) {
+				final URI artikelUri = artikelResource.getUriArtikel(p.getArtikel(), uriInfo);
+				p.setArtikelUri(artikelUri);
+			}
+			
 		}
 	}
 	

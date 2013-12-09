@@ -24,12 +24,7 @@ public class Bestellung implements Serializable {
 	@NotNull
 	private Date				bestelldatum;
 	
-	@XmlTransient
-	// TODO: @XmlTransient ausbauen damit Positionen per POST übergeben werden
-	// können!
 	private List<Position>		positionen;
-	
-	private URI					positionenUri;
 	
 	public Long getID() {
 		return id;
@@ -71,14 +66,6 @@ public class Bestellung implements Serializable {
 		this.positionen = positionen;
 	}
 	
-	public URI getPositionenUri() {
-		return positionenUri;
-	}
-	
-	public void setPositionenUri(URI positionenUri) {
-		this.positionenUri = positionenUri;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -88,7 +75,6 @@ public class Bestellung implements Serializable {
 		result = prime * result + ((kunde == null) ? 0 : kunde.hashCode());
 		result = prime * result + ((kundeUri == null) ? 0 : kundeUri.hashCode());
 		result = prime * result + ((positionen == null) ? 0 : positionen.hashCode());
-		result = prime * result + ((positionenUri == null) ? 0 : positionenUri.hashCode());
 		return result;
 	}
 	
@@ -131,20 +117,13 @@ public class Bestellung implements Serializable {
 		}
 		else if (!positionen.equals(other.positionen))
 			return false;
-		if (positionenUri == null) {
-			if (other.positionenUri != null)
-				return false;
-		}
-		else if (!positionenUri.equals(other.positionenUri))
-			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
 		return "Bestellung [id=" + id + ", kunde=" + kunde + ", kundeUri=" + kundeUri
-				+ ", bestelldatum=" + bestelldatum + ", positionen=" + positionen
-				+ ", positionenUri=" + positionenUri + "]";
+				+ ", bestelldatum=" + bestelldatum + ", positionen=" + positionen + "]";
 	}
 	
 }
