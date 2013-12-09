@@ -25,21 +25,21 @@ public class PositionServiceImpl implements PositionService, Serializable {
 	@Override
 	@NotNull(message = "{position.notFound.id}")
 	public Position findPositionById(Long id) {
-		// TODO Auto-generated method stub
+		// TODO Datenbankanbindung statt Mock
 		return Mock.findPositionById(id);
 	}
 	
 	@Override
 	@NotNull(message = "{position.notFound.bestellung.id}")
 	public List<Position> findPositionenByBestellungId(Long id) {
-		// TODO Auto-generated method stub
+		// // TODO Datenbankanbindung statt Mock
 		Bestellung bestellung = Mock.findBestellungById(id);
 		return Mock.findPositionenByBestellung(bestellung);
 	}
 	
 	@Override
 	public Position createPosition(Position position, Bestellung bestellung, Locale locale) {
-		// TODO Auto-generated method stub
+		// TODO Datenbankanbindung statt Mock
 		position = Mock.createPosition(position, bestellung);
 		event.fire(position);
 		

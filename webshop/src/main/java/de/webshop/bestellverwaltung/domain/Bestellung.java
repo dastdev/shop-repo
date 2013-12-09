@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;

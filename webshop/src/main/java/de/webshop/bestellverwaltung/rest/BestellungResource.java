@@ -2,7 +2,6 @@ package de.webshop.bestellverwaltung.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
-import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.FIRST_LINK;
 import static de.webshop.util.Constants.LAST_LINK;
@@ -11,10 +10,8 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -101,7 +98,6 @@ public class BestellungResource implements Serializable {
 	@Path("{id:[1-9][0-9]*}/positionen")
 	public Response findPositionenByBestellungId(@PathParam("id") long id) {
 		
-		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		final Bestellung bestellung = bs.findBestellungById(id);
 		
 		// TODO: bestellung.getID() etwas anderes als id?
@@ -125,9 +121,7 @@ public class BestellungResource implements Serializable {
 		// URI fuer Kunde setzen
 		final Kunde kunde = bestellung.getKunde();
 		if (kunde != null) {
-			// FIXME: kundeResource.getUriKunde(...)
-			final URI kundeUri = null; // kundeResource.getUriKunde(bestellung.getKunde(),
-										// uriInfo);
+			final URI kundeUri = kundeResource.getUriKunde(bestellung.getKunde(), uriInfo);
 			bestellung.setKundeUri(kundeUri);
 		}
 		

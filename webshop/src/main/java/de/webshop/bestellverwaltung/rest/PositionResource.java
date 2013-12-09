@@ -24,12 +24,14 @@ import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.rest.ArtikelResource;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.util.Mock;
+import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
-@RequestScoped
 @Path("/position")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
+@RequestScoped
+@Log
 public class PositionResource implements Serializable {
 	
 	private static final long	serialVersionUID	= -5839644821875097527L;
