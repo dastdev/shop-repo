@@ -60,7 +60,7 @@ public class Kunde implements Serializable {
 		this.typ = typ;
 	}
 
-	// Checkstyle TODO: Mehr als 7 Parameter
+	//TODO (Checkstyle) Mehr als 7 Parameter
 	public Kunde(Long id, String name, String vorname, Date geburtstag,
 			String passwort, String email, Kundentyp typ, boolean geloescht,
 			List<Bestellung> bestellungen, URI bestellungUri) {
@@ -200,8 +200,7 @@ public class Kunde implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		// Checkstyle TODO: Variable "other" sollte als final deklariert werden
-		Kunde other = (Kunde) obj;
+		final Kunde other = (Kunde) obj;
 		if (bestellungen == null) {
 			if (other.bestellungen != null)
 				return false;
