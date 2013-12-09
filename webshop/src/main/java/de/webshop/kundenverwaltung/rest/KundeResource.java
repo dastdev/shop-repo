@@ -70,7 +70,7 @@ public class KundeResource implements Serializable {
 	public Response findKundeById(@PathParam("id") Long id) {
 		final Kunde kunde = ks.findKundeById(id);
 		if (kunde == null) {
-			throw new NotFoundException(String.format("Kein Kunde mit der ID {0] gefunden.", id));
+			throw new NotFoundException(String.format("Kein Kunde mit der ID %d gefunden.", id));
 		}
 		setStructuralLinks(kunde, uriInfo);
 		// Link-Header setzen
@@ -123,7 +123,8 @@ public class KundeResource implements Serializable {
 		if (nachname != null) {
 			kunden = ks.findKundenByNachname(nachname);
 			if (kunden.isEmpty()) {
-				throw new NotFoundException("Kein Kunde mit Nachname " + nachname + " gefunden.");
+				throw new NotFoundException(String.format(	"Kein Kunde mit Nachname %d gefunden.",
+															nachname));
 			}
 		}
 		else {
@@ -161,7 +162,7 @@ public class KundeResource implements Serializable {
 		final Kunde kunde = ks.findKundeById(kundeId);
 		if (kunde == null) {
 			throw new NotFoundException(
-										String.format(	"Es wurden keine Bestellungen fuer den Kunden {0} gefunden",
+										String.format(	"Es wurden keine Bestellungen fuer den Kunden %d gefunden",
 														kundeId));
 		}
 		final List<Bestellung> bestellungen = bs.findBestellungenByKunde(kunde);
