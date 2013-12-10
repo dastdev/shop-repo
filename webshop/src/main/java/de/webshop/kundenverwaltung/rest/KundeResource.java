@@ -111,7 +111,7 @@ public class KundeResource implements Serializable {
 		final Link update = Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
 								.rel(Constants.UPDATE_LINK).build();
 		
-		final Link remove = Link.fromUri(	uriHelper.getUri(	KundeResource.class, "deleteKunde",
+		final Link remove = Link.fromUri(uriHelper.getUri(KundeResource.class, "deleteKunde",
 																kunde.getID(), uriInfo))
 								.rel(Constants.REMOVE_LINK).build();
 		
@@ -128,7 +128,7 @@ public class KundeResource implements Serializable {
 		if (nachname != null) {
 			kunden = ks.findKundenByNachname(nachname);
 			if (kunden.isEmpty()) {
-				throw new NotFoundException(String.format(	"Kein Kunde mit Nachname %s gefunden.",
+				throw new NotFoundException(String.format("Kein Kunde mit Nachname %s gefunden.",
 															nachname));
 			}
 		}
@@ -143,7 +143,7 @@ public class KundeResource implements Serializable {
 			setStructuralLinks(k, uriInfo);
 		}
 		
-		return Response.ok(new GenericEntity<List<Kunde>>(kunden) {})
+		return Response.ok(new GenericEntity<List<Kunde>>(kunden) { })
 						.links(getTransitionalLinksKunden(kunden, uriInfo)).build();
 	}
 	
@@ -168,7 +168,7 @@ public class KundeResource implements Serializable {
 		final Kunde kunde = ks.findKundeById(kundeId);
 		if (kunde == null) {
 			throw new NotFoundException(
-										String.format(	"Es wurden keine Bestellungen fuer den Kunden %d gefunden",
+										String.format("Es wurden keine Bestellungen fuer den Kunden %d gefunden",
 														kundeId));
 		}
 		final List<Bestellung> bestellungen = bs.findBestellungenByKunde(kunde);
@@ -179,7 +179,7 @@ public class KundeResource implements Serializable {
 			}
 		}
 		
-		return Response.ok(new GenericEntity<List<Bestellung>>(bestellungen) {})
+		return Response.ok(new GenericEntity<List<Bestellung>>(bestellungen) { })
 						.links(getTransitionalLinksBestellungen(bestellungen, kunde, uriInfo))
 						.build();
 	}

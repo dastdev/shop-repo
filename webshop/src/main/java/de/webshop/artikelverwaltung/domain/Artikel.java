@@ -39,6 +39,7 @@ public class Artikel implements Serializable {
 
 	private URI artikelbild;
 
+	
 	private String bezeichnung;
 
 	@Size(max = 200, message = "{artikelverwaltung.artikel.kurzBeschreibung.size}")
