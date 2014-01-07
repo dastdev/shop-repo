@@ -26,11 +26,17 @@
     <datasource jndi-name="java:jboss/datasources/webshopDS"
         pool-name="webshop" enabled="true"
         use-java-context="true">
-        <connection-url>jdbc:h2:mem:webshop;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>
-        <driver>h2</driver>
+        <connection-url>jdbc:oracle:thin:@localhost:1521:XE</connection-url>
+        <driver-class>oracle.jdbc.OracleDriver</driver-class>
+        <driver>oracle</driver>
+        <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
+        <pool>
+        	<min-pool-size>1</min-pool-size>
+        	<max-pool-size>4</max-pool-size>
+        </pool>
         <security>
-            <user-name>sa</user-name>
-            <password>sa</password>
+            <user-name>shop</user-name>		<!-- Default: sa/sa -->
+            <password>p</password>
         </security>
     </datasource>
 </datasources>
