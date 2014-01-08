@@ -1,11 +1,20 @@
 package de.webshop.bestellverwaltung.domain;
 
-//import static javax.persistence.TemporalType.DATE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
-//import javax.persistence.Temporal;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -15,21 +24,33 @@ import org.hibernate.validator.constraints.NotEmpty;
 import de.webshop.kundenverwaltung.domain.Kunde;
 
 @XmlRootElement
+@Entity
 public class Bestellung implements Serializable {
 	
 	private static final long serialVersionUID = 8645031681820165535L;
 	
+	@Id
+	@GeneratedValue
+	@Basic(optional = false)
 	@Min(value = 1, message = "{bestellverwaltung.bestellung.id.min}")
 	private Long id;
 	
+	@ManyToOne
+	@JoinColumn(name = "kunde_fk", nullable = false, insertable = false, updatable = false)
+	@OrderColumn(name = "index")
 	@XmlTransient
 	private Kunde kunde;
+	
+	@Transient
 	private URI	kundeUri;
 	
 	@NotNull(message = "{bestellverwaltung.bestellung.date.notNull}")
-	//@Temporal(DATE)
+	//TODO: temporal date
 	private Date bestelldatum;
 	
+	@OneToMany(cascade = { PERSIST, REMOVE }) // FOLIE 121 05jpa.pdf - fetch = EAGER = DEFAULT?
+	@JoinColumn(name = "bestellung_fk", nullable = false)
+	@OrderColumn(name = "index")
 	@NotEmpty(message = "{bestellverwaltung.bestellung.positionen.notEmpty}")
 	@Valid
 	private List<Position> positionen;
@@ -59,7 +80,6 @@ public class Bestellung implements Serializable {
 	}
 	
 	public Date getBestelldatum() {
-		
 		return bestelldatum;
 	}
 	

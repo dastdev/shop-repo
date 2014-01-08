@@ -35,7 +35,7 @@
          <property name="javax.persistence.schema-generation.create-source" value="metadata-then-script" />
          <property name="javax.persistence.schema-generation.drop-source" value="metadata-then-script" />
          <property name="javax.persistence.schema-generation.drop-script-source" value="sql/drop.sql" />
-         <property name="javax.persistence.schema-generation.create-script-source" value="sql.create.sql" />
+         <property name="javax.persistence.schema-generation.create-script-source" value="sql/create.sql" />
          <property name="javax.persistence.sql-load-script-source" value="sql/load.sql" />
                   <!-- Properties for Hibernate -->
          <!-- Nur "Java Persistence Query Language (JPAQL) nutzen, keine Erweiterungen von HQL -->
