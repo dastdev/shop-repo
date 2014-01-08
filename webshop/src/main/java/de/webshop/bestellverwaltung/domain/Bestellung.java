@@ -2,11 +2,14 @@ package de.webshop.bestellverwaltung.domain;
 
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.TemporalType.DATE;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -25,6 +29,7 @@ import de.webshop.kundenverwaltung.domain.Kunde;
 
 @XmlRootElement
 @Entity
+@Cacheable
 public class Bestellung implements Serializable {
 	
 	private static final long serialVersionUID = 8645031681820165535L;
@@ -44,8 +49,9 @@ public class Bestellung implements Serializable {
 	@Transient
 	private URI	kundeUri;
 	
+	@Temporal(DATE)
+	@Column(nullable = false, updatable = false)
 	@NotNull(message = "{bestellverwaltung.bestellung.date.notNull}")
-	//TODO: temporal date
 	private Date bestelldatum;
 	
 	@OneToMany(cascade = { PERSIST, REMOVE }) // FOLIE 121 05jpa.pdf - fetch = EAGER = DEFAULT?
