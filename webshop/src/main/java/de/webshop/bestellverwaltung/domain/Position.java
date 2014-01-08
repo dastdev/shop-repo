@@ -2,25 +2,42 @@ package de.webshop.bestellverwaltung.domain;
 
 import java.io.Serializable;
 import java.net.URI;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import de.webshop.artikelverwaltung.domain.Artikel;
 
-@XmlRootElement
+//FIXME: @XmlRootElement unnötig, da immer nur eine Bestellung das XMLRootElement ist?!
+@Entity
 public class Position implements Serializable {
 	
 	private static final long serialVersionUID	= -3474235149599204012L;
 	
+	@Id
+	@GeneratedValue
+	@Basic(optional = false)
 	@Min(value = 1, message = "{bestellverwaltung.position.id.min}")
 	private Long id;
 	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "artikel_fk", nullable = false)
 	@XmlTransient
 	private Artikel artikel;
+	
+	@Transient
 	private URI artikelUri;
 	
+	@Basic(optional = false)
 	@NotNull(message = "{bestellverwaltung.position.anzahl.notNull}")
+	@Min(value = 1, message = "{bestellverwaltung.position.anzahl.min}")
 	private Integer anzahl;
 	
 	public Long getID() {
