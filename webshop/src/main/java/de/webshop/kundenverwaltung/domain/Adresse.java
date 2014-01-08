@@ -20,7 +20,7 @@ public class Adresse implements Serializable {
 	
 	@OneToOne
 	@JoinColumn(name = "kunde_fk", nullable = false, unique = true)
-	@NotNull(message = "{kundenverwaltung.adresse.kunde.notNull}")
+//	@NotNull(message = "{kundenverwaltung.adresse.kunde.notNull}")
 	private Kunde kunde;
 	
 	@NotNull(message = "{kundenverwaltung.adresse.strasse.notNull}")
