@@ -24,14 +24,24 @@
     <!-- The datasource is bound into JNDI at this location. We reference 
         this in META-INF/persistence.xml -->
     <datasource jndi-name="java:jboss/datasources/webshopDS"
-        pool-name="webshop" enabled="true"
-        use-java-context="true">
-        <connection-url>jdbc:h2:mem:webshop;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>
-        <driver>h2</driver>
+        pool-name="webshop" enabled="true">        <!--  use-java-context="true"> -->
+        <connection-url>jdbc:oracle:thin:@localhost:1521:XE</connection-url>
+        <driver-class>oracle.jdbc.OracleDriver</driver-class>
+        <driver>oracle</driver>
+        <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
+        <pool>
+        	<min-pool-size>1</min-pool-size>
+        	<max-pool-size>4</max-pool-size>
+        </pool>
         <security>
-            <user-name>sa</user-name>
-            <password>sa</password>
+            <user-name>shop</user-name>		<!-- Default: sa/sa -->
+            <password>p</password>
         </security>
-    </datasource>
+    	<validation>
+			<valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker"/>
+			<check-valid-connection-sql>SELECT 1 FROM DUAL</check-valid-connection-sql>
+			<exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleExceptionSorter"/>
+		</validation>
+	</datasource>
 </datasources>
  

@@ -1,10 +1,23 @@
 package de.webshop.kundenverwaltung.domain;
 
+import static javax.persistence.TemporalType.DATE;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
-//import javax.persistence.Entity;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Index;
+import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -15,41 +28,68 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.validator.constraints.Email;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 
+@Entity
+@Table(indexes = @Index(columnList ="name") )
 @XmlRootElement
 public class Kunde implements Serializable {
 
 	private static final long serialVersionUID = -8937961791375017L;
-
+	
+	//TODO @Id raus?
+	@Id
+	@GeneratedValue
+	@Basic(optional=false)
 	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
 	private Long id;
+	
 	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
 	@Pattern(regexp = "[A-Z][a-z]+", message = "{kundenverwaltung.kunde.name.pattern}")
 	private String name;
+	
 	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
 	@Pattern(regexp = "[A-Z][a-z]+", message = "{kundenverwaltung.kunde.vorname.pattern}")
 	private String vorname;
+	
 	@Past(message = "{kundenverwaltung.kunde.geburtstag.date}")
+	@Temporal(DATE)
 	private Date geburtstag;
+	
 	@NotNull(message = "{kundenverwaltung.kunde.passwort.notNull}")
 	@Size(min = 4, max = 16, message = "{kundenverwaltung.kunde.passwort.length}")
 	private String passwort;
+	
 	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
 	@Email(message = "{kundenverwaltung.kunde.email.pattern}")
+	@Column(unique=true)
 	private String email;
+	
 	@NotNull(message = "{kundenverwaltung.kunde.typ.notNull}")
+	@Column(length = 1)
+	@Convert(converter = KundentypConverter.class)
 	private Kundentyp typ;
+	
+	@Column
 	private boolean geloescht;
+	
+	@Transient
+	@OneToMany
+	@JoinColumn(name="kunde")
 	@XmlTransient
 	private List<Bestellung> bestellungen;
+	
 	private URI uriBestellung;
+	
+	@Transient
+	@OneToOne(mappedBy = "kunde")
 	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
 	private Adresse adresse;
 
 	public Kunde() {
 	}
-
+	
+	//Konstruktor mit allen Pflichtattributen für DB-Zugriff
 	public Kunde(String name, String vorname, String passwort, String email,
 			Kundentyp typ) {
 		super();
@@ -60,22 +100,22 @@ public class Kunde implements Serializable {
 		this.typ = typ;
 	}
 
-	//TODO (Checkstyle) Mehr als 7 Parameter
-	public Kunde(Long id, String name, String vorname, Date geburtstag,
-			String passwort, String email, Kundentyp typ, boolean geloescht,
-			List<Bestellung> bestellungen, URI bestellungUri) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.vorname = vorname;
-		this.geburtstag = geburtstag;
-		this.passwort = passwort;
-		this.email = email;
-		this.typ = typ;
-		this.geloescht = geloescht;
-		this.bestellungen = bestellungen;
-		this.uriBestellung = bestellungUri;
-	}
+//	//TODO (Checkstyle) Mehr als 7 Parameter
+//	public Kunde(Long id, String name, String vorname, Date geburtstag,
+//			String passwort, String email, Kundentyp typ, boolean geloescht,
+//			List<Bestellung> bestellungen, URI bestellungUri) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.vorname = vorname;
+//		this.geburtstag = geburtstag;
+//		this.passwort = passwort;
+//		this.email = email;
+//		this.typ = typ;
+//		this.geloescht = geloescht;
+//		this.bestellungen = bestellungen;
+//		this.uriBestellung = bestellungUri;
+//	}
 
 	/**
 	 * Get- und Set-Methoden
@@ -162,6 +202,14 @@ public class Kunde implements Serializable {
 		this.uriBestellung = uri;
 	}
 
+	public Adresse getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
+	}
+
 	/**
 	 * Geerbte Object-Methoden
 	 */
@@ -177,8 +225,6 @@ public class Kunde implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((bestellungen == null) ? 0 : bestellungen.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((geburtstag == null) ? 0 : geburtstag.hashCode());
@@ -201,12 +247,6 @@ public class Kunde implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		final Kunde other = (Kunde) obj;
-		if (bestellungen == null) {
-			if (other.bestellungen != null)
-				return false;
-		}
-		else if (!bestellungen.equals(other.bestellungen))
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -248,14 +288,6 @@ public class Kunde implements Serializable {
 		else if (!vorname.equals(other.vorname))
 			return false;
 		return true;
-	}
-
-	public Adresse getAdresse() {
-		return adresse;
-	}
-
-	public void setAdresse(Adresse adresse) {
-		this.adresse = adresse;
 	}
 
 }

@@ -14,7 +14,7 @@ import javax.interceptor.InterceptorBinding;
 
 @InterceptorBinding
 @Retention(RUNTIME)
-@Target({METHOD, TYPE, CONSTRUCTOR })
+@Target({METHOD, TYPE, CONSTRUCTOR})
 @Documented
 public @interface Log {
 	

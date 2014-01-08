@@ -80,7 +80,7 @@ public final class Mock {
 			adresse.setPlz("76133");
 			adresse.setStadt("Megashophausen");
 			adresse.setStrasse("Bikestrasse");
-			adresse.setKundeID(id);
+			adresse.setKunde(kunde);
 		}
 		else {
 			adresse.setHausnummer("B2B");
@@ -89,7 +89,7 @@ public final class Mock {
 			adresse.setPlz("1885");
 			adresse.setStadt("Weizen");
 			adresse.setStrasse("Naturtruebweg");
-			adresse.setKundeID(id);
+			adresse.setKunde(kunde);
 		}
 		kunde.setAdresse(adresse);
 		
@@ -137,7 +137,7 @@ public final class Mock {
 		adresse.setID(kunde.getID() + 1); // andere ID fuer die Adresse
 		adresse.setPlz("12345");
 		adresse.setStadt("Testort");
-		adresse.setKundeID(kunde.getID());
+		adresse.setKunde(kunde);
 		kunde.setAdresse(adresse);
 		
 		return kunde;
@@ -193,7 +193,7 @@ public final class Mock {
 		
 		final Adresse adresse = kunde.getAdresse();
 		adresse.setID((Long.valueOf(nachname.length())) + 1);
-		adresse.setKundeID(kunde.getID());
+		adresse.setKunde(kunde);
 		
 		System.out.printf("Neuer Kunde: %s" , kunde);
 		return kunde;

@@ -1,7 +1,8 @@
 package de.webshop.kundenverwaltung.domain;
 
 import java.io.Serializable;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -16,19 +17,26 @@ public class Adresse implements Serializable {
 	@Min(value = 1, message = "{kundenverwaltung.adresse.id.min}")
 	@NotNull(message = "{kundenverwaltung.adresse.id.notNull}")
 	private Long id;
-	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
-	@NotNull(message = "{kundenverwaltung.adresse.kundeid.notNull}")
-	private Long kundeID;
+	
+	@OneToOne
+	@JoinColumn(name = "kunde_fk", nullable = false, unique = true)
+//	@NotNull(message = "{kundenverwaltung.adresse.kunde.notNull}")
+	private Kunde kunde;
+	
 	@NotNull(message = "{kundenverwaltung.adresse.strasse.notNull}")
 	private String strasse;
+	
 	@Size(max = 4, message = "{kundenverwaltung.adresse.hausnummer.size}")
 	@NotNull(message = "{kundenverwaltung.adresse.hausnummer.notNull}")
 	private String hausnummer;
+	
 	@Pattern(regexp = "\\d{4,5}", message = "{kundenverwaltung.adresse.plz.pattern}")
 	@NotNull(message = "{kundenverwaltung.adresse.plz.notNull }")
 	private String plz;
+	
 	@NotNull(message = "{kundenverwaltung.adresse.stadt.notNull}")
 	private String stadt;
+	
 	private Land land;
 
 	// Laenderkuerzel nach ISO 3166
@@ -86,12 +94,12 @@ public class Adresse implements Serializable {
 	}
 
 	// Rueckverweis auf Kunden, zu dem die Adresse gehoert
-	public Long getKundeID() {
-		return kundeID;
+	public Kunde getKunde() {
+		return kunde;
 	}
 
-	public void setKundeID(Long kundeID) {
-		this.kundeID = kundeID;
+	public void setKunde(Kunde kunde) {
+		this.kunde = kunde;
 	}
 
 	// Basismethoden
