@@ -4,7 +4,16 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.URI;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -16,60 +25,87 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 
  */
 @XmlRootElement
+@Entity
+@Table (indexes =  @Index(columnList = "bezeichnung"))
 public class Artikel implements Serializable {
-
-	/*
-	 * TODO ARTIKEL, ARTIKELRESOURCE, ARTIKELSERVICE [x] Bean-Validation [x]
-	 * Serialisierung aller Klassen [ ] Internationalisierung -> Fehlermeldungen
-	 * -> Exceptionmapper -> ValidationMessages-Dateien anlegen und fuellen [x]
-	 * Serviceklassen anlegen [x] Mock fuer Datenbankzugriff --> Wie genau? [x]
-	 * Logging implementieren [x] Equals, Hashcode [x] Evtl. vorbereitende
-	 * Annotationen fuer Datenbankzugriffe
-	 */
 
 	private static final long serialVersionUID = 2034010908161771924L;
 
 	// Eigenschaften
 	@Min(value = 1, message = "{artikelverwaltung.artikel.id.min}")
 	@Max(value = 99999999, message = "{artikelverwaltung.artikel.id.max}")
-	// @NotNull(message = "{artikelverwaltung.artikel.id.notNull}") // Funktioniert nicht, wenn einkommentiert!
+	@Id
+	@GeneratedValue
+	@Basic(optional = false)
 	private Long id;
+	
 	@NotNull(message = "{artikelverwaltung.artikel.artikelnummer.notNull}")
+	@Column (unique = true)
 	private String artikelnummer;
 
+	//@Transient ????
 	private URI artikelbild;
 
-	
 	private String bezeichnung;
 
 	@Size(max = 200, message = "{artikelverwaltung.artikel.kurzBeschreibung.size}")
 	private String kurzBeschreibung;
 
 	private String beschreibung;
+	
 	@DecimalMin(value = "0.0", message = "{artikelverwaltung.artikel.preis.min}")
 	@NotNull(message = "{artikelverwaltung.artikel.preis.notNull}")
+	@Digits(integer = 5, fraction = 2, message = "{artikelverwaltung.artikel.preis.digits}")
 	private BigDecimal preis;
 
 	@Min(value = 0, message = "{artikelverwaltung.artikel.lagerbestand.min}")
 	private Integer lagerbestand;
+	
 	@Min(value = 1, message = "{artikelverwaltung.artikel.parentID.min}")
 	private Long parentID;
 
+	@Column(length = 1) // Da Enum verkürzt in DB abgebildet wird
+	@Convert(converter = KategorieConverter.class)
 	private Kategorie kategorie;
 
 	public enum Kategorie {
-		KOMPLETTRAEDER, RADTEILE, ERSATZTEILE, ZUBEHOER
+		KOMPLETTRAEDER("K"),
+		RADTEILE("R"),
+		ERSATZTEILE("E"),
+		ZUBEHOER("Z");
+		
+		private String internal;
+		
+		private Kategorie(String internal) {
+			this.internal = internal;
+		}
+		
+		public String getInternal() {
+			return internal;
+		}
+		
+		public static Kategorie build(String internal) {
+			switch(internal) {
+			case "K": return KOMPLETTRAEDER;
+			case "R": return RADTEILE;
+			case "E": return ERSATZTEILE;
+			case "Z": return ZUBEHOER;
+			default: throw new RuntimeException("...");
+			}
+		}
 	}
+
 
 	// Konstruktoren
 	public Artikel() {
 
 	}
 
-	public Artikel(Long id, String artikelnummer) {
+	public Artikel(Long id, String artikelnummer, BigDecimal preis) {
 		super();
 		this.id = id;
 		this.artikelnummer = artikelnummer;
+		this.preis = preis;
 	}
 
 	// Getter und Setter
