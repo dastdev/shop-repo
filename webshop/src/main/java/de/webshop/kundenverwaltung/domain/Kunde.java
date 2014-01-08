@@ -35,7 +35,8 @@ public class Kunde implements Serializable {
 
 	private static final long serialVersionUID = -8937961791375017L;
 	
-	//TODO @Id raus?
+	//TODO 	tsc: @Id raus? 
+	//		dst: wieso?
 	@Id
 	@GeneratedValue
 	@Basic(optional=false)

@@ -12,14 +12,14 @@
 	<name>webshop</name>
 	
 	<url>http://www.iwi.hs-karlsruhe.de</url>
-	<inceptionYear>2009</inceptionYear>
+	<inceptionYear>2013</inceptionYear>
 	<description>Semester-Projekt</description>
 	
 	<!-- scm = source code management = Versionsmanagement -->
 	<scm>
-		<connection>scm:git:https://github.com/juergenzimmermann/shop.git</connection>
-		<url>https://github.com/juergenzimmermann/shop.git</url>
-		<developerConnection>scm:git:https://github.com/juergenzimmermann/shop.git</developerConnection>
+		<connection>scm:git:https://github.com/dastdev/shop-repo.git</connection>
+		<url>https://github.com/dastdev/shop-repo.git</url>
+		<developerConnection>scm:git:https://github.com/dastdev/shop-repo.git</developerConnection>
 	</scm>
 	
 	<licenses>
@@ -35,6 +35,7 @@
 	</organization>
 	
 	<developers>
+		<!--Auflistung alphabetisch-->
 		<developer>
 			<id>Matthias Koslowski</id>
 			<name>Matthias Koslowski</name>

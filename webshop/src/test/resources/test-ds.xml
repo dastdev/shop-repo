@@ -29,8 +29,8 @@
       <connection-url>jdbc:h2:mem:webshop-test;DB_CLOSE_DELAY=-1</connection-url>
       <driver>h2</driver>
       <security>
-         <user-name>sa</user-name>
-         <password>sa</password>
+         <user-name>shop</user-name>
+         <password>p</password>
       </security>
    </datasource>
 </datasources>
