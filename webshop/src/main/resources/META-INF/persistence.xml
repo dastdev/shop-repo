@@ -29,7 +29,7 @@
       <!-- The datasource is deployed as WEB-INF/webshop-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/webshop-ds.xml -->
       <jta-data-source>java:jboss/datasources/webshopDS</jta-data-source>
-      <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+      <!-- <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode> -->
       <properties>
       	 <!-- Neue Properties nach Vorlesungsfolien -->
          <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />

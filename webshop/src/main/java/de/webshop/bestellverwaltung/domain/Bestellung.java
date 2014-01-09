@@ -9,7 +9,6 @@ import java.net.URI;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +34,6 @@ import de.webshop.kundenverwaltung.domain.Kunde;
 @Table(indexes = {
 		@Index(columnList = "kunde_fk")
 	})
-@Cacheable
 public class Bestellung implements Serializable {
 	
 	private static final long serialVersionUID = 8645031681820165535L;
@@ -48,7 +46,7 @@ public class Bestellung implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "kunde_fk", nullable = false, insertable = false, updatable = false)
-	@OrderColumn(name = "index")
+	@OrderColumn(name = "idx")
 	@XmlTransient
 	private Kunde kunde;
 	
@@ -62,7 +60,7 @@ public class Bestellung implements Serializable {
 	
 	@OneToMany(fetch = EAGER, cascade = { PERSIST, REMOVE }) // FOLIE 121 05jpa.pdf - fetch = EAGER = DEFAULT?
 	@JoinColumn(name = "bestellung_fk", nullable = false)
-	// FIXME: @OrderColumn(name = "index") -> Führt zu ERROR!
+	// FIXME: @OrderColumn(name = "idx") -> Führt zu ERROR!
 	@NotEmpty(message = "{bestellverwaltung.bestellung.positionen.notEmpty}")
 	@Valid
 	private List<Position> positionen;
