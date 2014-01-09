@@ -35,8 +35,6 @@ public class Kunde implements Serializable {
 
 	private static final long serialVersionUID = -8937961791375017L;
 	
-	//TODO 	tsc: @Id raus? 
-	//		dst: wieso?
 	@Id
 	@GeneratedValue
 	@Basic(optional=false)
@@ -100,23 +98,6 @@ public class Kunde implements Serializable {
 		this.email = email;
 		this.typ = typ;
 	}
-
-//	//TODO (Checkstyle) Mehr als 7 Parameter
-//	public Kunde(Long id, String name, String vorname, Date geburtstag,
-//			String passwort, String email, Kundentyp typ, boolean geloescht,
-//			List<Bestellung> bestellungen, URI bestellungUri) {
-//		super();
-//		this.id = id;
-//		this.name = name;
-//		this.vorname = vorname;
-//		this.geburtstag = geburtstag;
-//		this.passwort = passwort;
-//		this.email = email;
-//		this.typ = typ;
-//		this.geloescht = geloescht;
-//		this.bestellungen = bestellungen;
-//		this.uriBestellung = bestellungUri;
-//	}
 
 	/**
 	 * Get- und Set-Methoden

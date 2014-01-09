@@ -90,7 +90,7 @@ public class Artikel implements Serializable {
 			case "R": return RADTEILE;
 			case "E": return ERSATZTEILE;
 			case "Z": return ZUBEHOER;
-			default: throw new RuntimeException("...");
+			default: throw new IllegalArgumentException("...");	//TODO Fehlermeldung einbauen!
 			}
 		}
 	}

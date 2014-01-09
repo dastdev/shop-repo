@@ -20,7 +20,7 @@ public enum Kundentyp {
 			case "F": return FIRMENKUNDE;
 			case "P": return PRIVATKUNDE;
 			case "E": return ERMAESSIGT;
-			default: throw new IllegalArgumentException();
+			default: throw new IllegalArgumentException();	//TODO Fehlermeldung einbauen!
 		}
 	}
 }

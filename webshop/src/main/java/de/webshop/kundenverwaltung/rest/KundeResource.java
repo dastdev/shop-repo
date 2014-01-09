@@ -3,6 +3,13 @@ package de.webshop.kundenverwaltung.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
+
+import static de.webshop.util.Constants.SELF_LINK;
+import static de.webshop.util.Constants.LIST_LINK;
+import static de.webshop.util.Constants.ADD_LINK;
+import static de.webshop.util.Constants.UPDATE_LINK;
+import static de.webshop.util.Constants.REMOVE_LINK;
+
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
@@ -31,7 +38,6 @@ import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.bestellverwaltung.service.BestellungService;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.service.KundeService;
-import de.webshop.util.Constants;
 import de.webshop.util.rest.UriHelper;
 
 @RequestScoped
@@ -101,22 +107,23 @@ public class KundeResource implements Serializable {
 	}
 	
 	private Link[] getTransitionalLinks(Kunde kunde, UriInfo uriInfo) {
-		// FIXME LINK_LIST einfuegen?
-		final Link self = Link.fromUri(getUriKunde(kunde, uriInfo)).rel(Constants.SELF_LINK)
+		final Link self = Link.fromUri(getUriKunde(kunde, uriInfo)).rel(SELF_LINK)
 								.build();
 		
+		final Link list = Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
+								.rel(LIST_LINK).build();
+		
 		final Link add = Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
-								.rel(Constants.ADD_LINK).build();
+								.rel(ADD_LINK).build();
 		
 		final Link update = Link.fromUri(uriHelper.getUri(KundeResource.class, uriInfo))
-								.rel(Constants.UPDATE_LINK).build();
+								.rel(UPDATE_LINK).build();
 		
 		final Link remove = Link.fromUri(uriHelper.getUri(KundeResource.class, "deleteKunde",
 																kunde.getID(), uriInfo))
-								.rel(Constants.REMOVE_LINK).build();
+								.rel(REMOVE_LINK).build();
 		
-		// TODO "list" einfuegen
-		return new Link[] {self, add, update, remove };
+		return new Link[] {self, list, add, update, remove };
 	}
 	
 	public URI getUriKunde(Kunde kunde, UriInfo uriInfo) {
