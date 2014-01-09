@@ -2,6 +2,7 @@ package de.webshop.bestellverwaltung.domain;
 
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.TemporalType.DATE;
 import java.io.Serializable;
 import java.net.URI;
@@ -13,10 +14,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -29,6 +32,9 @@ import de.webshop.kundenverwaltung.domain.Kunde;
 
 @XmlRootElement
 @Entity
+@Table(indexes = {
+		@Index(columnList = "kunde_fk")
+	})
 @Cacheable
 public class Bestellung implements Serializable {
 	
@@ -38,7 +44,7 @@ public class Bestellung implements Serializable {
 	@GeneratedValue
 	@Basic(optional = false)
 	@Min(value = 1, message = "{bestellverwaltung.bestellung.id.min}")
-	private Long id;
+	private Long id = null;
 	
 	@ManyToOne
 	@JoinColumn(name = "kunde_fk", nullable = false, insertable = false, updatable = false)
@@ -50,16 +56,26 @@ public class Bestellung implements Serializable {
 	private URI	kundeUri;
 	
 	@Temporal(DATE)
-	@Column(nullable = false, updatable = false)
+	@Column(updatable = false)
 	@NotNull(message = "{bestellverwaltung.bestellung.date.notNull}")
 	private Date bestelldatum;
 	
-	@OneToMany(cascade = { PERSIST, REMOVE }) // FOLIE 121 05jpa.pdf - fetch = EAGER = DEFAULT?
+	@OneToMany(fetch = EAGER, cascade = { PERSIST, REMOVE }) // FOLIE 121 05jpa.pdf - fetch = EAGER = DEFAULT?
 	@JoinColumn(name = "bestellung_fk", nullable = false)
-	@OrderColumn(name = "index")
+	// FIXME: @OrderColumn(name = "index") -> Führt zu ERROR!
 	@NotEmpty(message = "{bestellverwaltung.bestellung.positionen.notEmpty}")
 	@Valid
 	private List<Position> positionen;
+	
+	
+	public Bestellung() {
+		super();
+	}
+	
+	public Bestellung(List<Position> positionen) {
+		super();
+		this.positionen = positionen;
+	}
 	
 	public Long getID() {
 		return id;

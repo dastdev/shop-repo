@@ -11,10 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import de.webshop.artikelverwaltung.domain.Artikel;
 
-//FIXME: @XmlRootElement unnötig, da immer nur eine Bestellung das XMLRootElement ist?!
+@XmlRootElement
 @Entity
 public class Position implements Serializable {
 	
@@ -24,7 +25,7 @@ public class Position implements Serializable {
 	@GeneratedValue
 	@Basic(optional = false)
 	@Min(value = 1, message = "{bestellverwaltung.position.id.min}")
-	private Long id;
+	private Long id = null;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "artikel_fk", nullable = false)
@@ -38,6 +39,17 @@ public class Position implements Serializable {
 	@NotNull(message = "{bestellverwaltung.position.anzahl.notNull}")
 	@Min(value = 1, message = "{bestellverwaltung.position.anzahl.min}")
 	private Integer anzahl;
+	
+	
+	public Position() {
+		super();
+	}
+	
+	public Position(Artikel artikel) {
+		super();
+		this.artikel = artikel;
+		this.anzahl = 1;
+	}
 	
 	public Long getID() {
 		return id;

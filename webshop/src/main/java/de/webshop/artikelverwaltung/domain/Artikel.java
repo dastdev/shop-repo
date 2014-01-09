@@ -20,10 +20,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * @author Mario Reinholdt
- * 
- */
 @XmlRootElement
 @Entity
 @Table (indexes =  @Index(columnList = "bezeichnung"))
@@ -43,7 +39,8 @@ public class Artikel implements Serializable {
 	@Column (unique = true)
 	private String artikelnummer;
 
-	//@Transient ????
+	// mre: @Transient ???? 
+	// dst: ich würde es drin lassen, kommt halt darauf an, wie und wo wir das Bild ablegen
 	private URI artikelbild;
 
 	private String bezeichnung;
