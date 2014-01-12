@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.webshop.artikelverwaltung.domain;
 
 import java.io.Serializable;
