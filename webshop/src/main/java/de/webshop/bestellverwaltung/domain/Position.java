@@ -1,25 +1,35 @@
 package de.webshop.bestellverwaltung.domain;
 
-import java.io.Serializable;
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostPersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.jboss.logging.Logger;
 import de.webshop.artikelverwaltung.domain.Artikel;
+import de.webshop.util.persistence.AbstractAuditable;
 
 @XmlRootElement
 @Entity
-public class Position implements Serializable {
+@Table(indexes = {
+	@Index(columnList = "bestellung_fk"),
+	@Index(columnList = "artikel_fk")
+})
+public class Position extends AbstractAuditable {
 	
 	private static final long serialVersionUID	= -3474235149599204012L;
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Id
 	@GeneratedValue
@@ -49,6 +59,17 @@ public class Position implements Serializable {
 		super();
 		this.artikel = artikel;
 		this.anzahl = 1;
+	}
+	
+	public Position(Artikel artikel, Integer anzahl) {
+		super();
+		this.artikel = artikel;
+		this.anzahl = anzahl;
+	}
+	
+	@PostPersist
+	private void postPersist() {
+		LOGGER.debugf("Neue Bestellposition mit ID = %d", id);
 	}
 	
 	public Long getID() {

@@ -17,7 +17,6 @@ public class ArtikelService implements Serializable {
 
 	// / Gibt eine Artikelinstanz des gesuchten Artikels via ID zurueck
 	public Artikel findArtikelById(Long id) {
-		// Checkstyle TODO Variable "artikel" sollte als final deklariert werden
 		final Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
