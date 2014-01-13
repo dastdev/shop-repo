@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -26,6 +27,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Artikel implements Serializable {
 
 	private static final long serialVersionUID = 2034010908161771924L;
+	
+	private static final String PREFIX = "Artikel.";
+	
+	public static final String UPDATE_KUNDE = PREFIX + "findKundenByNachname";
 
 	// Eigenschaften
 	@Min(value = 1, message = "{artikelverwaltung.artikel.id.min}")
@@ -39,8 +44,6 @@ public class Artikel implements Serializable {
 	@Column (unique = true)
 	private String artikelnummer;
 
-	// mre: @Transient ???? 
-	// dst: ich würde es drin lassen, kommt halt darauf an, wie und wo wir das Bild ablegen
 	private URI artikelbild;
 
 	private String bezeichnung;
