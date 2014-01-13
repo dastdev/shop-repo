@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-@Entity
+//@Entity
 
 public class Artikelpreishistorie implements Serializable {
 
