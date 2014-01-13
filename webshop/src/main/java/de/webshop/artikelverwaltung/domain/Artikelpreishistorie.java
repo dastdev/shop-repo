@@ -17,7 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 //@Entity
-
 public class Artikelpreishistorie implements Serializable {
 
 	private static final long serialVersionUID = -2471255330875233292L;
