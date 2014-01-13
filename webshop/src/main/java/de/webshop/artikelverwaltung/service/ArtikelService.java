@@ -28,21 +28,20 @@ public class ArtikelService implements Serializable {
 	 */
 	//@NotNull(message = "{artikelverwaltung.artikel.notFound.id}")
 	public Artikel findArtikelById(Long id) {
-//		return em.find(Artikel.class, id);
+		return em.find(Artikel.class, id);
 
-		final Artikel artikel = new Artikel();
-		artikel.setID(id);
-		artikel.setArtikelnummer("R2D2uC3PO");
-		artikel.setBezeichnung("Robobike");
-		artikel.setKurzBeschreibung("Das Robobike weiss wohin ...");
-		artikel.setBeschreibung("Lange Robobikebeschreibu...........");
-		artikel.setKategorie(Kategorie.KOMPLETTRAEDER);
-		final Integer tempLaBe = new Integer(11);
-		artikel.setLagerbestand(tempLaBe);
-		final BigDecimal tempPreis = new BigDecimal(1337.55);
-		artikel.setPreis(tempPreis);
-
-		return artikel;
+//		final Artikel artikel = new Artikel();
+//		artikel.setID(id);
+//		artikel.setArtikelnummer("R2D2uC3PO");
+//		artikel.setBezeichnung("Robobike");
+//		artikel.setKurzBeschreibung("Das Robobike weiss wohin ...");
+//		artikel.setBeschreibung("Lange Robobikebeschreibu...........");
+//		artikel.setKategorie(Kategorie.KOMPLETTRAEDER);
+//		final Integer tempLaBe = new Integer(11);
+//		artikel.setLagerbestand(tempLaBe);
+//		final BigDecimal tempPreis = new BigDecimal(1337.55);
+//		artikel.setPreis(tempPreis);
+//		return artikel;
 	}
 
 	
@@ -53,28 +52,28 @@ public class ArtikelService implements Serializable {
 	 */
 	public Artikel updateArtikel(Artikel artikel) {
 		
-		if (artikel == null) {
-		System.out.println("[ERROR] UPDATE ARTIKEL fehlgeschlagen.");
-		
-
-		artikel = new Artikel();
-		}
-		else {
-			System.out.println(String.format("Artikel %d updated.",
-					artikel.getID()));
-		}
-	
-		return artikel;
-		
 //		if (artikel == null) {
-//			System.out.println("[ERROR] UPDATE ARTIKEL fehlgeschlagen.");
-//			return null;			
+//		System.out.println("[ERROR] UPDATE ARTIKEL fehlgeschlagen.");
+//		
+//
+//		artikel = new Artikel();
 //		}
+//		else {
+//			System.out.println(String.format("Artikel %d updated.",
+//					artikel.getID()));
+//		}
+//	
+//		return artikel;
+		
+		if (artikel == null) {
+			System.out.println("[ERROR] UPDATE ARTIKEL fehlgeschlagen.");
+			return null;			
+		}
+		
+		// kunde vom EntityManager trennen, weil anschliessend z.B. nach Id und Email gesucht wird
+		em.detach(artikel);
 //		
-//		// kunde vom EntityManager trennen, weil anschliessend z.B. nach Id und Email gesucht wird
-//		em.detach(artikel);
-//		
-//		// Gibt es ein anderes Objekt mit gleicher Email-Adresse?
+//		// Gibt es ein anderes Objekt mit gleicher Artikelnummer?
 //		final Artikel tmp = findArtikelByArtikelnummer(artikel.getArtikelnummer());
 //		if (tmp != null) {
 //			em.detach(tmp);
@@ -84,8 +83,8 @@ public class ArtikelService implements Serializable {
 //			}
 //		}
 //
-//		em.merge(artikel);
-//		return artikel;
+		em.merge(artikel);
+		return artikel;
 	}
 
 	
@@ -103,7 +102,7 @@ public class ArtikelService implements Serializable {
 		}
 		else {
 			artikel.setID(null);
-//			em.persist(artikel);
+			em.persist(artikel);
 			System.out.println("Artikel created.");
 			return artikel;
 		}

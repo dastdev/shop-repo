@@ -44,7 +44,7 @@ import de.webshop.util.persistence.AbstractAuditable;
 	})
 @NamedQueries({
 	@NamedQuery(name = Bestellung.FIND_BESTELLUNGEN_BY_KUNDE,
-			query = "SELECT b"
+			query = "SELECT b "
 					+ "FROM Bestellung b "
 					+ "WHERE b.kunde = :" + Bestellung.PARAM_KUNDE),
 	@NamedQuery(name  = Bestellung.FIND_KUNDE_BY_ID,
