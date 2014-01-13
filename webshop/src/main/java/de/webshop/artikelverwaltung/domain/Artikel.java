@@ -33,11 +33,10 @@ public class Artikel implements Serializable {
 	public static final String UPDATE_KUNDE = PREFIX + "findKundenByNachname";
 
 	// Eigenschaften
-	@Min(value = 1, message = "{artikelverwaltung.artikel.id.min}")
-	@Max(value = 99999999, message = "{artikelverwaltung.artikel.id.max}")
 	@Id
 	@GeneratedValue
 	@Basic(optional = false)
+	@Min(value = 1, message = "{artikelverwaltung.artikel.id.min}")
 	private Long id;
 	
 	@NotNull(message = "{artikelverwaltung.artikel.artikelnummer.notNull}")

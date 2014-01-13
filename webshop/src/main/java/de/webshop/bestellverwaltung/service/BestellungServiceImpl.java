@@ -1,23 +1,31 @@
 package de.webshop.bestellverwaltung.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import de.webshop.bestellverwaltung.domain.Bestellung;
+import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Kunde;
-import de.webshop.util.Mock;
+import de.webshop.kundenverwaltung.service.KundeService;
 import de.webshop.util.interceptor.Log;
 
 @Dependent
 @Log
 public class BestellungServiceImpl implements BestellungService, Serializable {
 	
-	private static final long			serialVersionUID	= -9035064120402892464L;
+	private static final long serialVersionUID	= -9035064120402892464L;
+	
+	@Inject 
+	private transient EntityManager em;
+	
+	@Inject
+	private KundeService ks;
 	
 	@Inject
 	@NeueBestellung
@@ -26,22 +34,53 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	@Override
 	@NotNull(message = "{bestellung.notFound.id}")
 	public Bestellung findBestellungById(Long id) {
-		// TODO Datenbankzugriffsschicht
-		return Mock.findBestellungById(id);
+		if(id == null) {
+			return null;
+		}
+		
+		return em.find(Bestellung.class, id);
 	}
 	
 	@Override
 	@Size(min = 1, message = "{bestellung.notFound.kunde}")
 	public List<Bestellung> findBestellungenByKunde(Kunde kunde) {
-		// TODO Datenbankzugriffsschicht
-		return Mock.findBestellungenByKunde(kunde);
+		if(kunde == null) {
+			return new ArrayList<Bestellung>();
+		}
+		
+		return em.createNamedQuery(Bestellung.FIND_BESTELLUNGEN_BY_KUNDE, Bestellung.class).setParameter(Bestellung.PARAM_KUNDE, kunde).getResultList();
 	}
 	
 	@Override
-	public Bestellung createBestellung(Bestellung bestellung, long kundeId, Locale locale) {
-		// TODO Datenbankzugriffsschicht
-		// TODO Kunde in der Bestellung setzen
-		bestellung = Mock.createBestellung(bestellung, kundeId);
+	public Bestellung createBestellung(Bestellung bestellung, Long kundeId) {
+		if(bestellung == null) {
+			return null;
+		}
+		
+		Kunde kunde = ks.findKundeById(kundeId);
+		return createBestellung(bestellung, kunde);
+	}
+	
+	@Override
+	public Bestellung createBestellung(Bestellung bestellung, Kunde kunde) {
+		if(bestellung == null) {
+			return null;
+		}
+		
+		// Kunde mit Bestellung verknuepfen
+		if(!em.contains(kunde)) {
+			kunde = ks.findKundeById(kunde.getID());
+		}
+		// TODO: kunde.addBestellung(bestellung)
+		bestellung.setKunde(kunde);
+		
+		// IDs zuruecksetzen
+		bestellung.setID(null);
+		for(Position p : bestellung.getPositionen()) {
+			p.setID(null);
+		}
+		
+		em.persist(bestellung);
 		event.fire(bestellung);
 		
 		return bestellung;

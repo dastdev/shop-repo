@@ -4,10 +4,13 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
+
 import java.io.Serializable;
 import java.net.URI;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.NotFoundException;
@@ -20,6 +23,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.rest.ArtikelResource;
 import de.webshop.bestellverwaltung.domain.Position;
@@ -31,6 +35,7 @@ import de.webshop.util.rest.UriHelper;
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
 @RequestScoped
+@Transactional
 @Log
 public class PositionResource implements Serializable {
 	

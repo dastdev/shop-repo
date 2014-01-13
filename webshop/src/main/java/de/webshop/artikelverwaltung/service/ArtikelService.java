@@ -1,14 +1,11 @@
 package de.webshop.artikelverwaltung.service;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-
+import javax.validation.constraints.NotNull;
 import de.webshop.artikelverwaltung.domain.Artikel;
-import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 import de.webshop.util.interceptor.Log;
 
 @Log
@@ -21,8 +18,10 @@ public class ArtikelService implements Serializable {
 	private EntityManager em;
 	
 	// / Gibt eine Artikelinstanz des gesuchten Artikels via ID zurueck
+	@NotNull(message = "{artikelverwaltung.artikel.notFound.id}")
 	public Artikel findArtikelById(Long id) {
 		return em.find(Artikel.class, id);
+	}
 
 //		final Artikel artikel = new Artikel();
 //		artikel.setID(id);
@@ -37,7 +36,6 @@ public class ArtikelService implements Serializable {
 //		artikel.setPreis(tempPreis);
 //
 //		return artikel;
-	}
 
 	// / Ersetzt den angegebenen Artikel und gibt die neue Version als Instanz
 	// zurueck
@@ -101,11 +99,17 @@ public class ArtikelService implements Serializable {
 			System.out.println("Artikel created.");
 			artikel.setID(null);
 			em.persist(artikel);
+			
 			return artikel;
 		}
 		
-//		final Long tempId = new Long(66);
-//		artikel.setID(tempId);
+		/// Von David:
+//		final Artikel tmp = findArtikelById(artikel.getID());
+//		if(tmp != null) {
+//			throw new ArtikelExistsException(artikel.getBezeichnung());
+//		}
+//		
+//		em.persist(artikel);
 	}
 
 }
