@@ -1,36 +1,52 @@
 package de.webshop.artikelverwaltung.domain;
 
+import static javax.persistence.TemporalType.TIMESTAMP;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
-import javax.validation.constraints.DecimalMin;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+
 public class Artikelpreishistorie implements Serializable {
 
 	private static final long serialVersionUID = -2471255330875233292L;
 
 	// Eigenschaften
-	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.id.notNull}")
-	@Min(value = 1, message = "{artikelverwaltung.artikelpreishistorie.id.min}")
+	@Id
+	@GeneratedValue
+	@Basic(optional = false)
 	private Long id;
 	
+	@OneToMany
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.artikelID.notNul}")
 	@Min(value = 1, message = "{artikelverwaltung.artikelpreishistorie.artikelID.min}")
 	private Long artikelID;
-	
+
+	@Temporal(TIMESTAMP)
+	@Basic(optional=false)
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.gueltigVon.notNull}")
 	private Date gueltigVon;
 	
+	@Digits(integer = 10, fraction = 2, message = "{artikelverwaltung.artikelpreishistorie.preis.digits}")
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.preis.notNull}")
-	@DecimalMin(value = "0.0", message = "{artikelverwaltung.artikelpreishistorie.preis.decimalMin}")
 	private BigDecimal preis;
 
 	// Konstruktor
+	public Artikelpreishistorie() {
+		super();
+	}
+	
 	public Artikelpreishistorie(Long artikelid, Date gueltigVon,
 			BigDecimal preis) {
 		super();

@@ -28,11 +28,10 @@ public class Artikel implements Serializable {
 	private static final long serialVersionUID = 2034010908161771924L;
 
 	// Eigenschaften
-	@Min(value = 1, message = "{artikelverwaltung.artikel.id.min}")
-	@Max(value = 99999999, message = "{artikelverwaltung.artikel.id.max}")
 	@Id
 	@GeneratedValue
 	@Basic(optional = false)
+	@Min(value = 1, message = "{artikelverwaltung.artikel.id.min}")
 	private Long id;
 	
 	@NotNull(message = "{artikelverwaltung.artikel.artikelnummer.notNull}")
