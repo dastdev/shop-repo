@@ -3,7 +3,7 @@ package de.webshop.bestellverwaltung.domain;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.TemporalType.DATE;
+import static javax.persistence.TemporalType.TIMESTAMP;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.ArrayList;
@@ -73,14 +73,13 @@ public class Bestellung extends AbstractAuditable {
 	
 	@ManyToOne
 	@JoinColumn(name = "kunde_fk", nullable = false, insertable = false, updatable = false)
-	@OrderColumn(name = "idx")
 	@XmlTransient
 	private Kunde kunde;
 	
 	@Transient
 	private URI	kundeUri;
 	
-	@Temporal(DATE)
+	@Temporal(TIMESTAMP)
 	@Column(updatable = false)
 	@NotNull(message = "{bestellverwaltung.bestellung.date.notNull}")
 	private Date bestelldatum;
