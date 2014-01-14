@@ -89,10 +89,10 @@ public class ArtikelService implements Serializable {
 
 	
 
-	private Artikel findArtikelByArtikelnummer(String artikelnummer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	private Artikel findArtikelByArtikelnummer(String artikelnummer) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	// / Erstellt einen neuen Artikel und gibt diesen als Instanz zurueck
 	public Artikel createArtikel(Artikel artikel) {
