@@ -1,9 +1,9 @@
 --
 -- artikel
 --
-INSERT INTO artikel (id, artikelnummer, artikelbild, bezeichnung, kurzBeschreibung, beschreibung, preis, lagerbestand, parentID, kategorie) VALUES (100, '123123', utl_raw.cast_to_raw('media/img/art/1.png'), 'Chromobike 2014', 'Mit dem Chromobike 2014 sind sie bestens ausgerüstet ...', 'Das Chromobike 2014 ist das neueste Modell aus dem Hause X. Es besticht durch sein geringes Gewicht und seine auffällige Form ...', 199, 5, null, 'K');
-INSERT INTO artikel (id, artikelnummer, artikelbild, bezeichnung, kurzBeschreibung, beschreibung, preis, lagerbestand, parentID, kategorie) VALUES (101, '124124', utl_raw.cast_to_raw('media/img/art/2.png'), 'Chromobike 2014 PLUS Edition', 'Mit dem Chromobike 2014 sind sie bestens ausgerüstet ...', 'Das Chromobike 2014 PLUS ist das neueste und hochwertigste Modell aus dem Hause X. Es besticht durch sein geringes Gewicht und seine auffällige Form ...', 2499, 3, null, 'K');
-INSERT INTO artikel (id, artikelnummer, artikelbild, bezeichnung, kurzBeschreibung, beschreibung, preis, lagerbestand, parentID, kategorie) VALUES (102, '124774', utl_raw.cast_to_raw('media/img/art/3.png'), 'Redhax Sattel Black', 'Harter Herrensportsattel in Schwarz', 'Mit dem Redhax Sattel wird jede Tour zum Vergnügen...', 79, 25, null, 'Z');
+INSERT INTO artikel (id, artikelnummer, bezeichnung, kurzBeschreibung, beschreibung, preis, lagerbestand, kategorie) VALUES (100, '123123', 'Chromobike 2014', 'Mit dem Chromobike 2014 sind sie bestens ausgerüstet ...', 'Das Chromobike 2014 ist das neueste Modell aus dem Hause X. Es besticht durch sein geringes Gewicht und seine auffällige Form ...', 199, 5, 'K');
+INSERT INTO artikel (id, artikelnummer, bezeichnung, kurzBeschreibung, beschreibung, preis, lagerbestand, kategorie) VALUES (101, '124124', 'Chromobike 2014 PLUS Edition', 'Mit dem Chromobike 2014 sind sie bestens ausgerüstet ...', 'Das Chromobike 2014 PLUS ist das neueste und hochwertigste Modell aus dem Hause X. Es besticht durch sein geringes Gewicht und seine auffällige Form ...', 2499, 3, 'K');
+INSERT INTO artikel (id, artikelnummer, bezeichnung, kurzBeschreibung, beschreibung, preis, lagerbestand, kategorie) VALUES (102, '124774', 'Redhax Sattel Black', 'Harter Herrensportsattel in Schwarz', 'Mit dem Redhax Sattel wird jede Tour zum Vergnügen...', 79, 25, 'Z');
 
 --
 -- bestellung

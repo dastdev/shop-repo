@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -41,6 +42,7 @@ public class Artikel implements Serializable {
 	@Column (unique = true)
 	private String artikelnummer;
 
+	@Transient
 	private URI artikelbild;
 
 	private String bezeichnung;
@@ -57,9 +59,6 @@ public class Artikel implements Serializable {
 
 	@Min(value = 0, message = "{artikelverwaltung.artikel.lagerbestand.min}")
 	private Integer lagerbestand;
-	
-	@Min(value = 1, message = "{artikelverwaltung.artikel.parentID.min}")
-	private Long parentID;
 
 	@Column(length = 1) // Da Enum verkürzt in DB abgebildet wird
 	@Convert(converter = KategorieConverter.class)
@@ -179,9 +178,6 @@ public class Artikel implements Serializable {
 		return id;
 	}
 
-	public Long getParentID() {
-		return parentID;
-	}
 
 	// Basismethoden
 	@Override
@@ -190,8 +186,8 @@ public class Artikel implements Serializable {
 				+ " \nArtikelbild: " + artikelbild + "\nBezeichnung: "
 				+ bezeichnung + "\nKurzbeschreibung: " + kurzBeschreibung
 				+ "\nArtikelbeschreibung: " + beschreibung + "\nPreis: "
-				+ preis + "\nLagerbestand: " + lagerbestand + "\nParentID: "
-				+ parentID + "\nKategorie: " + kategorie;
+				+ preis + "\nLagerbestand: " + lagerbestand + "\nKategorie: "
+				+ kategorie;
 	}
 
 	@Override
@@ -213,7 +209,6 @@ public class Artikel implements Serializable {
 				* result
 				+ ((kurzBeschreibung == null) ? 0 : kurzBeschreibung.hashCode());
 		result = prime * result + lagerbestand;
-		result = prime * result + (int) (parentID ^ (parentID >>> 32));
 		result = prime * result + ((preis == null) ? 0 : preis.hashCode());
 		return result;
 	}
@@ -262,8 +257,6 @@ public class Artikel implements Serializable {
 		else if (!kurzBeschreibung.equals(other.kurzBeschreibung))
 			return false;
 		if (lagerbestand != other.lagerbestand.intValue())
-			return false;
-		if (parentID != other.parentID.longValue())
 			return false;
 		if (preis == null) {
 			if (other.preis != null)
