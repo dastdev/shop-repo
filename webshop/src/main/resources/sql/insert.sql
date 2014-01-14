@@ -9,13 +9,13 @@
 --
 -- kunde
 --
-INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (100,'Admin','Admin','F', 'admin@hs-karlsruhe.de', 'Admin','01.01.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
+--INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (100,'Admin','Admin','F', 'admin@hs-karlsruhe.de', 'Admin','01.01.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
 
-INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (101,'Alpha','Adrian','P', 'adrian@hs-karlsruhe.de', 'Alpha','01.01.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
-INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (102,'Beta','Bea','P', 'bea@hs-karlsruhe.de', 'Beta','02.02.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
-INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (103,'Gamma','Guru','F', 'guru@hs-karlsruhe.de', 'Gamma','03.03.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
-INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (104,'Phi','Pettersson','F', 'pettersson@hs-karlsruhe.de', 'Phi','04.04.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
-INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (105,'Phi','Paula','F', 'paula@hs-karlsruhe.de', 'Phi','05.05.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
+--INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (101,'Alpha','Adrian','P', 'adrian@hs-karlsruhe.de', 'Alpha','01.01.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
+--INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (102,'Beta','Bea','P', 'bea@hs-karlsruhe.de', 'Beta','02.02.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
+--INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (103,'Gamma','Guru','F', 'guru@hs-karlsruhe.de', 'Gamma','03.03.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
+--INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (104,'Phi','Pettersson','F', 'pettersson@hs-karlsruhe.de', 'Phi','04.04.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
+--INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt, aktualisiert) VALUES (105,'Phi','Paula','F', 'paula@hs-karlsruhe.de', 'Phi','05.05.2001', '01.08.2006 00:00:00','01.08.2006 00:00:00'-- );
 
 --
 -- adresse
@@ -37,7 +37,7 @@ INSERT INTO artikel (id, artikelnummer, bezeichnung, kurzBeschreibung, beschreib
 --
 -- bestellung
 --
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (400,100,'01.08.2006 00:00:00','01.08.2006 00:00:00','01.08.2006 00:00:00');
+--INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (400,100,'01.08.2006 00:00:00','01.08.2006 00:00:00','01.08.2006 00:00:00');
 --INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (401,101,'02.08.2006 00:00:00','01.08.2006 00:00:00','02.08.2006 00:00:00');
 --INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (402,102,'03.08.2006 00:00:00','01.08.2006 00:00:00','03.08.2006 00:00:00');
 --INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (403,102,'04.08.2006 00:00:00','01.08.2006 00:00:00','04.08.2006 00:00:00');
@@ -46,8 +46,8 @@ INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUE
 --
 -- position
 --
-INSERT INTO position (id, bestellung_fk, artikel_fk, anzahl, erzeugt, aktualisiert) VALUES (500,400,300,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO position (id, bestellung_fk, artikel_fk, anzahl, erzeugt, aktualisiert) VALUES (501,400,301,4,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+--INSERT INTO position (id, bestellung_fk, artikel_fk, anzahl, erzeugt, aktualisiert) VALUES (500,400,300,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+--INSERT INTO position (id, bestellung_fk, artikel_fk, anzahl, erzeugt, aktualisiert) VALUES (501,400,301,4,'01.08.2006 00:00:00','01.08.2006 00:00:00');
 --INSERT INTO position (id, bestellung_fk, artikel_fk, anzahl, erzeugt, aktualisiert) VALUES (502,401,302,5,'02.08.2006 00:00:00','02.08.2006 00:00:00');
 --INSERT INTO position (id, bestellung_fk, artikel_fk, anzahl, erzeugt, aktualisiert) VALUES (503,402,303,3,'03.08.2006 00:00:00','03.08.2006 00:00:00');
 --INSERT INTO position (id, bestellung_fk, artikel_fk, anzahl, erzeugt, aktualisiert) VALUES (504,402,302,2,'03.08.2006 00:00:00','03.08.2006 00:00:00');
