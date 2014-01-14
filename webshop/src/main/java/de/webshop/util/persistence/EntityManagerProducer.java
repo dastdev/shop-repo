@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 
 @Dependent
 public class EntityManagerProducer {
-	
+
 	@PersistenceContext
 	@Produces
 	private EntityManager em;
