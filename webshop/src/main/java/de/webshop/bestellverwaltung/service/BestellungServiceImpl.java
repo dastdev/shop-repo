@@ -71,7 +71,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 		if (!em.contains(kunde)) {
 			kunde = ks.findKundeById(kunde.getID());
 		}
-		// TODO: kunde.addBestellung(bestellung)
+		kunde.addBestellung(bestellung);
 		bestellung.setKunde(kunde);
 		
 		// IDs zuruecksetzen

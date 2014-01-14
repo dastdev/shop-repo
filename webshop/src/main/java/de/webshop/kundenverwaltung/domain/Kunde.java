@@ -3,6 +3,7 @@ package de.webshop.kundenverwaltung.domain;
 import static javax.persistence.TemporalType.DATE;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -229,6 +230,14 @@ public class Kunde extends AbstractAuditable {
 
 	public void setBestellungen(List<Bestellung> bestellungen) {
 		this.bestellungen = bestellungen;
+	}
+	
+	public Kunde addBestellung(Bestellung bestellung) {
+		if (bestellungen == null) {
+			bestellungen = new ArrayList<>();
+		}
+		bestellungen.add(bestellung);
+		return this;
 	}
 
 	public URI getUriBestellung() {
