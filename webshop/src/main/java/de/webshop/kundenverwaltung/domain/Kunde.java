@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,10 +32,49 @@ import de.webshop.bestellverwaltung.domain.Bestellung;
 
 @Entity
 @Table(indexes = @Index(columnList ="name") )
+@NamedQueries({ 
+	@NamedQuery(name = Kunde.FIND_KUNDEN, 
+			   query = "SELECT k " 
+					   + "FROM Kunde k"),
+	@NamedQuery(name = Kunde.FIND_KUNDEN_ORDER_BY_ID, 
+			   query = "SELECT k " 
+					   + "FROM Kunde k " 
+					   + "ORDER BY k.id"),
+	@NamedQuery(name = Kunde.FIND_KUNDE_BY_EMAIL, 
+			   query = "SELECT k " 
+					   + "FROM Kunde k " 
+					   + "WHERE k.email = :" 
+					   + Kunde.PARAM_KUNDE_EMAIL),
+	@NamedQuery(name = Kunde.FIND_KUNDEN_BY_NACHNAME, 
+			   query = "SELECT k " 
+					   + "FROM Kunde k " 
+					   + "WHERE k.name = :" 
+					   + Kunde.PARAM_KUNDE_NACHNAME),
+	@NamedQuery(name = Kunde.FIND_KUNDEN_BY_NACHNAME_PREFIX, 
+			   query = "SELECT k " 
+					   + "FROM Kunde k " 
+					   + "WHERE UPPER(k.name) LIKE (:" 
+					   + Kunde.PARAM_KUNDE_NACHNAME_PREFIX + ")")
+	})
 @XmlRootElement
 public class Kunde implements Serializable {
 
 	private static final long serialVersionUID = -8937961791375017L;
+	
+	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF]+";
+	private static final String PREFIX_ADEL = "(o'|von|von der|von und zu|van)?";
+	public static final String NACHNAME_PATTERN = PREFIX_ADEL + NAME_PATTERN + "(-" + NAME_PATTERN + ")?";
+	
+	public static final String KUNDE_PREFIX = "Kunde.";
+	public static final String FIND_KUNDEN = KUNDE_PREFIX + "findKunden";
+	public static final String FIND_KUNDEN_ORDER_BY_ID = KUNDE_PREFIX + "findKundenOrderByID";
+	public static final String FIND_KUNDEN_BY_NACHNAME = KUNDE_PREFIX + "findKundenByNachname";
+	public static final String FIND_KUNDEN_BY_NACHNAME_PREFIX = KUNDE_PREFIX + "findKundenByNachnamePrefix";
+	public static final String FIND_KUNDE_BY_EMAIL = KUNDE_PREFIX + "findKundeByEmail";
+	
+	public static final String PARAM_KUNDE_EMAIL = "email";
+	public static final String PARAM_KUNDE_NACHNAME = "name";
+	public static final String PARAM_KUNDE_NACHNAME_PREFIX = "namePrefix";
 	
 	@Id
 	@GeneratedValue
@@ -43,12 +84,12 @@ public class Kunde implements Serializable {
 	
 	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
-	@Pattern(regexp = "[A-Z][a-z]+", message = "{kundenverwaltung.kunde.name.pattern}")
+	@Pattern(regexp = NACHNAME_PATTERN, message = "{kundenverwaltung.kunde.name.pattern}")
 	private String name;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
-	@Pattern(regexp = "[A-Z][a-z]+", message = "{kundenverwaltung.kunde.vorname.pattern}")
+	@Pattern(regexp = NAME_PATTERN, message = "{kundenverwaltung.kunde.vorname.pattern}")
 	private String vorname;
 	
 	@Past(message = "{kundenverwaltung.kunde.geburtstag.date}")

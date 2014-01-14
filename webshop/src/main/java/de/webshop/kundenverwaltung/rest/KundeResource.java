@@ -53,10 +53,9 @@ public class KundeResource implements Serializable {
 	
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
 	
-	// FIXME Kundensuche nach PLZ implementieren
+	// TODO Kundensuche nach PLZ implementieren
 	// private static final String KUNDEN_PLZ_QUERY_PARAM = "plz";
 	
-	private static final String	SELF_LINK					= null;
 	private static final String	FIRST_LINK					= null;
 	private static final String	LAST_LINK					= null;
 	
@@ -233,6 +232,7 @@ public class KundeResource implements Serializable {
 	@Path("{id:[1-9][0-9]*}")
 	@Produces
 	public void deleteKunde(@PathParam("id") Long kundeId) {
-		ks.deleteKunde(kundeId);
+		final Kunde kunde = ks.findKundeById(kundeId);
+		ks.deleteKunde(kunde);
 	}
 }

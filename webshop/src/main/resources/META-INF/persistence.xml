@@ -40,22 +40,38 @@
       -->
       
       <properties>
-      	 <!-- Neue Properties nach Vorlesungsfolien -->
-         <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
-         <property name="javax.persistence.schema-generation.create-source" value="metadata-then-script" />
-         <property name="javax.persistence.schema-generation.drop-source" value="metadata-then-script" />
-         <property name="javax.persistence.schema-generation.drop-script-source" value="sql/drop.sql" />
-         <property name="javax.persistence.schema-generation.create-script-source" value="sql/create.sql" />
-         <property name="javax.persistence.sql-load-script-source" value="sql/insert.sql" />
-                  <!-- Properties for Hibernate -->
-         <!-- Nur "Java Persistence Query Language (JPAQL) nutzen, keine Erweiterungen von HQL -->
-         <property name="hibernate.query.jpaql_strict_compliance" value="true" />
-         <!-- SQL-Anweisungen in Log-Datei lesbarer herausschreiben -->
-         <property name="hibernate.format_sql" value="true" />
-         <!-- Kommentare zu generierten SQL-Statements hinzufügen -->
-         <property name="hibernate.use_sql_comments" value="true" />
-         <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-         <property name="hibernate.show_sql" value="false" />
-      </properties>
+	    <!-- im Produktivbetrieb auskommentieren -->
+		<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+		<property name="javax.persistence.schema-generation.create-source" value="metadata-then-script"/>
+					
+		<!-- unterhalb des Verzeichnisses src\main\resources -->
+		<property name="javax.persistence.schema-generation.create-script-source" value="sql/create.sql"/>
+		<property name="javax.persistence.sql-load-script-source" value="sql/insert.sql"/>
+		
+		<property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
+		<property name="javax.persistence.schema-generation.scripts.create-target" value="C:/temp/create.sql"/>
+		<property name="javax.persistence.schema-generation.scripts.drop-target" value="C:/temp/drop.sql"/>
+		<!-- http://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html/ch03.html -->
+		<!-- https://docs.jboss.org/author/display/WFLY8/JPA+Reference+Guide -->
+		<!-- javadoc fuer org.hibernate.cfg.AvailableSettings -->
+			
+		<!-- Keine proprietaeren Erweiterungen von HQL nutzen -->
+		<property name="hibernate.query.jpaql_strict_compliance" value="true"/>
+		<!-- SQL-Anweisungen lesbar protokollieren -->
+		<property name="hibernate.format_sql" value="true"/>
+		
+		<!-- Kommentare zu den generierten SQL-Anweisungen hinzufuegen -->
+		<property name="hibernate.use_sql_comments" value="true"/>
+			
+		<!-- Batch fuer DML von automatisch versionierten Datensaetzen -->
+		<property name="hibernate.jdbc.batch_versioned_data" value="true"/>
+		
+		<!-- L2C: Default = Infinispan -->
+		<property name="hibernate.cache.use_second_level_cache" value="true"/>
+		<property name="hibernate.cache.use_query_cache" value="true"/>
+		
+		<!-- direktes Abspeichern von Entity-Referenzen im L2C, falls die Entities unveraenderlich sind -->
+		<property name="hibernate.cache.use_reference_entries" value="true"/>
+  	</properties>
    </persistence-unit>
 </persistence>
