@@ -8,10 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.validation.constraints.NotNull;
 import de.webshop.kundenverwaltung.domain.Kunde;
-import de.webshop.util.Mock;
 import de.webshop.util.interceptor.Log;
 
-//Naechste Testversion
 @Dependent
 @Log
 public class KundeService implements Serializable {
@@ -80,34 +78,64 @@ public class KundeService implements Serializable {
 				 .getResultList();
 	}
 
+	/**
+	 * Anlegen eines neuen Kunden
+	 * @param kunde Der anzulegende Kunde (mit zugehörigen Pflichtattributen)
+	 * @return Der neu angelegte Kunde samt neuer ID
+	 */
 	public Kunde createKunde(Kunde kunde) {
 		if (kunde == null) {
 		System.out.println("Kein anzulegender Kunde angegeben");
 		return kunde;
 		}
-
-//		final Kunde tmpKunde = Mock.findKundeByEmail(kunde.getEmail());
-//		if (tmpKunde != null)
-//			throw new EmailExistsException(kunde.getEmail());
-
-		// TODO Datenbankanbindung statt Mock
-		kunde = Mock.createKunde(kunde);
+		
+		//Prüfung, ob es schon einen Kunden mit dieser Mailadresse gibt
+		final Kunde tmpKunde = findKundeByEmail(kunde.getEmail());
+		if (tmpKunde != null)
+			throw new EmailExistsException(kunde.getEmail());
+		
+		em.persist(kunde);
 		return kunde;
 	}
 
+	/**
+	 * Aktualisieren eines Kunden
+	 * @param kunde Der zu aktualisierende Kunde mit Attributen
+	 * @return Aktualisierter Kunde
+	 */
 	public Kunde updateKunde(Kunde kunde) {
-//		if (kunde == null)
-//			return null;
+		if (kunde == null)
+			return null;
 
-//		final Kunde tmpkunde = findKundeByEmail(kunde.getEmail());
-//		if (tmpkunde.getID().longValue() != kunde.getID().longValue())
-//			throw new EmailExistsException(tmpkunde.getEmail());
-
-		Mock.updateKunde(kunde);
+		//Prüfung, ob es einen anderen Kunden mit gleicher Emailadresse gibt
+		final Kunde tmpkunde = findKundeByEmail(kunde.getEmail());
+		if (tmpkunde != null) {
+			em.detach(tmpkunde);
+			if (tmpkunde.getID().longValue() != kunde.getID().longValue()) {
+				throw new EmailExistsException(tmpkunde.getEmail());
+			}
+		}
+		
+		em.merge(kunde);
 		return kunde;
 	}
 
-	public void deleteKunde(Long kundeId) {
-		Mock.deleteKunde(kundeId);
+	/**
+	 * Löschen eines Kunden, sofern keine Bestellungen vorhanden
+	 * @param kunde Der zu entfernende Kunde
+	 */
+	//TODO deleteKunde: Wenn Bestellungen >1, ausblenden
+	public void deleteKunde(Kunde kunde) {
+		if (kunde == null)
+			return;
+		
+		kunde = findKundeById(kunde.getID());
+		if (kunde == null)
+			return;
+		
+		if (!kunde.getBestellungen().isEmpty())
+			throw new KundeDeleteBestellungException(kunde);
+		
+			em.remove(kunde);
 	}
 }

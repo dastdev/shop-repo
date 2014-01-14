@@ -232,6 +232,7 @@ public class KundeResource implements Serializable {
 	@Path("{id:[1-9][0-9]*}")
 	@Produces
 	public void deleteKunde(@PathParam("id") Long kundeId) {
-		ks.deleteKunde(kundeId);
+		final Kunde kunde = ks.findKundeById(kundeId);
+		ks.deleteKunde(kunde);
 	}
 }
