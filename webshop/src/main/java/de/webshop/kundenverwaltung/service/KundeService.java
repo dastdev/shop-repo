@@ -19,6 +19,8 @@ public class KundeService implements Serializable {
 	@Inject
 	private EntityManager em;
 	
+//	public enum FetchType { NUR_KUNDE, MIT_BESTELLUNGEN }
+	
 	/**
 	 * Suche einen Kunden zu gegebener ID
 	 * @param id Angegebene ID

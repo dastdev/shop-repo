@@ -3,19 +3,18 @@ package de.webshop.kundenverwaltung.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
-
 import static de.webshop.util.Constants.SELF_LINK;
 import static de.webshop.util.Constants.LIST_LINK;
 import static de.webshop.util.Constants.ADD_LINK;
 import static de.webshop.util.Constants.UPDATE_LINK;
 import static de.webshop.util.Constants.REMOVE_LINK;
-
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -38,13 +37,15 @@ import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.bestellverwaltung.service.BestellungService;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.service.KundeService;
+import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
 @RequestScoped
 @Path("/kunde")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.75" })
 @Consumes
-// @Log
+@Transactional
+@Log
 public class KundeResource implements Serializable {
 	
 	private static final long	serialVersionUID			= -3183019727204066374L;

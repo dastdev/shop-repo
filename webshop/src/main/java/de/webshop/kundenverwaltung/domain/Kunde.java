@@ -1,7 +1,7 @@
 package de.webshop.kundenverwaltung.domain;
 
 import static javax.persistence.TemporalType.DATE;
-import java.io.Serializable;
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
@@ -12,10 +12,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+//import javax.persistence.NamedAttributeNode;
+//import javax.persistence.NamedEntityGraph;
+//import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Index;
 import javax.persistence.Temporal;
@@ -28,10 +32,15 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.validator.constraints.Email;
+import org.jboss.logging.Logger;
 import de.webshop.bestellverwaltung.domain.Bestellung;
+import de.webshop.util.persistence.AbstractAuditable;
 
 @Entity
 @Table(indexes = @Index(columnList ="name") )
+//@NamedEntityGraphs({
+//	@NamedEntityGraph(name = "bestellungen", attributeNodes = @NamedAttributeNode("bestellungen"))
+//})
 @NamedQueries({ 
 	@NamedQuery(name = Kunde.FIND_KUNDEN, 
 			   query = "SELECT k " 
@@ -57,9 +66,10 @@ import de.webshop.bestellverwaltung.domain.Bestellung;
 					   + Kunde.PARAM_KUNDE_NACHNAME_PREFIX + ")")
 	})
 @XmlRootElement
-public class Kunde implements Serializable {
+public class Kunde extends AbstractAuditable {
 
 	private static final long serialVersionUID = -8937961791375017L;
+	private static final Logger LOGGER =Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF]+";
 	private static final String PREFIX_ADEL = "(o'|von|von der|von und zu|van)?";
@@ -129,6 +139,11 @@ public class Kunde implements Serializable {
 	public Kunde() {
 	}
 	
+	@PostPersist
+	protected void postPersist() {
+		LOGGER.debugf("Neuer Kunde angelegt mit ID: %d", id);
+	}
+	
 	//Konstruktor mit allen Pflichtattributen für DB-Zugriff
 	public Kunde(String name, String vorname, String passwort, String email,
 			Kundentyp typ) {
@@ -142,7 +157,6 @@ public class Kunde implements Serializable {
 
 	/**
 	 * Get- und Set-Methoden
-	 * 
 	 * @return: Jeweils Rueckgabe des entspr. Attributs (get-Methode)
 	 */
 	public String getName() {
@@ -234,7 +248,7 @@ public class Kunde implements Serializable {
 	}
 
 	/**
-	 * Geerbte Object-Methoden
+	 * Geerbte Object-Methoden toString, hashCode, equals mit primitiven Attributen
 	 */
 	@Override
 	public String toString() {
