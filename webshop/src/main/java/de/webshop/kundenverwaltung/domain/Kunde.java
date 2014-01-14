@@ -37,7 +37,7 @@ import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.util.persistence.AbstractAuditable;
 
 @Entity
-@Table(indexes = @Index(columnList ="name") )
+@Table(indexes = @Index(columnList = "name"))
 //@NamedEntityGraphs({
 //	@NamedEntityGraph(name = "bestellungen", attributeNodes = @NamedAttributeNode("bestellungen"))
 //})
@@ -69,7 +69,7 @@ import de.webshop.util.persistence.AbstractAuditable;
 public class Kunde extends AbstractAuditable {
 
 	private static final long serialVersionUID = -8937961791375017L;
-	private static final Logger LOGGER =Logger.getLogger(MethodHandles.lookup().lookupClass());
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF]+";
 	private static final String PREFIX_ADEL = "(o'|von|von der|von und zu|van)?";
@@ -88,7 +88,7 @@ public class Kunde extends AbstractAuditable {
 	
 	@Id
 	@GeneratedValue
-	@Basic(optional=false)
+	@Basic(optional = false)
 	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
 	private Long id;
 	
@@ -112,7 +112,7 @@ public class Kunde extends AbstractAuditable {
 	
 	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
 	@Email(message = "{kundenverwaltung.kunde.email.pattern}")
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.typ.notNull}")
@@ -125,7 +125,7 @@ public class Kunde extends AbstractAuditable {
 	
 	@Transient
 	@OneToMany
-	@JoinColumn(name="kunde")
+	@JoinColumn(name = "kunde")
 	@XmlTransient
 	private List<Bestellung> bestellungen;
 	
