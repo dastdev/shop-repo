@@ -1,8 +1,3 @@
-/**
- * 
- */
-/**
- * @author scth1028
- *
- */
+@Vetoed
 package de.webshop.artikelverwaltung.domain;
+import javax.enterprise.inject.Vetoed;

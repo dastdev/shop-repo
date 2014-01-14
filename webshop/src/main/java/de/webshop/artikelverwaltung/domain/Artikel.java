@@ -24,8 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table (indexes =  @Index(columnList = "bezeichnung"))
 public class Artikel implements Serializable {
 
-	private static final long serialVersionUID = 2034010908161771924L;
-	
+	private static final long serialVersionUID = -4294751998308802696L;
+
 	private static final String PREFIX = "Artikel.";
 	
 	public static final String UPDATE_KUNDE = PREFIX + "findKundenByNachname";

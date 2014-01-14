@@ -11,6 +11,7 @@ import java.net.URI;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -35,6 +36,7 @@ import de.webshop.util.rest.UriHelper;
 @Path("/artikel")
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
+@Transactional
 public class ArtikelResource implements Serializable {
 	
 	private static final long serialVersionUID = -8511705638924554310L;
@@ -53,8 +55,7 @@ public class ArtikelResource implements Serializable {
 	@Path("version")
 	public String getVersion() {
 		return "1.5";
-	}
-	
+	}	
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
