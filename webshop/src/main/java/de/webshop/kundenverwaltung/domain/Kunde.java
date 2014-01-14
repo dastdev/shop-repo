@@ -122,7 +122,7 @@ public class Kunde extends AbstractAuditable {
 	private Kundentyp typ;
 	
 	@Column
-	private boolean geloescht;
+	private Boolean geloescht;
 	
 	@Transient
 	@OneToMany
@@ -216,11 +216,11 @@ public class Kunde extends AbstractAuditable {
 		this.typ = typ;
 	}
 
-	public boolean isGeloescht() {
+	public Boolean isGeloescht() {
 		return geloescht;
 	}
 
-	public void setGeloescht(boolean geloescht) {
+	public void setGeloescht(Boolean geloescht) {
 		this.geloescht = geloescht;
 	}
 
