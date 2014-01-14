@@ -25,7 +25,7 @@ public class PositionServiceImpl implements PositionService, Serializable {
 	@Override
 	@NotNull(message = "{position.notFound.id}")
 	public Position findPositionById(Long id) {
-		if(id == null) {
+		if (id == null) {
 			return null;
 		}
 		

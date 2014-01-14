@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+//import javax.persistence.OrderColumn;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -151,13 +151,13 @@ public class Bestellung extends AbstractAuditable {
 	}
 	
 	public void setPositionen(List<Position> positionen) {
-		if(this.positionen == null) {
+		if (this.positionen == null) {
 			this.positionen = positionen;
 			return;
 		}
 		
 		this.positionen.clear();
-		if(positionen != null) {
+		if (positionen != null) {
 			this.positionen.addAll(positionen);
 		}
 	}

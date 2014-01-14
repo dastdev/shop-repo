@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 import javax.inject.Qualifier;
 
 @Qualifier
-@Target(value = {FIELD, PARAMETER})
+@Target(value = { FIELD, PARAMETER })
 @Retention(RUNTIME)
 @Documented
 public @interface NeuePosition {

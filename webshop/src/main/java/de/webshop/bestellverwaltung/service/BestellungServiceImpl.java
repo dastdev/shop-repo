@@ -34,7 +34,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	@Override
 	@NotNull(message = "{bestellung.notFound.id}")
 	public Bestellung findBestellungById(Long id) {
-		if(id == null) {
+		if (id == null) {
 			return null;
 		}
 		
@@ -44,7 +44,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	@Override
 	@Size(min = 1, message = "{bestellung.notFound.kunde}")
 	public List<Bestellung> findBestellungenByKunde(Kunde kunde) {
-		if(kunde == null) {
+		if (kunde == null) {
 			return new ArrayList<Bestellung>();
 		}
 		
@@ -53,7 +53,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	
 	@Override
 	public Bestellung createBestellung(Bestellung bestellung, Long kundeId) {
-		if(bestellung == null) {
+		if (bestellung == null) {
 			return null;
 		}
 		
@@ -63,12 +63,12 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	
 	@Override
 	public Bestellung createBestellung(Bestellung bestellung, Kunde kunde) {
-		if(bestellung == null) {
+		if (bestellung == null) {
 			return null;
 		}
 		
 		// Kunde mit Bestellung verknuepfen
-		if(!em.contains(kunde)) {
+		if (!em.contains(kunde)) {
 			kunde = ks.findKundeById(kunde.getID());
 		}
 		// TODO: kunde.addBestellung(bestellung)
@@ -76,7 +76,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 		
 		// IDs zuruecksetzen
 		bestellung.setID(null);
-		for(Position p : bestellung.getPositionen()) {
+		for (Position p : bestellung.getPositionen()) {
 			p.setID(null);
 		}
 		
