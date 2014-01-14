@@ -53,7 +53,7 @@ import de.webshop.bestellverwaltung.domain.Bestellung;
 	@NamedQuery(name = Kunde.FIND_KUNDEN_BY_NACHNAME_PREFIX, 
 			   query = "SELECT k " 
 					   + "FROM Kunde k " 
-					   + "WHERE UPPER(k.nachname) LIKE (:" 
+					   + "WHERE UPPER(k.name) LIKE (:" 
 					   + Kunde.PARAM_KUNDE_NACHNAME_PREFIX + ")")
 	})
 @XmlRootElement
