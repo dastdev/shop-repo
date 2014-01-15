@@ -69,9 +69,10 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 		}
 		
 		// Kunde mit Bestellung verknuepfen
-		if(!em.contains(kunde)) {
+		if(!em.contains(kunde)) {	
 			kunde = ks.findKundeById(kunde.getID(), FetchType.NUR_KUNDE);
 		}
+			
 		kunde.addBestellung(bestellung);
 		bestellung.setKunde(kunde);
 		

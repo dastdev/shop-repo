@@ -39,7 +39,7 @@ import de.webshop.util.rest.UriHelper;
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
 @RequestScoped
-@Transactional 
+@Transactional
 @Log
 public class BestellungResource implements Serializable {
 	
@@ -114,19 +114,15 @@ public class BestellungResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public Response createBestellung(@Valid Bestellung bestellung) {
-		System.out.println("Bestellung anlegen: " + bestellung);
-		System.out.println("KundeUri: " + bestellung.getKundeUri().toString());
 		// TODO eingeloggter Kunde ermitteln
 		final String kundeUriStr = bestellung.getKundeUri().toString();
 		int startPos = kundeUriStr.lastIndexOf('/') + 1;
 		final String kundeIdStr = kundeUriStr.substring(startPos);
 		Long kundeId = null;
 		try {
-			System.out.println("Kunde ID: " + kundeIdStr);
 			kundeId = Long.valueOf(kundeIdStr);
 		}
 		catch (NumberFormatException e) {
-			System.out.println("Kunde ID nicht gefunden");
 			kundeIdInvalid();
 		}
 		
@@ -134,7 +130,6 @@ public class BestellungResource implements Serializable {
 		final Collection<Position> positionen = bestellung.getPositionen();
 		final List<Long> artikelIds = new ArrayList<>(positionen.size());
 		
-		System.out.println("IDs der Artikel ermitteln");
 		for (Position p : positionen) {
 			final URI artikelUri = p.getArtikelUri();
 			if (artikelUri == null) {
@@ -150,7 +145,6 @@ public class BestellungResource implements Serializable {
 			catch (NumberFormatException e) {
 				continue;
 			}
-			System.out.println("      Artikel-ID: " + artikelId);
 			artikelIds.add(artikelId);
 		}
 		
@@ -163,8 +157,6 @@ public class BestellungResource implements Serializable {
 		for (Long artikelId : artikelIds) {
 			gefundeneArtikel.add(as.findArtikelById(artikelId));
 		}
-
-		System.out.println(gefundeneArtikel.size() + " gefundene Artikel");
 		
 		int i = 0;
 		final List<Position> neuePositionen = new ArrayList<Position>();
@@ -179,8 +171,6 @@ public class BestellungResource implements Serializable {
 					// Der Artikel wurde gefunden
 					p.setArtikel(artikel);
 					
-					System.out.println("    Position hinzufügen " + p.toString());
-					
 					neuePositionen.add(p);
 					break;
 				}
@@ -188,15 +178,11 @@ public class BestellungResource implements Serializable {
 		}
 		
 		bestellung.setPositionen(neuePositionen);
-		
-		System.out.println("bs.createBestellung: " + bestellung + "\n  fuer Kunde mit ID " + kundeId);
 		bestellung = bs.createBestellung(bestellung, kundeId);
 		
-System.out.println("get BestellungUri");
 		final URI bestellungUri = getUriBestellung(bestellung, uriInfo);
 		
-		Response res =Response.created(bestellungUri).build();
-		System.out.println("Response: " + res);
+		Response res = Response.created(bestellungUri).build();
 		return res;
 	}
 	

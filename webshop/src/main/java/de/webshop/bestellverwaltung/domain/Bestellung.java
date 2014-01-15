@@ -67,7 +67,6 @@ public class Bestellung extends AbstractAuditable {
 	@Id
 	@GeneratedValue
 	@Basic(optional = false)
-	//@Min(value = 1, message = "{bestellverwaltung.bestellung.id.min}")
 	private Long id = null;
 	
 	@ManyToOne
@@ -88,7 +87,6 @@ public class Bestellung extends AbstractAuditable {
 	@NotEmpty(message = "{bestellverwaltung.bestellung.positionen.notEmpty}")
 	@Valid
 	private List<Position> positionen;
-	
 	
 	public Bestellung() {
 		super();

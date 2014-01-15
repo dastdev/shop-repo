@@ -42,8 +42,8 @@ public class Position extends AbstractAuditable {
 	@Transient
 	private URI artikelUri;
 	
-	@Basic(optional = false)
 	@Min(value = 1, message = "{bestellverwaltung.position.anzahl.min}")
+	@Basic(optional = false)
 	private Integer anzahl;
 	
 	public Position() {
@@ -139,7 +139,7 @@ public class Position extends AbstractAuditable {
 	
 	@Override
 	public String toString() {
-		return "Position [id=" + id + ", artikel=" + artikel + ", artikelUri=" + artikelUri
+		return "Position [id=" + id + ", artikel=" + (artikel == null ? null : artikel.getID()) + ", artikelUri=" + artikelUri
 				+ ", anzahl=" + anzahl + "]";
 	}
 	
