@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.Entity;
+//import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -33,7 +33,7 @@ public class Artikelpreishistorie implements Serializable {
 	private Long artikelID;
 
 	@Temporal(TIMESTAMP)
-	@Basic(optional=false)
+	@Basic(optional = false)
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.gueltigVon.notNull}")
 	private Date gueltigVon;
 	

@@ -17,5 +17,4 @@ public class KategorieConverter implements AttributeConverter<Kategorie, String>
 	public Kategorie convertToEntityAttribute(String internal) {
 	return Kategorie.build(internal);
 	}	
-
 }

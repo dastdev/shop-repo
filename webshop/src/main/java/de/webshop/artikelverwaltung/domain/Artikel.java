@@ -86,7 +86,7 @@ public class Artikel implements Serializable {
 			case "R": return RADTEILE;
 			case "E": return ERSATZTEILE;
 			case "Z": return ZUBEHOER;
-			default: throw new IllegalArgumentException("...");	//TODO Fehlermeldung einbauen!
+			default: throw new RuntimeException(internal + " ist kein gueltiger Wert fuer eine Kategorie");
 			}
 		}
 	}

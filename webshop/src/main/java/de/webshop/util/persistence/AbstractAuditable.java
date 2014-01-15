@@ -16,12 +16,12 @@ public abstract class AbstractAuditable implements Serializable {
 	private static final long	serialVersionUID	= -6888875114036861068L;
 
 	@Temporal(TIMESTAMP)
-	@Basic(optional=false)
+	@Basic(optional = false)
 	@XmlTransient
 	private Date erzeugt;
 	
 	@Temporal(TIMESTAMP)
-	@Basic(optional=false)
+	@Basic(optional = false)
 	@XmlTransient
 	private Date aktualisiert;
 	

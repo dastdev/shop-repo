@@ -3,6 +3,7 @@ package de.webshop.kundenverwaltung.domain;
 import static javax.persistence.TemporalType.DATE;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -43,6 +44,7 @@ import de.webshop.util.persistence.AbstractAuditable;
 @NamedEntityGraphs({
 	@NamedEntityGraph (name = "bestellungen", attributeNodes = @NamedAttributeNode ("bestellungen"))
 })
+
 @NamedQueries({ 
 	@NamedQuery(name = Kunde.FIND_KUNDEN, 
 			   query = "SELECT k " 
@@ -71,7 +73,7 @@ import de.webshop.util.persistence.AbstractAuditable;
 public class Kunde extends AbstractAuditable {
 
 	private static final long serialVersionUID = -8937961791375017L;
-	private static final Logger LOGGER =Logger.getLogger(MethodHandles.lookup().lookupClass());
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF]+";
 	private static final String PREFIX_ADEL = "(o'|von|von der|von und zu|van)?";
@@ -91,7 +93,7 @@ public class Kunde extends AbstractAuditable {
 	
 	@Id
 	@GeneratedValue
-	@Basic(optional=false)
+	@Basic(optional = false)
 	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
 	private Long id;
 	
@@ -123,8 +125,8 @@ public class Kunde extends AbstractAuditable {
 	@Convert(converter = KundentypConverter.class)
 	private Kundentyp typ;
 	
-	private boolean geloescht = false;
-	
+	private Boolean geloescht = false;
+
 	@OneToMany
 	@JoinColumn(name = "kunde_fk")
 	@OrderColumn(name = "idx")
@@ -218,11 +220,11 @@ public class Kunde extends AbstractAuditable {
 		this.typ = typ;
 	}
 
-	public boolean isGeloescht() {
+	public Boolean isGeloescht() {
 		return geloescht;
 	}
 
-	public void setGeloescht(boolean geloescht) {
+	public void setGeloescht(Boolean geloescht) {
 		this.geloescht = geloescht;
 	}
 
@@ -232,6 +234,14 @@ public class Kunde extends AbstractAuditable {
 
 	public void setBestellungen(List<Bestellung> bestellungen) {
 		this.bestellungen = bestellungen;
+	}
+	
+	public Kunde addBestellung(Bestellung bestellung) {
+		if (bestellungen == null) {
+			bestellungen = new ArrayList<>();
+		}
+		bestellungen.add(bestellung);
+		return this;
 	}
 
 	public URI getUriBestellung() {
