@@ -36,11 +36,11 @@ INSERT INTO artikel (id, artikelnummer, bezeichnung, kurzBeschreibung, beschreib
 --
 -- bestellung
 --
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (400,100,'01.08.2006 00:00:00','01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (401,101,'02.08.2006 00:00:00','01.08.2006 00:00:00','02.08.2006 00:00:00');
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (402,102,'03.08.2006 00:00:00','01.08.2006 00:00:00','03.08.2006 00:00:00');
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (403,102,'04.08.2006 00:00:00','01.08.2006 00:00:00','04.08.2006 00:00:00');
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert) VALUES (404,100,'05.08.2006 00:00:00','01.08.2006 00:00:00','05.08.2006 00:00:00');
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (400,100,'01.08.2006 00:00:00','01.08.2006 00:00:00','01.08.2006 00:00:00', 0);
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (401,101,'02.08.2006 00:00:00','01.08.2006 00:00:00','02.08.2006 00:00:00', 0);
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (402,102,'03.08.2006 00:00:00','01.08.2006 00:00:00','03.08.2006 00:00:00', 1);
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (403,102,'04.08.2006 00:00:00','01.08.2006 00:00:00','04.08.2006 00:00:00',2);
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (404,100,'05.08.2006 00:00:00','01.08.2006 00:00:00','05.08.2006 00:00:00',1);
 
 --
 -- position

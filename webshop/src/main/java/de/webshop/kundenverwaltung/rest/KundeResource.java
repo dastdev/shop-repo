@@ -39,6 +39,7 @@ import com.google.common.base.Strings;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.bestellverwaltung.service.BestellungService;
+import de.webshop.kundenverwaltung.domain.Adresse;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.service.KundeService;
 import de.webshop.kundenverwaltung.service.KundeService.FetchType;
@@ -92,8 +93,9 @@ public class KundeResource implements Serializable {
 //                               String plz,
                                @QueryParam(KUNDEN_EMAIL_QUERY_PARAM)
                                @Email(message = "{kunde.email}")
-                               String email) {
-		List<? extends Kunde> kunden = null;
+                               String email) 
+	                           {
+		List<Kunde> kunden = null;
 		Kunde kunde = null;
 		// TODO Mehrere Query-Parameter koennen angegeben sein
 		if (!Strings.isNullOrEmpty(nachname)) {
@@ -117,7 +119,7 @@ public class KundeResource implements Serializable {
 				setStructuralLinks(k, uriInfo);
 			}
 		
-			entity = new GenericEntity<List<? extends Kunde>>(kunden){};
+			entity = new GenericEntity<List<Kunde>>(kunden){};
 			links = getTransitionalLinksKunden(kunden, uriInfo);
 		}
 		else if (kunde != null) {
@@ -273,9 +275,14 @@ public class KundeResource implements Serializable {
 	public Response createKunde(@Valid Kunde kunde) {
 		kunde.setID(START_ID_NULL);
 		
+//		final Adresse adresse = kunde.getAdresse();
+//		if (adresse != null)
+//			adresse.setKunde(kunde);
+		
 		kunde = ks.createKunde(kunde);
 		
 		LOGGER.tracef("Kunde: %s", kunde);
+		
 		return Response.created(getUriKunde(kunde, uriInfo)).build();
 	}
 	

@@ -2,6 +2,8 @@ package de.webshop.kundenverwaltung.domain;
 
 import static de.webshop.util.Constants.START_ID_NULL;
 import static javax.persistence.TemporalType.DATE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.text.DateFormat;
@@ -101,10 +103,9 @@ public class Kunde extends AbstractAuditable {
 //	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
 	private Long id = START_ID_NULL;
 	
-//	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
+	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
 	@Pattern(regexp = NACHNAME_PATTERN, message = "{kundenverwaltung.kunde.name.pattern}")
-	@Column(nullable = false)
 	private String name;
 	
 //	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
@@ -122,9 +123,9 @@ public class Kunde extends AbstractAuditable {
 	@Column(nullable = false)
 	private String passwort;
 	
-//	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
+	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
 	@Email(message = "{kundenverwaltung.kunde.email.pattern}")
-	@Column(unique = true, nullable = false)
+	@Column(unique = true)
 	private String email;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.typ.notNull}")
@@ -135,13 +136,13 @@ public class Kunde extends AbstractAuditable {
 	private Boolean geloescht = false;
 
 	@OneToMany
-	@JoinColumn(name = "kunde_fk")
-	@OrderColumn(name = "idx")
+	@JoinColumn(name = "kunde_fk", nullable = false)
+	@OrderColumn(name = "idx", nullable = false)
 	@XmlTransient
 	private List<Bestellung> bestellungen;
 	
-	@OneToOne(mappedBy = "kunde")
-//	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
+	@OneToOne(mappedBy = "kunde", cascade={PERSIST, REMOVE})
+	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
 	@Valid
 	private Adresse adresse;
 	
