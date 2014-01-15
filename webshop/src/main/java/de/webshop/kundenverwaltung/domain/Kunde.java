@@ -271,15 +271,16 @@ public class Kunde extends AbstractAuditable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
+		result = prime * result + ((bestellungen == null) ? 0 : bestellungen.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result
-				+ ((geburtstag == null) ? 0 : geburtstag.hashCode());
-		result = prime * result + (geloescht ? 1231 : 1237);
+		result = prime * result + ((geburtstag == null) ? 0 : geburtstag.hashCode());
+		result = prime * result + ((geloescht == null) ? 0 : geloescht.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((passwort == null) ? 0 : passwort.hashCode());
+		result = prime * result + ((passwort == null) ? 0 : passwort.hashCode());
 		result = prime * result + ((typ == null) ? 0 : typ.hashCode());
+		result = prime * result + ((uriBestellung == null) ? 0 : uriBestellung.hashCode());
 		result = prime * result + ((vorname == null) ? 0 : vorname.hashCode());
 		return result;
 	}
@@ -292,7 +293,19 @@ public class Kunde extends AbstractAuditable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Kunde other = (Kunde) obj;
+		Kunde other = (Kunde) obj;
+		if (adresse == null) {
+			if (other.adresse != null)
+				return false;
+		}
+		else if (!adresse.equals(other.adresse))
+			return false;
+		if (bestellungen == null) {
+			if (other.bestellungen != null)
+				return false;
+		}
+		else if (!bestellungen.equals(other.bestellungen))
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -305,7 +318,11 @@ public class Kunde extends AbstractAuditable {
 		}
 		else if (!geburtstag.equals(other.geburtstag))
 			return false;
-		if (geloescht != other.geloescht)
+		if (geloescht == null) {
+			if (other.geloescht != null)
+				return false;
+		}
+		else if (!geloescht.equals(other.geloescht))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -326,6 +343,12 @@ public class Kunde extends AbstractAuditable {
 		else if (!passwort.equals(other.passwort))
 			return false;
 		if (typ != other.typ)
+			return false;
+		if (uriBestellung == null) {
+			if (other.uriBestellung != null)
+				return false;
+		}
+		else if (!uriBestellung.equals(other.uriBestellung))
 			return false;
 		if (vorname == null) {
 			if (other.vorname != null)

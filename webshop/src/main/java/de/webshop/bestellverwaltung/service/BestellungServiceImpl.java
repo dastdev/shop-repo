@@ -81,7 +81,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 		}
 		
 		em.persist(bestellung);
-		event.fire(bestellung);
+		//event.fire(bestellung);
 		
 		return bestellung;
 	}

@@ -60,6 +60,9 @@
 		<!-- SQL-Anweisungen lesbar protokollieren -->
 		<property name="hibernate.format_sql" value="true"/>
 		
+		<!-- SQL-Anweisungen anzeigen -->
+		<property name="hibernate.show_sql" value="true" />
+		
 		<!-- Kommentare zu den generierten SQL-Anweisungen hinzufuegen -->
 		<property name="hibernate.use_sql_comments" value="true"/>
 			
