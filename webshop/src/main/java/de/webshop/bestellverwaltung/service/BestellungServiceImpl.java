@@ -13,6 +13,7 @@ import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.service.KundeService;
+import de.webshop.kundenverwaltung.service.KundeService.FetchType;
 import de.webshop.util.interceptor.Log;
 
 @Dependent
@@ -57,7 +58,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 			return null;
 		}
 		
-		Kunde kunde = ks.findKundeById(kundeId);
+		Kunde kunde = ks.findKundeById(kundeId, FetchType.NUR_KUNDE);
 		return createBestellung(bestellung, kunde);
 	}
 	
@@ -69,7 +70,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 		
 		// Kunde mit Bestellung verknuepfen
 		if(!em.contains(kunde)) {
-			kunde = ks.findKundeById(kunde.getID());
+			kunde = ks.findKundeById(kunde.getID(), FetchType.NUR_KUNDE);
 		}
 		// TODO: kunde.addBestellung(bestellung)
 		bestellung.setKunde(kunde);
