@@ -12,18 +12,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-//import javax.persistence.NamedAttributeNode;
-//import javax.persistence.NamedEntityGraph;
-//import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Index;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -38,9 +40,9 @@ import de.webshop.util.persistence.AbstractAuditable;
 
 @Entity
 @Table(indexes = @Index(columnList ="name") )
-//@NamedEntityGraphs({
-//	@NamedEntityGraph(name = "bestellungen", attributeNodes = @NamedAttributeNode("bestellungen"))
-//})
+@NamedEntityGraphs({
+	@NamedEntityGraph (name = "bestellungen", attributeNodes = @NamedAttributeNode ("bestellungen"))
+})
 @NamedQueries({ 
 	@NamedQuery(name = Kunde.FIND_KUNDEN, 
 			   query = "SELECT k " 
@@ -85,6 +87,7 @@ public class Kunde extends AbstractAuditable {
 	public static final String PARAM_KUNDE_EMAIL = "email";
 	public static final String PARAM_KUNDE_NACHNAME = "name";
 	public static final String PARAM_KUNDE_NACHNAME_PREFIX = "namePrefix";
+	public static final String GRAPH_BESTELLUNGEN = KUNDE_PREFIX + "bestellungen";
 	
 	@Id
 	@GeneratedValue
@@ -112,7 +115,7 @@ public class Kunde extends AbstractAuditable {
 	
 	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
 	@Email(message = "{kundenverwaltung.kunde.email.pattern}")
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.typ.notNull}")
@@ -120,21 +123,21 @@ public class Kunde extends AbstractAuditable {
 	@Convert(converter = KundentypConverter.class)
 	private Kundentyp typ;
 	
-	@Column
-	private boolean geloescht;
+	private boolean geloescht = false;
 	
-	@Transient
 	@OneToMany
-	@JoinColumn(name="kunde")
+	@JoinColumn(name = "kunde_fk")
+	@OrderColumn(name = "idx")
 	@XmlTransient
 	private List<Bestellung> bestellungen;
 	
-	private URI uriBestellung;
-	
-	@Transient
 	@OneToOne(mappedBy = "kunde")
 	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
+	@Valid
 	private Adresse adresse;
+	
+	@Transient
+	private URI uriBestellung;
 
 	public Kunde() {
 	}

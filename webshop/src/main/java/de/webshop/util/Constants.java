@@ -13,6 +13,9 @@ public final class Constants {
 	public static final String	LAST_LINK	= "last";
 	public static final String	LIST_LINK	= "list";
 	
+	//JPA
+	public static final String LOADGRAPH = "javax.persistance.loadgraph";
+	
 	private Constants() {
 	}
 }

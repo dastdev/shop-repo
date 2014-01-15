@@ -39,7 +39,6 @@ public final class Mock {
 	}
 	
 	public static Artikel findArtikelById(Long id) {
-		// Checkstyle TODO Variable "artikel" sollte als final deklariert werden
 		final Artikel artikel = new Artikel();
 		artikel.setID(id);
 		artikel.setArtikelnummer("R2D2uC3PO");
@@ -56,7 +55,6 @@ public final class Mock {
 	}
 
 	public static List<Position> findPositionenByBestellung(Bestellung bestellung) {
-		// Checkstyle TODO Variable "positionen" sollte als final deklariert werden
 		final List<Position> positionen = bestellung.getPositionen();
 		return positionen;
 	}
@@ -208,7 +206,6 @@ public final class Mock {
 	}
 	
 	public static Position createPosition(Position position, Bestellung bestellung) {
-		// TODO position anpassen
 		if (position == null) {
 			position = new Position();
 			System.out.println("uebergebene Position ungueltig");
