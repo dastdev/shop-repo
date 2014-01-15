@@ -15,6 +15,7 @@ public final class Constants {
 	
 	//JPA
 	public static final String LOADGRAPH = "javax.persistance.loadgraph";
+	public static final Long START_ID_NULL = null;
 	
 	private Constants() {
 	}

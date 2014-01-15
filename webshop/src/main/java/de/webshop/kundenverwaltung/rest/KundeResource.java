@@ -8,6 +8,7 @@ import static de.webshop.util.Constants.LIST_LINK;
 import static de.webshop.util.Constants.ADD_LINK;
 import static de.webshop.util.Constants.UPDATE_LINK;
 import static de.webshop.util.Constants.REMOVE_LINK;
+import static de.webshop.util.Constants.START_ID_NULL;
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
@@ -270,6 +271,8 @@ public class KundeResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public Response createKunde(@Valid Kunde kunde) {
+		kunde.setID(START_ID_NULL);
+		
 		kunde = ks.createKunde(kunde);
 		
 		LOGGER.tracef("Kunde: %s", kunde);
