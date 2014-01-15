@@ -13,14 +13,11 @@ import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.jboss.logging.Logger;
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.util.persistence.AbstractAuditable;
 
-@XmlRootElement
 @Entity
 @Table(indexes = {
 	@Index(columnList = "bestellung_fk"),
@@ -34,7 +31,7 @@ public class Position extends AbstractAuditable {
 	@Id
 	@GeneratedValue
 	@Basic(optional = false)
-	@Min(value = 1, message = "{bestellverwaltung.position.id.min}")
+	//@Min(value = 1, message = "{bestellverwaltung.position.id.min}")
 	private Long id = null;
 	
 	@ManyToOne(optional = false)
@@ -46,10 +43,8 @@ public class Position extends AbstractAuditable {
 	private URI artikelUri;
 	
 	@Basic(optional = false)
-	@NotNull(message = "{bestellverwaltung.position.anzahl.notNull}")
 	@Min(value = 1, message = "{bestellverwaltung.position.anzahl.min}")
 	private Integer anzahl;
-	
 	
 	public Position() {
 		super();
@@ -110,7 +105,6 @@ public class Position extends AbstractAuditable {
 		int result = 1;
 		result = prime * result + ((anzahl == null) ? 0 : anzahl.hashCode());
 		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
-		result = prime * result + ((artikelUri == null) ? 0 : artikelUri.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -128,26 +122,18 @@ public class Position extends AbstractAuditable {
 			if (other.anzahl != null)
 				return false;
 		}
-		else if (!anzahl.equals(other.anzahl))
-			return false;
-		if (artikel == null) {
-			if (other.artikel != null)
-				return false;
-		}
-		else if (!artikel.equals(other.artikel))
-			return false;
-		if (artikelUri == null) {
-			if (other.artikelUri != null)
-				return false;
-		}
-		else if (!artikelUri.equals(other.artikelUri))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		}
 		else if (!id.equals(other.id))
 			return false;
+		
+		if (artikel == null) {
+			if (other.artikel != null) {
+				return false;
+			}
+		}
+		else if (!artikel.equals(other.artikel)) {
+			return false;
+		}
+		
 		return true;
 	}
 	
