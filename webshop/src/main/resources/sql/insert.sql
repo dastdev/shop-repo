@@ -20,11 +20,11 @@ INSERT INTO kunde (id, name, vorname, typ, email, passwort, geburtstag, erzeugt,
 -- adresse
 --
 INSERT INTO adresse (id, strasse, hausnummer, plz, stadt, land, kunde_fk, erzeugt, aktualisiert) VALUES (200,'Moltkestraﬂe','13','76133','Karlsruhe',1,100,'01.08.2006 00:00:00','01.08.2006 00:00:00');
---INSERT INTO adresse (id, plz, ort, strasse, hausnr, kunde_fk, erzeugt, aktualisiert) VALUES (201,'76133','Karlsruhe','Moltkestraﬂe','31',101,'02.08.2006 00:00:00','02.08.2006 00:00:00');
---INSERT INTO adresse (id, plz, ort, strasse, hausnr, kunde_fk, erzeugt, aktualisiert) VALUES (202,'76133','Karlsruhe','Moltkestraﬂe','32',102,'03.08.2006 00:00:00','03.08.2006 00:00:00');
---INSERT INTO adresse (id, plz, ort, strasse, hausnr, kunde_fk, erzeugt, aktualisiert) VALUES (203,'76133','Karlsruhe','Moltkestraﬂe','33',103,'04.08.2006 00:00:00','04.08.2006 00:00:00');
---INSERT INTO adresse (id, plz, ort, strasse, hausnr, kunde_fk, erzeugt, aktualisiert) VALUES (204,'76133','Karlsruhe','Moltkestraﬂe','34',104,'05.08.2006 00:00:00','05.08.2006 00:00:00');
---INSERT INTO adresse (id, plz, ort, strasse, hausnr, kunde_fk, erzeugt, aktualisiert) VALUES (205,'76133','Karlsruhe','Moltkestraﬂe','35',105,'06.08.2006 00:00:00','06.08.2006 00:00:00');
+INSERT INTO adresse (id, strasse, hausnummer, plz, stadt, land, kunde_fk, erzeugt, aktualisiert) VALUES (201,'Moltkestraﬂe','13','76133','Karlsruhe',1,101,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO adresse (id, strasse, hausnummer, plz, stadt, land, kunde_fk, erzeugt, aktualisiert) VALUES (202,'Moltkestraﬂe','13','76133','Karlsruhe',1,102,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO adresse (id, strasse, hausnummer, plz, stadt, land, kunde_fk, erzeugt, aktualisiert) VALUES (203,'Moltkestraﬂe','13','76133','Karlsruhe',1,103,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO adresse (id, strasse, hausnummer, plz, stadt, land, kunde_fk, erzeugt, aktualisiert) VALUES (204,'Moltkestraﬂe','13','76133','Karlsruhe',1,104,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO adresse (id, strasse, hausnummer, plz, stadt, land, kunde_fk, erzeugt, aktualisiert) VALUES (205,'Moltkestraﬂe','13','76133','Karlsruhe',1,105,'01.08.2006 00:00:00','01.08.2006 00:00:00');
 
 --
 -- artikel
@@ -36,11 +36,12 @@ INSERT INTO artikel (id, artikelnummer, bezeichnung, kurzBeschreibung, beschreib
 --
 -- bestellung
 --
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (400,100,'01.08.2006 00:00:00','01.08.2006 00:00:00','01.08.2006 00:00:00', 0);
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (401,101,'02.08.2006 00:00:00','01.08.2006 00:00:00','02.08.2006 00:00:00', 0);
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (402,102,'03.08.2006 00:00:00','01.08.2006 00:00:00','03.08.2006 00:00:00', 1);
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (403,102,'04.08.2006 00:00:00','01.08.2006 00:00:00','04.08.2006 00:00:00',2);
-INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (404,100,'05.08.2006 00:00:00','01.08.2006 00:00:00','05.08.2006 00:00:00',1);
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (400,100,'01.08.2006 00:00:00','01.08.2006 00:00:00','01.08.2006 00:00:00',0);
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (401,101,'02.08.2006 00:00:00','01.08.2006 00:00:00','02.08.2006 00:00:00',1);
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (402,102,'03.08.2006 00:00:00','01.08.2006 00:00:00','03.08.2006 00:00:00',0);
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (403,102,'04.08.2006 00:00:00','01.08.2006 00:00:00','04.08.2006 00:00:00',1);
+INSERT INTO bestellung (id, kunde_fk, bestelldatum, erzeugt, aktualisiert, idx) VALUES (404,100,'05.08.2006 00:00:00','01.08.2006 00:00:00','05.08.2006 00:00:00',0);
+
 
 --
 -- position

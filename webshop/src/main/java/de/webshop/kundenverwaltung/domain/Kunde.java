@@ -305,15 +305,6 @@ public class Kunde extends AbstractAuditable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result
-				+ ((geburtstag == null) ? 0 : geburtstag.hashCode());
-		result = prime * result + (geloescht ? 1231 : 1237);
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((passwort == null) ? 0 : passwort.hashCode());
-		result = prime * result + ((typ == null) ? 0 : typ.hashCode());
-		result = prime * result + ((vorname == null) ? 0 : vorname.hashCode());
 		return result;
 	}
 
@@ -325,47 +316,16 @@ public class Kunde extends AbstractAuditable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		
 		final Kunde other = (Kunde) obj;
+		
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		}
 		else if (!email.equals(other.email))
 			return false;
-		if (geburtstag == null) {
-			if (other.geburtstag != null)
-				return false;
-		}
-		else if (!geburtstag.equals(other.geburtstag))
-			return false;
-		if (geloescht != other.geloescht)
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		}
-		else if (!id.equals(other.id))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		}
-		else if (!name.equals(other.name))
-			return false;
-		if (passwort == null) {
-			if (other.passwort != null)
-				return false;
-		}
-		else if (!passwort.equals(other.passwort))
-			return false;
-		if (typ != other.typ)
-			return false;
-		if (vorname == null) {
-			if (other.vorname != null)
-				return false;
-		}
-		else if (!vorname.equals(other.vorname))
-			return false;
+
 		return true;
 	}
 

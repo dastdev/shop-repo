@@ -26,7 +26,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -68,7 +67,6 @@ public class Bestellung extends AbstractAuditable {
 	@Id
 	@GeneratedValue
 	@Basic(optional = false)
-	@Min(value = 1, message = "{bestellverwaltung.bestellung.id.min}")
 	private Long id = null;
 	
 	@ManyToOne
@@ -89,7 +87,6 @@ public class Bestellung extends AbstractAuditable {
 	@NotEmpty(message = "{bestellverwaltung.bestellung.positionen.notEmpty}")
 	@Valid
 	private List<Position> positionen;
-	
 	
 	public Bestellung() {
 		super();
@@ -190,7 +187,7 @@ public class Bestellung extends AbstractAuditable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Bestellung other = (Bestellung) obj;
+		Bestellung other = (Bestellung) obj;
 		if (bestelldatum == null) {
 			if (other.bestelldatum != null)
 				return false;
