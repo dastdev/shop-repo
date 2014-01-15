@@ -1,11 +1,15 @@
 package de.webshop.kundenverwaltung.domain;
 
+import static de.webshop.util.Constants.START_ID_NULL;
 import static javax.persistence.TemporalType.DATE;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -13,19 +17,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-//import javax.persistence.NamedAttributeNode;
-//import javax.persistence.NamedEntityGraph;
-//import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Index;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
-import javax.validation.constraints.Min;
+import javax.validation.Valid;
+//import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -38,10 +44,11 @@ import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.util.persistence.AbstractAuditable;
 
 @Entity
-@Table(indexes = @Index(columnList = "name"))
-//@NamedEntityGraphs({
-//	@NamedEntityGraph(name = "bestellungen", attributeNodes = @NamedAttributeNode("bestellungen"))
-//})
+@Table(indexes = @Index(columnList ="name") )
+@NamedEntityGraphs({
+	@NamedEntityGraph (name = "bestellungen", attributeNodes = @NamedAttributeNode ("bestellungen"))
+})
+
 @NamedQueries({ 
 	@NamedQuery(name = Kunde.FIND_KUNDEN, 
 			   query = "SELECT k " 
@@ -86,34 +93,38 @@ public class Kunde extends AbstractAuditable {
 	public static final String PARAM_KUNDE_EMAIL = "email";
 	public static final String PARAM_KUNDE_NACHNAME = "name";
 	public static final String PARAM_KUNDE_NACHNAME_PREFIX = "namePrefix";
+	public static final String GRAPH_BESTELLUNGEN = KUNDE_PREFIX + "bestellungen";
 	
 	@Id
 	@GeneratedValue
 	@Basic(optional = false)
-	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
-	private Long id;
+//	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
+	private Long id = START_ID_NULL;
 	
-	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
+//	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
 	@Pattern(regexp = NACHNAME_PATTERN, message = "{kundenverwaltung.kunde.name.pattern}")
+	@Column(nullable = false)
 	private String name;
 	
-	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
+//	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
 	@Pattern(regexp = NAME_PATTERN, message = "{kundenverwaltung.kunde.vorname.pattern}")
+	@Column(nullable = false)
 	private String vorname;
 	
 	@Past(message = "{kundenverwaltung.kunde.geburtstag.date}")
 	@Temporal(DATE)
 	private Date geburtstag;
 	
-	@NotNull(message = "{kundenverwaltung.kunde.passwort.notNull}")
+//	@NotNull(message = "{kundenverwaltung.kunde.passwort.notNull}")
 	@Size(min = 4, max = 16, message = "{kundenverwaltung.kunde.passwort.length}")
+	@Column(nullable = false)
 	private String passwort;
 	
-	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
+//	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
 	@Email(message = "{kundenverwaltung.kunde.email.pattern}")
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.typ.notNull}")
@@ -121,21 +132,21 @@ public class Kunde extends AbstractAuditable {
 	@Convert(converter = KundentypConverter.class)
 	private Kundentyp typ;
 	
-	@Column
-	private Boolean geloescht;
-	
-	@Transient
+	private Boolean geloescht = false;
+
 	@OneToMany
-	@JoinColumn(name = "kunde")
+	@JoinColumn(name = "kunde_fk")
+	@OrderColumn(name = "idx")
 	@XmlTransient
 	private List<Bestellung> bestellungen;
 	
-	private URI uriBestellung;
+	@OneToOne(mappedBy = "kunde")
+//	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
+	@Valid
+	private Adresse adresse;
 	
 	@Transient
-	@OneToOne(mappedBy = "kunde")
-	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
-	private Adresse adresse;
+	private URI uriBestellung;
 
 	public Kunde() {
 	}
@@ -192,6 +203,27 @@ public class Kunde extends AbstractAuditable {
 		this.geburtstag = geburtstag;
 	}
 
+	public String getGeburtstagAsString(int style, Locale locale) {
+		Date temp = geburtstag;
+		if (temp == null) {
+			temp = new Date();
+		}
+		final DateFormat f = DateFormat.getDateInstance(style, locale);
+		return f.format(temp);
+	}
+	
+	// Parameter, z.B. DateFormat.MEDIUM, Locale.GERMANY
+	// MEDIUM fuer Format dd.MM.yyyy
+	public void setGeburtstag(String seitStr, int style, Locale locale) {
+		final DateFormat f = DateFormat.getDateInstance(style, locale);
+		try {
+			this.geburtstag = f.parse(seitStr);
+		}
+		catch (ParseException e) {
+			throw new RuntimeException("Kein gueltiges Datumsformat fuer: " + seitStr, e);
+		}
+	}
+	
 	public String getPasswort() {
 		return passwort;
 	}

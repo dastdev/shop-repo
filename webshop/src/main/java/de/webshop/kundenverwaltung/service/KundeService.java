@@ -1,12 +1,17 @@
 package de.webshop.kundenverwaltung.service;
 
+import static de.webshop.util.Constants.LOADGRAPH;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
+import com.google.common.collect.ImmutableMap;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.util.interceptor.Log;
 
@@ -19,7 +24,15 @@ public class KundeService implements Serializable {
 	@Inject
 	private EntityManager em;
 	
-//	public enum FetchType { NUR_KUNDE, MIT_BESTELLUNGEN }
+	public enum FetchType { 
+		NUR_KUNDE,
+		MIT_BESTELLUNGEN
+	}
+	
+	public enum OrderType {
+		KEINE,
+		ID
+	}
 	
 	/**
 	 * Suche einen Kunden zu gegebener ID
@@ -27,11 +40,29 @@ public class KundeService implements Serializable {
 	 * @return Der Kunde, zu dem die gegebene ID gehört.
 	 */
 	@NotNull(message = "{kunde.notFound.id}")
-	public Kunde findKundeById(Long id) {
+	public Kunde findKundeById(Long id, FetchType fetchType) {
 		if (id == null)
 			return null;
-
-		Kunde kunde = em.find(Kunde.class, id);
+		
+		EntityGraph<?> entityGraph;
+		Map<String, Object> props;
+		Kunde kunde;
+		
+		switch (fetchType) {
+			case NUR_KUNDE:
+				kunde = em.find(Kunde.class, id);
+				break;
+				
+			case MIT_BESTELLUNGEN:
+				entityGraph = em.getEntityGraph(Kunde.GRAPH_BESTELLUNGEN);
+				props = ImmutableMap.of(LOADGRAPH, (Object) entityGraph);
+				kunde = em.find(Kunde.class, id, props);
+				break;
+				
+			default:
+				kunde = em.find(Kunde.class, id);
+				break;
+		}
 		return kunde;
 	}
 
@@ -58,26 +89,49 @@ public class KundeService implements Serializable {
 	 * @return Liste der Kunden, die den angegebenen Nachnamen besitzen
 	 */
 	@NotNull(message = "{kunde.notFound.name}")
-	public List<Kunde> findKundenByNachname(String name) {
-		try {
-			return em.createNamedQuery(Kunde.FIND_KUNDEN_BY_NACHNAME, Kunde.class)
-					 .setParameter(Kunde.PARAM_KUNDE_NACHNAME, name)
-					 .getResultList();
-		}
-		catch (NoResultException e) {
-			return null;
-		}
-
+	public List<Kunde> findKundenByNachname(String name, FetchType fetchType) {
+		final TypedQuery<Kunde> query = em.createNamedQuery(Kunde.FIND_KUNDEN_BY_NACHNAME, Kunde.class)
+					 					  .setParameter(Kunde.PARAM_KUNDE_NACHNAME, name);
+		
+		EntityGraph<?> entityGraph;
+		switch(fetchType) {
+			case NUR_KUNDE:
+				break;
+					
+			case MIT_BESTELLUNGEN:
+				entityGraph = em.getEntityGraph(Kunde.GRAPH_BESTELLUNGEN);
+				query.setHint(LOADGRAPH, entityGraph);
+				break;
+				
+			default:
+				break;
+			}
+		return query.getResultList();
 	}
 
 	/**
 	 * Suche nach Liste aller Kunden
 	 * @return Gibt alle vorhandenen Kunden zurück
 	 */
-	//TODO Sortierte Kundensuche implementieren (Kunde.FIND_KUNDEN_ORDER_BY_ID)
-	public List<Kunde> findAllKunden() {
-		return em.createNamedQuery(Kunde.FIND_KUNDEN, Kunde.class)
-				 .getResultList();
+	public List<Kunde> findAllKunden(FetchType fetchType, OrderType orderType) {
+		final TypedQuery<Kunde> query = OrderType.ID.equals(orderType)
+										? em.createNamedQuery(Kunde.FIND_KUNDEN_ORDER_BY_ID, Kunde.class)
+										: em.createNamedQuery(Kunde.FIND_KUNDEN, Kunde.class);
+		
+		EntityGraph<?> entityGraph;
+		switch(fetchType) {
+			case NUR_KUNDE:
+				break;
+			
+			case MIT_BESTELLUNGEN:
+				entityGraph = em.getEntityGraph(Kunde.GRAPH_BESTELLUNGEN);
+				query.setHint(LOADGRAPH, entityGraph);
+				break;
+			
+			default:
+				break;
+		}
+		return query.getResultList();
 	}
 
 	/**
@@ -131,12 +185,14 @@ public class KundeService implements Serializable {
 		if (kunde == null)
 			return;
 		
-		kunde = findKundeById(kunde.getID());
+		kunde = findKundeById(kunde.getID(), FetchType.NUR_KUNDE);
 		if (kunde == null)
 			return;
 		
-		if (!kunde.getBestellungen().isEmpty())
+		if (!kunde.getBestellungen().isEmpty()) {
+			kunde.setGeloescht(true);
 			throw new KundeDeleteBestellungException(kunde);
+		}
 		
 			em.remove(kunde);
 	}

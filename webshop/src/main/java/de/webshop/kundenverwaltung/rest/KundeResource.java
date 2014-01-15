@@ -8,6 +8,7 @@ import static de.webshop.util.Constants.LIST_LINK;
 import static de.webshop.util.Constants.ADD_LINK;
 import static de.webshop.util.Constants.UPDATE_LINK;
 import static de.webshop.util.Constants.REMOVE_LINK;
+import static de.webshop.util.Constants.START_ID_NULL;
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
@@ -16,6 +17,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -31,12 +33,16 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.hibernate.validator.constraints.Email;
 import org.jboss.logging.Logger;
+import com.google.common.base.Strings;
 import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.rest.BestellungResource;
 import de.webshop.bestellverwaltung.service.BestellungService;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.service.KundeService;
+import de.webshop.kundenverwaltung.service.KundeService.FetchType;
+import de.webshop.kundenverwaltung.service.KundeService.OrderType;
 import de.webshop.util.interceptor.Log;
 import de.webshop.util.rest.UriHelper;
 
@@ -53,6 +59,7 @@ public class KundeResource implements Serializable {
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private static final String	KUNDEN_NACHNAME_QUERY_PARAM	= "nachname";
+	private static final String KUNDEN_EMAIL_QUERY_PARAM = "email";
 	
 	// TODO Kundensuche nach PLZ implementieren
 	// private static final String KUNDEN_PLZ_QUERY_PARAM = "plz";
@@ -76,10 +83,59 @@ public class KundeResource implements Serializable {
 	private UriHelper			uriHelper;
 	
 	@GET
+	public Response findKunden(@QueryParam(KUNDEN_NACHNAME_QUERY_PARAM)
+                               @Pattern(regexp = Kunde.NACHNAME_PATTERN, message = "{kunde.nachname.pattern}")
+	                           String nachname,
+	                           	//Suche nach PLZ implementieren
+//                               @QueryParam(KUNDEN_PLZ_QUERY_PARAM)
+//                               @Pattern(regexp = "\\d{5}", message = "{adresse.plz}")
+//                               String plz,
+                               @QueryParam(KUNDEN_EMAIL_QUERY_PARAM)
+                               @Email(message = "{kunde.email}")
+                               String email) {
+		List<? extends Kunde> kunden = null;
+		Kunde kunde = null;
+		// TODO Mehrere Query-Parameter koennen angegeben sein
+		if (!Strings.isNullOrEmpty(nachname)) {
+			kunden = ks.findKundenByNachname(nachname, FetchType.NUR_KUNDE);
+		}
+		//PLZ-Suche noch nicht implementiert
+//		else if (!Strings.isNullOrEmpty(plz)) {
+//			kunden = ks.findKundenByPLZ(plz);
+//		}
+		else if (!Strings.isNullOrEmpty(email)) {
+			kunde = ks.findKundeByEmail(email);
+		}
+		else {
+			kunden = ks.findAllKunden(FetchType.NUR_KUNDE, OrderType.ID);
+		}
+		
+		Object entity = null;
+		Link[] links = null;
+		if (kunden != null) {
+			for (Kunde k : kunden) {
+				setStructuralLinks(k, uriInfo);
+			}
+		
+			entity = new GenericEntity<List<? extends Kunde>>(kunden){};
+			links = getTransitionalLinksKunden(kunden, uriInfo);
+		}
+		else if (kunde != null) {
+			entity = kunde;
+			links = getTransitionalLinks(kunde, uriInfo);
+		}
+		
+		return Response.ok(entity)
+		               .links(links)
+		               .build();
+	}
+	
+	
+	@GET
 	@Path("{id:[1-9][0-9]*}")
 	// Kunde ueber ID suchen
 	public Response findKundeById(@PathParam("id") Long id) {
-		final Kunde kunde = ks.findKundeById(id);
+		final Kunde kunde = ks.findKundeById(id, FetchType.NUR_KUNDE);
 		if (kunde == null) {
 			throw new NotFoundException(String.format("Kein Kunde mit der ID %d gefunden.", id));
 		}
@@ -133,14 +189,14 @@ public class KundeResource implements Serializable {
 	public Response findKundeByNachname(@QueryParam(KUNDEN_NACHNAME_QUERY_PARAM) String nachname) {
 		List<Kunde> kunden = null;
 		if (nachname != null) {
-			kunden = ks.findKundenByNachname(nachname);
+			kunden = ks.findKundenByNachname(nachname, FetchType.NUR_KUNDE);
 			if (kunden.isEmpty()) {
 				throw new NotFoundException(String.format("Kein Kunde mit Nachname %s gefunden.",
 															nachname));
 			}
 		}
 		else {
-			kunden = ks.findAllKunden();
+			kunden = ks.findAllKunden(FetchType.NUR_KUNDE, OrderType.ID);
 			if (kunden.isEmpty()) {
 				throw new NotFoundException("Keine Kunden vorhanden.");
 			}
@@ -154,7 +210,7 @@ public class KundeResource implements Serializable {
 						.links(getTransitionalLinksKunden(kunden, uriInfo)).build();
 	}
 	
-	private Link[] getTransitionalLinksKunden(List<Kunde> kunden, UriInfo uriInfo2) {
+	private Link[] getTransitionalLinksKunden(List<? extends Kunde> kunden, UriInfo uriInfo2) {
 		if (kunden == null || kunden.isEmpty()) {
 			return null;
 		}
@@ -172,7 +228,7 @@ public class KundeResource implements Serializable {
 	@GET
 	@Path("{id:[1-9][0-9]*}/bestellungen")
 	public Response findBestellungenByKundeId(@PathParam("id") Long kundeId) {
-		final Kunde kunde = ks.findKundeById(kundeId);
+		final Kunde kunde = ks.findKundeById(kundeId, FetchType.NUR_KUNDE);
 		if (kunde == null) {
 			throw new NotFoundException(
 										String.format("Es wurden keine Bestellungen fuer den Kunden %d gefunden",
@@ -215,6 +271,8 @@ public class KundeResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public Response createKunde(@Valid Kunde kunde) {
+		kunde.setID(START_ID_NULL);
+		
 		kunde = ks.createKunde(kunde);
 		
 		LOGGER.tracef("Kunde: %s", kunde);
@@ -233,7 +291,7 @@ public class KundeResource implements Serializable {
 	@Path("{id:[1-9][0-9]*}")
 	@Produces
 	public void deleteKunde(@PathParam("id") Long kundeId) {
-		final Kunde kunde = ks.findKundeById(kundeId);
+		final Kunde kunde = ks.findKundeById(kundeId, FetchType.NUR_KUNDE);
 		ks.deleteKunde(kunde);
 	}
 }
