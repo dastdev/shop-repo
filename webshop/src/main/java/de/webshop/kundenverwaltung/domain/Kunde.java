@@ -102,13 +102,13 @@ public class Kunde extends AbstractAuditable {
 	private Long id = START_ID_NULL;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
-	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
+//	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
 	@Pattern(regexp = NACHNAME_PATTERN, message = "{kundenverwaltung.kunde.name.pattern}")
 	private String name;
 	
+
 	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
 	@Pattern(regexp = NAME_PATTERN, message = "{kundenverwaltung.kunde.vorname.pattern}")
-	@Column(nullable = false)
 	private String vorname;
 	
 	@Temporal(TIMESTAMP)
