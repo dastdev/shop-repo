@@ -145,7 +145,7 @@ public class KundeService implements Serializable {
 	public Kunde createKunde(Kunde kunde) {
 		if (kunde == null) {
 		System.out.println("Kein anzulegender Kunde angegeben");
-		return kunde;
+			return kunde;
 		}
 		
 		//Prüfung, ob es schon einen Kunden mit dieser Mailadresse gibt

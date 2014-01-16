@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.jboss.logging.Logger;
 import de.webshop.util.persistence.AbstractAuditable;
 
-@XmlRootElement
+//@XmlRootElement
 @Entity
 @Table(indexes = @Index(columnList = "plz"))
 public class Adresse extends AbstractAuditable {
@@ -47,7 +47,7 @@ public class Adresse extends AbstractAuditable {
 	@XmlTransient
 	private Kunde kunde;
 	
-	@Size(min = STRASSE_LENGTH_MIN, max = STRASSE_LENGTH_MAX)
+	@Size(min = STRASSE_LENGTH_MIN, max = STRASSE_LENGTH_MAX, message = "{kundenverwaltung.adresse.strasse.size}")
 	@NotNull(message = "{kundenverwaltung.adresse.strasse.notNull}")
 	private String strasse;
 	
@@ -141,8 +141,6 @@ public class Adresse extends AbstractAuditable {
 		int result = 1;
 		result = prime * result
 				+ ((hausnummer == null) ? 0 : hausnummer.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((land == null) ? 0 : land.hashCode());
 		result = prime * result + ((plz == null) ? 0 : plz.hashCode());
 		result = prime * result + ((stadt == null) ? 0 : stadt.hashCode());
 		result = prime * result + ((strasse == null) ? 0 : strasse.hashCode());

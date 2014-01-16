@@ -2,6 +2,7 @@ package de.webshop.kundenverwaltung.domain;
 
 import static de.webshop.util.Constants.START_ID_NULL;
 import static javax.persistence.TemporalType.DATE;
+import static javax.persistence.TemporalType.TIMESTAMP;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 import java.lang.invoke.MethodHandles;
@@ -100,7 +101,6 @@ public class Kunde extends AbstractAuditable {
 	@Id
 	@GeneratedValue
 	@Basic(optional = false)
-//	@Min(value = 1, message = "{kundenverwaltung.kunde.id.min}")
 	private Long id = START_ID_NULL;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
@@ -108,17 +108,17 @@ public class Kunde extends AbstractAuditable {
 	@Pattern(regexp = NACHNAME_PATTERN, message = "{kundenverwaltung.kunde.name.pattern}")
 	private String name;
 	
-	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
-//	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
+
+	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
 	@Pattern(regexp = NAME_PATTERN, message = "{kundenverwaltung.kunde.vorname.pattern}")
 	private String vorname;
 	
+	@Temporal(TIMESTAMP)
 	@Past(message = "{kundenverwaltung.kunde.geburtstag.date}")
-	@Temporal(DATE)
 	private Date geburtstag;
 	
-	@NotNull(message = "{kundenverwaltung.kunde.passwort.notNull}")
-//	@Size(min = 4, max = 16, message = "{kundenverwaltung.kunde.passwort.length}")
+	@Size(min = 4, max = 16, message = "{kundenverwaltung.kunde.passwort.length}")
+	@Column(nullable = false)
 	private String passwort;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
@@ -146,15 +146,13 @@ public class Kunde extends AbstractAuditable {
 	
 	@Transient
 	private URI uriBestellung;
-
-	public Kunde() {
-	}
 	
 	@PostPersist
 	protected void postPersist() {
 		LOGGER.debugf("Neuer Kunde angelegt mit ID: %d", id);
 	}
 	
+	/*
 	//Konstruktor mit allen Pflichtattributen für DB-Zugriff
 	public Kunde(String name, String vorname, String passwort, String email,
 			Kundentyp typ) {
@@ -164,7 +162,7 @@ public class Kunde extends AbstractAuditable {
 		this.passwort = passwort;
 		this.email = email;
 		this.typ = typ;
-	}
+	}*/
 
 	/**
 	 * Get- und Set-Methoden
