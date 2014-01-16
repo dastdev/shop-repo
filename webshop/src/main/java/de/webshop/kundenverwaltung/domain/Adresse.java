@@ -15,12 +15,10 @@ import javax.persistence.Index;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.jboss.logging.Logger;
 import de.webshop.util.persistence.AbstractAuditable;
 
-//@XmlRootElement
 @Entity
 @Table(indexes = @Index(columnList = "plz"))
 public class Adresse extends AbstractAuditable {
@@ -52,7 +50,6 @@ public class Adresse extends AbstractAuditable {
 	private String strasse;
 	
 	@Size(max = HAUSNUMMER_LENGTH_MAX, message = "{kundenverwaltung.adresse.hausnummer.size}")
-	//@NotNull(message = "{kundenverwaltung.adresse.hausnummer.notNull}")	//Unsinnig, da manche Adressen keine Hausnr. besitzen
 	private String hausnummer;
 	
 	@Pattern(regexp = PATTERN_PLZ, message = "{kundenverwaltung.adresse.plz.pattern}")

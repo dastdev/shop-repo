@@ -149,23 +149,7 @@ public class Kunde extends AbstractAuditable {
 	protected void postPersist() {
 		LOGGER.debugf("Neuer Kunde angelegt mit ID: %d", id);
 	}
-	
-	/*
-	//Konstruktor mit allen Pflichtattributen für DB-Zugriff
-	public Kunde(String name, String vorname, String passwort, String email,
-			Kundentyp typ) {
-		super();
-		this.name = name;
-		this.vorname = vorname;
-		this.passwort = passwort;
-		this.email = email;
-		this.typ = typ;
-	}*/
 
-	/**
-	 * Get- und Set-Methoden
-	 * @return: Jeweils Rueckgabe des entspr. Attributs (get-Methode)
-	 */
 	public String getName() {
 		return name;
 	}
@@ -321,6 +305,16 @@ public class Kunde extends AbstractAuditable {
 			return false;
 
 		return true;
+	}
+
+	public void setValues(Kunde kunde) {
+		name = kunde.name;
+		vorname = kunde.vorname;
+		email = kunde.email;
+		passwort = kunde.passwort;
+		typ = kunde.typ;
+		geloescht = kunde.geloescht;
+		geburtstag = kunde.geburtstag;
 	}
 
 }
