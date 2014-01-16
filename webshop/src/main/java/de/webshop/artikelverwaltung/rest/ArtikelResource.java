@@ -5,9 +5,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
-
 import java.net.URI;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -23,9 +21,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.service.ArtikelService;
+import de.webshop.kundenverwaltung.domain.Kunde;
+import de.webshop.kundenverwaltung.service.KundeService.FetchType;
 import de.webshop.util.interceptor.Log;
 import de.webshop.util.persistence.AbstractAuditable;
 import de.webshop.util.rest.NotFoundException;
@@ -90,8 +89,11 @@ public class ArtikelResource extends AbstractAuditable {
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public Response updateArtikel(@Valid Artikel artikel) {
-		as.updateArtikel(artikel);
-		return Response.ok(artikel).links(getTransitionalLinks(artikel, uriInfo)).build();
+	public void updateeArtikel(@Valid Artikel artikel) {
+		final Artikel origArtikel = as.findArtikelById(artikel.getID());
+		origArtikel.setValues(origArtikel);
+				
+		as.updateArtikel(origArtikel);
+		return;
 	}
 }

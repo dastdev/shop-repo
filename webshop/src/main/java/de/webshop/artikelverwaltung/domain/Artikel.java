@@ -319,4 +319,14 @@ public class Artikel implements Serializable {
 		return true;
 	}
 
+	public void setValues(Artikel artikel) {
+		artikelbild = artikel.artikelbild;
+		beschreibung = artikel.beschreibung;
+		kurzBeschreibung = artikel.kurzBeschreibung;
+		bezeichnung = artikel.bezeichnung;
+		kategorie = artikel.kategorie;
+		preis = artikel.preis;
+		lagerbestand = artikel.lagerbestand;
+	}
+
 }
