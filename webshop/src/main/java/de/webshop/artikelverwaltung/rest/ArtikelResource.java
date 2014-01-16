@@ -23,8 +23,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.service.ArtikelService;
-import de.webshop.kundenverwaltung.domain.Kunde;
-import de.webshop.kundenverwaltung.service.KundeService.FetchType;
 import de.webshop.util.interceptor.Log;
 import de.webshop.util.persistence.AbstractAuditable;
 import de.webshop.util.rest.NotFoundException;

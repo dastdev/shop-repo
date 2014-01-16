@@ -26,7 +26,6 @@ public class ArtikelService implements Serializable {
 	 * @param id : Die ID des gesuchten Artikels
 	 * @return Der Artikel, falls vorhanden
 	 */
-	//@NotNull(message = "{artikelverwaltung.artikel.notFound.ID}")
 	public Artikel findArtikelById(Long id) {
 		return em.find(Artikel.class, id);
 	}
@@ -39,37 +38,24 @@ public class ArtikelService implements Serializable {
 	 */
 	public Artikel updateArtikel(Artikel artikel) {	
 		if (artikel == null) {
-			System.out.println("[ERROR] UPDATE ARTIKEL fehlgeschlagen.");
 			return null;			
 		}
 		
 		// kunde vom EntityManager trennen, weil anschliessend z.B. nach Id und Email gesucht wird
 		em.detach(artikel);
 		em.merge(artikel);
-		System.out.println("Artikel (ID: " + artikel.getID() + ") updated.");
 		return artikel;
 	}
 
 	// / Erstellt einen neuen Artikel und gibt diesen als Instanz zurueck
 	public Artikel createArtikel(Artikel artikel) {
-		if (artikel == null) {
-			System.out.println("[ERROR] CREATE ARTIKEL fehlgeschlagen.");			
+		if (artikel == null) {			
 			return null;
 		}
-		else {
-			artikel.setID(null);
-			em.persist(artikel);
-			System.out.println("Artikel created.");
-			return artikel;
-		}
 		
-		/// Von David:
-//		final Artikel tmp = findArtikelById(artikel.getID());
-//		if(tmp != null) {
-//			throw new ArtikelExistsException(artikel.getBezeichnung());
-//		}
-//		
-//		em.persist(artikel);
+		artikel.setID(null);
+		em.persist(artikel);
+		return artikel;
 	}
 
 }

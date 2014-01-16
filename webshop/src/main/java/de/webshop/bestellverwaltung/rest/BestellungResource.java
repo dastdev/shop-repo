@@ -46,7 +46,7 @@ public class BestellungResource implements Serializable {
 	private static final long serialVersionUID = 7649051701994670170L;
 	
 	@Context
-	private UriInfo	uriInfo;
+	private transient UriInfo	uriInfo;
 	
 	@Inject
 	private ArtikelService as;

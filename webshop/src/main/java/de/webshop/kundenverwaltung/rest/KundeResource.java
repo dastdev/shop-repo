@@ -69,7 +69,7 @@ public class KundeResource implements Serializable {
 	private static final String	LAST_LINK					= null;
 	
 	@Context
-	private UriInfo				uriInfo;
+	private transient UriInfo				uriInfo;
 	
 	@Inject
 	private KundeService		ks;
@@ -272,18 +272,15 @@ public class KundeResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public Response createKunde(@Valid Kunde kunde) {
-		System.out.println("Kunde: " + kunde);
+		
 		kunde.setID(START_ID_NULL);
-		System.out.println("neue ID " + kunde.getID());
+		
 		final Adresse adresse = kunde.getAdresse();
 		
-		System.out.println("Adresse: " + adresse);
 		if (adresse != null)
 			adresse.setKunde(kunde);
 		
-		System.out.println("ks.createKunde()");
 		kunde = ks.createKunde(kunde);
-		System.out.println("ks.createKunde::::: DONE");
 		
 		LOGGER.tracef("Kunde: %s", kunde);
 		
