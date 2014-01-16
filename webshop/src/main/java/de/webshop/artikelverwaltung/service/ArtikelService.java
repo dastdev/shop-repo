@@ -46,7 +46,7 @@ public class ArtikelService implements Serializable {
 		// kunde vom EntityManager trennen, weil anschliessend z.B. nach Id und Email gesucht wird
 		em.detach(artikel);
 		em.merge(artikel);
-		System.out.println("Artikel (ID: "+ artikel.getID() + ") updated.");
+		System.out.println("Artikel (ID: " + artikel.getID() + ") updated.");
 		return artikel;
 	}
 

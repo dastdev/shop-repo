@@ -6,7 +6,6 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
 
-import java.io.Serializable;
 import java.net.URI;
 
 import javax.enterprise.context.RequestScoped;
