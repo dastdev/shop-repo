@@ -182,7 +182,7 @@ public class BestellungResource implements Serializable {
 		
 		final URI bestellungUri = getUriBestellung(bestellung, uriInfo);
 		
-		Response res = Response.created(bestellungUri).build();
+		final Response res = Response.created(bestellungUri).build();
 		return res;
 	}
 	

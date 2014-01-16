@@ -2,7 +2,6 @@ package de.webshop.kundenverwaltung.service;
 
 import static de.webshop.util.Constants.LOADGRAPH;
 import java.io.Serializable;
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.Dependent;
@@ -12,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
-import org.jboss.logging.Logger;
 import com.google.common.collect.ImmutableMap;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.util.interceptor.Log;
@@ -22,7 +20,6 @@ import de.webshop.util.interceptor.Log;
 public class KundeService implements Serializable {
 
 	private static final long serialVersionUID = -7742705898377634324L;
-	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Inject
 	private transient EntityManager em;
