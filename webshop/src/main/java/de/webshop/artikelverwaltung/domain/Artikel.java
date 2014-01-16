@@ -230,6 +230,17 @@ public class Artikel implements Serializable {
 		this.aktualisiert = aktualisiert == null ? null : (Date) aktualisiert.clone();
 	}
 
+	public void setValues(Artikel artikel) {
+		this.artikelnummer = artikel.artikelnummer;
+		this.preis = artikel.preis;
+		this.beschreibung = artikel.beschreibung;
+		this.kurzBeschreibung = artikel.kurzBeschreibung;
+		this.kategorie = artikel.kategorie;
+		this.bezeichnung = artikel.bezeichnung;
+		this.preis = artikel.preis;
+		this.lagerbestand = artikel.lagerbestand;
+	}
+
 
 	// Basismethoden
 	@Override
@@ -317,16 +328,6 @@ public class Artikel implements Serializable {
 		else if (!preis.equals(other.preis))
 			return false;
 		return true;
-	}
-
-	public void setValues(Artikel artikel) {
-		artikelbild = artikel.artikelbild;
-		beschreibung = artikel.beschreibung;
-		kurzBeschreibung = artikel.kurzBeschreibung;
-		bezeichnung = artikel.bezeichnung;
-		kategorie = artikel.kategorie;
-		preis = artikel.preis;
-		lagerbestand = artikel.lagerbestand;
 	}
 
 }
