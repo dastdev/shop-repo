@@ -273,13 +273,18 @@ public class KundeResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public Response createKunde(@Valid Kunde kunde) {
+		System.out.println("Kunde: " + kunde);
 		kunde.setID(START_ID_NULL);
+		System.out.println("neue ID " + kunde.getID());
+		final Adresse adresse = kunde.getAdresse();
 		
-//		final Adresse adresse = kunde.getAdresse();
-//		if (adresse != null)
-//			adresse.setKunde(kunde);
+		System.out.println("Adresse: " + adresse);
+		if (adresse != null)
+			adresse.setKunde(kunde);
 		
+		System.out.println("ks.createKunde()");
 		kunde = ks.createKunde(kunde);
+		System.out.println("ks.createKunde::::: DONE");
 		
 		LOGGER.tracef("Kunde: %s", kunde);
 		
