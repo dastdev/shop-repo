@@ -29,7 +29,6 @@ INSERT INTO adresse (id, strasse, hausnummer, plz, stadt, land, kunde_fk, erzeug
 --
 -- artikel
 --
-<<<<<<< HEAD
 INSERT INTO artikel (id, artikelnummer, bezeichnung, kurzBeschreibung, beschreibung, preis, lagerbestand, kategorie, erzeugt, aktualisiert) VALUES (300, '123123', 'Chromobike 2014', 'Mit dem Chromobike 2014 sind sie bestens ausgerüstet ...', 'Das Chromobike 2014 ist das neueste Modell aus dem Hause X. Es besticht durch sein geringes Gewicht und seine auffällige Form ...', 199, 5, 'K','01.08.2006 00:00:00','01.08.2006 00:00:00');
 INSERT INTO artikel (id, artikelnummer, bezeichnung, kurzBeschreibung, beschreibung, preis, lagerbestand, kategorie, erzeugt, aktualisiert) VALUES (301, '124124', 'Chromobike 2014 PLUS Edition', 'Mit dem Chromobike 2014 sind sie bestens ausgerüstet ...', 'Das Chromobike 2014 PLUS ist das neueste und hochwertigste Modell aus dem Hause X. Es besticht durch sein geringes Gewicht und seine auffällige Form ...', 2499, 3, 'K','02.08.2006 00:00:00','02.08.2006 00:00:00');
 INSERT INTO artikel (id, artikelnummer, bezeichnung, kurzBeschreibung, beschreibung, preis, lagerbestand, kategorie, erzeugt, aktualisiert) VALUES (302, '124774', 'Redhax Sattel Black', 'Harter Herrensportsattel in Schwarz', 'Mit dem Redhax Sattel wird jede Tour zum Vergnügen...', 79, 25, 'Z','03.08.2006 00:00:00','03.08.2006 00:00:00');
