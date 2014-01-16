@@ -40,7 +40,7 @@
       -->
       
       <properties>
-	    <!-- im Produktivbetrieb auskommentieren -->
+        <!-- im Produktivbetrieb auskommentieren -->
 		<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 		<property name="javax.persistence.schema-generation.create-source" value="metadata-then-script"/>
 					
@@ -59,6 +59,9 @@
 		<property name="hibernate.query.jpaql_strict_compliance" value="true"/>
 		<!-- SQL-Anweisungen lesbar protokollieren -->
 		<property name="hibernate.format_sql" value="true"/>
+		
+		<!-- SQL-Anweisungen anzeigen -->
+		<property name="hibernate.show_sql" value="true" />
 		
 		<!-- Kommentare zu den generierten SQL-Anweisungen hinzufuegen -->
 		<property name="hibernate.use_sql_comments" value="true"/>

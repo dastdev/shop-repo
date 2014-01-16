@@ -1,15 +1,15 @@
 package de.webshop.artikelverwaltung.service;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 import de.webshop.artikelverwaltung.domain.Artikel;
-import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
+//import de.webshop.artikelverwaltung.domain.Artikel.Kategorie;
 import de.webshop.util.interceptor.Log;
 
 @Log
@@ -19,7 +19,7 @@ public class ArtikelService implements Serializable {
 	private static final long serialVersionUID = -3006652195760480390L;
 
 	@Inject
-	private EntityManager em;
+	private transient EntityManager em;
 	
 	/**
 	 * Findet einen vorhandenen Artikel entsprechend seiner ID

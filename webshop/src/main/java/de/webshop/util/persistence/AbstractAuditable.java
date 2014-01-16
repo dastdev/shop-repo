@@ -16,12 +16,12 @@ public abstract class AbstractAuditable implements Serializable {
 	private static final long	serialVersionUID	= -6888875114036861068L;
 
 	@Temporal(TIMESTAMP)
-	@Basic(optional=false)
+	@Basic(optional = false)
 	@XmlTransient
 	private Date erzeugt;
 	
 	@Temporal(TIMESTAMP)
-	@Basic(optional=false)
+	@Basic(optional = false)
 	@XmlTransient
 	private Date aktualisiert;
 	
@@ -41,7 +41,7 @@ public abstract class AbstractAuditable implements Serializable {
 	}
 	
 	public void setErzeugt(Date erzeugt) {
-		this.erzeugt = erzeugt;
+		this.erzeugt = erzeugt == null ? null : (Date) erzeugt.clone();
 	}
 	
 	public Date getAktualisiert() {
@@ -49,7 +49,7 @@ public abstract class AbstractAuditable implements Serializable {
 	}
 	
 	public void setAktualisiert(Date aktualisiert) {
-		this.aktualisiert = aktualisiert;
+		this.aktualisiert = aktualisiert == null ? null : (Date) aktualisiert.clone();
 	}
 	
 	@Override

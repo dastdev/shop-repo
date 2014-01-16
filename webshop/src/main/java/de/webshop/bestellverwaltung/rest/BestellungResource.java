@@ -4,7 +4,6 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static de.webshop.util.Constants.SELF_LINK;
-
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.rest.ArtikelResource;
 import de.webshop.artikelverwaltung.service.ArtikelService;
@@ -41,7 +39,7 @@ import de.webshop.util.rest.UriHelper;
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
 @RequestScoped
-@Transactional 
+@Transactional
 @Log
 public class BestellungResource implements Serializable {
 	
@@ -131,6 +129,7 @@ public class BestellungResource implements Serializable {
 		// IDs der Artikel ermitteln
 		final Collection<Position> positionen = bestellung.getPositionen();
 		final List<Long> artikelIds = new ArrayList<>(positionen.size());
+		
 		for (Position p : positionen) {
 			final URI artikelUri = p.getArtikelUri();
 			if (artikelUri == null) {
@@ -171,6 +170,7 @@ public class BestellungResource implements Serializable {
 				if (artikel.getID().longValue() == artikelId) {
 					// Der Artikel wurde gefunden
 					p.setArtikel(artikel);
+					
 					neuePositionen.add(p);
 					break;
 				}
@@ -181,7 +181,9 @@ public class BestellungResource implements Serializable {
 		bestellung = bs.createBestellung(bestellung, kundeId);
 		
 		final URI bestellungUri = getUriBestellung(bestellung, uriInfo);
-		return Response.created(bestellungUri).build();
+		
+		final Response res = Response.created(bestellungUri).build();
+		return res;
 	}
 	
 	@NotNull(message = "{bestellung.artikelIds.invalid}")

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.Entity;
+//import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -33,7 +33,7 @@ public class Artikelpreishistorie implements Serializable {
 	private Long artikelID;
 
 	@Temporal(TIMESTAMP)
-	@Basic(optional=false)
+	@Basic(optional = false)
 	@NotNull(message = "{artikelverwaltung.artikelpreishistorie.gueltigVon.notNull}")
 	private Date gueltigVon;
 	
@@ -45,12 +45,12 @@ public class Artikelpreishistorie implements Serializable {
 	public Artikelpreishistorie() {
 		super();
 	}
-	
+	//FIXME [Thommy] Wird der Konstruktor hier wirklich benötigt?
 	public Artikelpreishistorie(Long artikelid, Date gueltigVon,
 			BigDecimal preis) {
 		super();
 		this.artikelID = artikelid;
-		this.gueltigVon = gueltigVon;
+		this.gueltigVon = gueltigVon == null ? null : (Date) gueltigVon.clone();
 		this.preis = preis;
 	}
 
@@ -72,11 +72,11 @@ public class Artikelpreishistorie implements Serializable {
 	}
 
 	public Date getGueltigVon() {
-		return gueltigVon;
+		return gueltigVon == null ? null : (Date) gueltigVon.clone();
 	}
 
 	public void setGueltigVon(Date gueltigVon) {
-		this.gueltigVon = gueltigVon;
+		this.gueltigVon = gueltigVon == null ? null : (Date) gueltigVon.clone();
 	}
 
 	public BigDecimal getPreis() {
@@ -111,7 +111,7 @@ public class Artikelpreishistorie implements Serializable {
 
 
 		final Artikelpreishistorie other = (Artikelpreishistorie) obj;
-		if (artikelID != other.artikelID) {
+		if (artikelID != other.artikelID.longValue()) {
 			return false;
 		}
 		

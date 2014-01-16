@@ -20,13 +20,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+//import javax.persistence.OrderColumn;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -68,7 +67,6 @@ public class Bestellung extends AbstractAuditable {
 	@Id
 	@GeneratedValue
 	@Basic(optional = false)
-	@Min(value = 1, message = "{bestellverwaltung.bestellung.id.min}")
 	private Long id = null;
 	
 	@ManyToOne
@@ -89,7 +87,6 @@ public class Bestellung extends AbstractAuditable {
 	@NotEmpty(message = "{bestellverwaltung.bestellung.positionen.notEmpty}")
 	@Valid
 	private List<Position> positionen;
-	
 	
 	public Bestellung() {
 		super();
@@ -139,11 +136,11 @@ public class Bestellung extends AbstractAuditable {
 	}
 	
 	public Date getBestelldatum() {
-		return bestelldatum;
+		return bestelldatum == null ? null : (Date) bestelldatum.clone();
 	}
 	
 	public void setBestelldatum(Date bestelldatum) {
-		this.bestelldatum = bestelldatum;
+		this.bestelldatum = bestelldatum == null ? null : (Date) bestelldatum.clone();
 	}
 	
 	public List<Position> getPositionen() {
@@ -151,13 +148,13 @@ public class Bestellung extends AbstractAuditable {
 	}
 	
 	public void setPositionen(List<Position> positionen) {
-		if(this.positionen == null) {
+		if (this.positionen == null) {
 			this.positionen = positionen;
 			return;
 		}
 		
 		this.positionen.clear();
-		if(positionen != null) {
+		if (positionen != null) {
 			this.positionen.addAll(positionen);
 		}
 	}

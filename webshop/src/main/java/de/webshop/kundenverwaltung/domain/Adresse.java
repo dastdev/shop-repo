@@ -1,49 +1,81 @@
 package de.webshop.kundenverwaltung.domain;
 
-import java.io.Serializable;
+import static de.webshop.util.Constants.START_ID_NULL;
+
+import java.lang.invoke.MethodHandles;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Min;
+import javax.persistence.PostPersist;
+import javax.persistence.Table;
+import javax.persistence.Index;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.jboss.logging.Logger;
+import de.webshop.util.persistence.AbstractAuditable;
 
-@XmlRootElement
-public class Adresse implements Serializable {
+//@XmlRootElement
+@Entity
+@Table(indexes = @Index(columnList = "plz"))
+public class Adresse extends AbstractAuditable {
 
 	private static final long serialVersionUID = -6129881639235747224L;
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+	
+	private static final int STRASSE_LENGTH_MIN = 2;
+	private static final int STRASSE_LENGTH_MAX = 32;
+	private static final int HAUSNUMMER_LENGTH_MAX = 4;
+	private static final int STADT_LENGTH_MIN = 2;
+	private static final int STADT_LENGTH_MAX = 32;
+	
+	protected static final String PATTERN_PLZ = "\\d{4,5}";
+	
 	// Eigenschaften
-	@Min(value = 1, message = "{kundenverwaltung.adresse.id.min}")
-	@NotNull(message = "{kundenverwaltung.adresse.id.notNull}")
-	private Long id;
+	@Id
+	@GeneratedValue
+	@Basic(optional = false)
+	private Long id = START_ID_NULL;
 	
 	@OneToOne
 	@JoinColumn(name = "kunde_fk", nullable = false, unique = true)
-//	@NotNull(message = "{kundenverwaltung.adresse.kunde.notNull}")
+	@XmlTransient
 	private Kunde kunde;
 	
+	@Size(min = STRASSE_LENGTH_MIN, max = STRASSE_LENGTH_MAX, message = "{kundenverwaltung.adresse.strasse.size}")
 	@NotNull(message = "{kundenverwaltung.adresse.strasse.notNull}")
 	private String strasse;
 	
-	@Size(max = 4, message = "{kundenverwaltung.adresse.hausnummer.size}")
-	@NotNull(message = "{kundenverwaltung.adresse.hausnummer.notNull}")
+	@Size(max = HAUSNUMMER_LENGTH_MAX, message = "{kundenverwaltung.adresse.hausnummer.size}")
+	//@NotNull(message = "{kundenverwaltung.adresse.hausnummer.notNull}")	//Unsinnig, da manche Adressen keine Hausnr. besitzen
 	private String hausnummer;
 	
-	@Pattern(regexp = "\\d{4,5}", message = "{kundenverwaltung.adresse.plz.pattern}")
+	@Pattern(regexp = PATTERN_PLZ, message = "{kundenverwaltung.adresse.plz.pattern}")
 	@NotNull(message = "{kundenverwaltung.adresse.plz.notNull }")
 	private String plz;
 	
 	@NotNull(message = "{kundenverwaltung.adresse.stadt.notNull}")
+	@Size(min = STADT_LENGTH_MIN, max = STADT_LENGTH_MAX)
 	private String stadt;
 	
+	@NotNull(message = "{kundenverwaltung.adresse.land.notNull}")
 	private Land land;
-
+	
 	// Laenderkuerzel nach ISO 3166
 	public enum Land {
-		AT, CH, DE
+			AT, CH, DE
 	}
-
+	
+	@PostPersist
+	protected void postPersist() {
+		LOGGER.debugf("Neue Adresse mit ID %d hinzugefuegt", id);
+	}
+		
 	// get/set-Methoden
 	public Long getID() {
 		return id;
@@ -109,8 +141,6 @@ public class Adresse implements Serializable {
 		int result = 1;
 		result = prime * result
 				+ ((hausnummer == null) ? 0 : hausnummer.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((land == null) ? 0 : land.hashCode());
 		result = prime * result + ((plz == null) ? 0 : plz.hashCode());
 		result = prime * result + ((stadt == null) ? 0 : stadt.hashCode());
 		result = prime * result + ((strasse == null) ? 0 : strasse.hashCode());

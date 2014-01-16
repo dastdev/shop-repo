@@ -13,6 +13,7 @@ import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.bestellverwaltung.domain.Position;
 import de.webshop.kundenverwaltung.domain.Kunde;
 import de.webshop.kundenverwaltung.service.KundeService;
+import de.webshop.kundenverwaltung.service.KundeService.FetchType;
 import de.webshop.util.interceptor.Log;
 
 @Dependent
@@ -34,7 +35,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	@Override
 	@NotNull(message = "{bestellung.notFound.id}")
 	public Bestellung findBestellungById(Long id) {
-		if(id == null) {
+		if (id == null) {
 			return null;
 		}
 		
@@ -44,7 +45,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	@Override
 	@Size(min = 1, message = "{bestellung.notFound.kunde}")
 	public List<Bestellung> findBestellungenByKunde(Kunde kunde) {
-		if(kunde == null) {
+		if (kunde == null) {
 			return new ArrayList<Bestellung>();
 		}
 		
@@ -53,35 +54,36 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	
 	@Override
 	public Bestellung createBestellung(Bestellung bestellung, Long kundeId) {
-		if(bestellung == null) {
+		if (bestellung == null) {
 			return null;
 		}
 		
-		Kunde kunde = ks.findKundeById(kundeId);
+		final Kunde kunde = ks.findKundeById(kundeId, FetchType.NUR_KUNDE);
 		return createBestellung(bestellung, kunde);
 	}
 	
 	@Override
 	public Bestellung createBestellung(Bestellung bestellung, Kunde kunde) {
-		if(bestellung == null) {
+		if (bestellung == null) {
 			return null;
 		}
 		
 		// Kunde mit Bestellung verknuepfen
-		if(!em.contains(kunde)) {
-			kunde = ks.findKundeById(kunde.getID());
+		if (!em.contains(kunde)) {	
+			kunde = ks.findKundeById(kunde.getID(), FetchType.NUR_KUNDE);
 		}
-		// TODO: kunde.addBestellung(bestellung)
+			
+		kunde.addBestellung(bestellung);
 		bestellung.setKunde(kunde);
 		
 		// IDs zuruecksetzen
 		bestellung.setID(null);
-		for(Position p : bestellung.getPositionen()) {
+		for (Position p : bestellung.getPositionen()) {
 			p.setID(null);
 		}
 		
 		em.persist(bestellung);
-		event.fire(bestellung);
+		//event.fire(bestellung);
 		
 		return bestellung;
 	}
