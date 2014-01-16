@@ -91,7 +91,13 @@ public class ArtikelResource extends AbstractAuditable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public Response updateArtikel(@Valid Artikel artikel) {
-		as.updateArtikel(artikel);
-		return Response.ok(artikel).links(getTransitionalLinks(artikel, uriInfo)).build();
+		// Vorhandenen Kunden ermitteln
+		final Artikel origArtikel = as.findArtikelById(artikel.getID());
+
+		// Daten des vorhandenen Kunden ueberschreiben
+		origArtikel.setValues(artikel);
+		as.updateArtikel(origArtikel);
+
+		return Response.ok(origArtikel).links(getTransitionalLinks(artikel, uriInfo)).build();
 	}
 }
