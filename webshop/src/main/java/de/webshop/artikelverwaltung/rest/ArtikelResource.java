@@ -28,6 +28,7 @@ import javax.ws.rs.core.UriInfo;
 import de.webshop.artikelverwaltung.domain.Artikel;
 import de.webshop.artikelverwaltung.service.ArtikelService;
 import de.webshop.util.interceptor.Log;
+import de.webshop.util.persistence.AbstractAuditable;
 import de.webshop.util.rest.NotFoundException;
 import de.webshop.util.rest.UriHelper;
 
@@ -37,7 +38,7 @@ import de.webshop.util.rest.UriHelper;
 @Produces({ APPLICATION_JSON, APPLICATION_XML + ";qs=0.75", TEXT_XML + ";qs=0.5" })
 @Consumes
 @Transactional
-public class ArtikelResource implements Serializable {
+public class ArtikelResource extends AbstractAuditable {
 	
 	private static final long serialVersionUID = -8511705638924554310L;
 
@@ -90,7 +91,8 @@ public class ArtikelResource implements Serializable {
 	@PUT
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
-	public void updateArtikel(@Valid Artikel artikel) {
+	public Response updateArtikel(@Valid Artikel artikel) {
 		as.updateArtikel(artikel);
+		return Response.ok(artikel).links(getTransitionalLinks(artikel, uriInfo)).build();
 	}
 }

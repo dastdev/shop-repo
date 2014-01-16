@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.URI;
 
+import static javax.persistence.TemporalType.TIMESTAMP;
+
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -11,7 +15,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Entity;
+import javax.persistence.PostPersist;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -19,6 +27,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 @Entity
@@ -36,6 +45,7 @@ public class Artikel implements Serializable {
 	@GeneratedValue
 	@Basic(optional = false)
 	@Min(value = 1, message = "{artikelverwaltung.artikel.id.min}")
+	@Column(nullable = false, updatable = false)
 	private Long id;
 	
 	@NotNull(message = "{artikelverwaltung.artikel.artikelnummer.notNull}")
@@ -63,6 +73,16 @@ public class Artikel implements Serializable {
 	@Column(length = 1) // Da Enum verkürzt in DB abgebildet wird
 	@Convert(converter = KategorieConverter.class)
 	private Kategorie kategorie;
+	
+	@Basic(optional = false)
+	@Temporal(TIMESTAMP)
+	@XmlTransient
+	private Date erzeugt;
+
+	@Basic(optional = false)
+	@Temporal(TIMESTAMP)
+	@XmlTransient
+	private Date aktualisiert;
 
 	public enum Kategorie {
 		KOMPLETTRAEDER("K"),
@@ -102,6 +122,22 @@ public class Artikel implements Serializable {
 		this.id = id;
 		this.artikelnummer = artikelnummer;
 		this.preis = preis;
+	}
+	
+	@PrePersist
+	private void prePersist() {
+		this.erzeugt = new Date();
+		this.aktualisiert = new Date();
+	}
+	
+	@PostPersist
+	private void postPersist() {
+		//LOGGER.debugf("Neuer Artikel mit ID=%d", id);
+	}
+	
+	@PreUpdate
+	private void preUpdate() {
+		this.aktualisiert = new Date();
 	}
 
 	// Getter und Setter
@@ -177,6 +213,22 @@ public class Artikel implements Serializable {
 	public Long getID() {
 		return id;
 	}
+	
+	public Date getErzeugt() {
+		return erzeugt == null ? null : (Date) erzeugt.clone();
+	}
+
+	public void setErzeugt(Date erzeugt) {
+		this.erzeugt = erzeugt == null ? null : (Date) erzeugt.clone();
+	}
+
+	public Date getAktualisiert() {
+		return aktualisiert == null ? null : (Date) aktualisiert.clone();
+	}
+
+	public void setAktualisiert(Date aktualisiert) {
+		this.aktualisiert = aktualisiert == null ? null : (Date) aktualisiert.clone();
+	}
 
 
 	// Basismethoden
@@ -187,7 +239,7 @@ public class Artikel implements Serializable {
 				+ bezeichnung + "\nKurzbeschreibung: " + kurzBeschreibung
 				+ "\nArtikelbeschreibung: " + beschreibung + "\nPreis: "
 				+ preis + "\nLagerbestand: " + lagerbestand + "\nKategorie: "
-				+ kategorie;
+				+ kategorie + "\nErzeugt: ";
 	}
 
 	@Override
