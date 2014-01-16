@@ -104,23 +104,21 @@ public class Kunde extends AbstractAuditable {
 	private Long id = START_ID_NULL;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.name.notNull}")
-	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
+//	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.name.length}")
 	@Pattern(regexp = NACHNAME_PATTERN, message = "{kundenverwaltung.kunde.name.pattern}")
 	private String name;
 	
-//	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
-	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
+	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
+//	@Size(min = 2, max = 32, message = "{kundenverwaltung.kunde.vorname.length}")
 	@Pattern(regexp = NAME_PATTERN, message = "{kundenverwaltung.kunde.vorname.pattern}")
-	@Column(nullable = false)
 	private String vorname;
 	
 	@Past(message = "{kundenverwaltung.kunde.geburtstag.date}")
 	@Temporal(DATE)
 	private Date geburtstag;
 	
-//	@NotNull(message = "{kundenverwaltung.kunde.passwort.notNull}")
-	@Size(min = 4, max = 16, message = "{kundenverwaltung.kunde.passwort.length}")
-	@Column(nullable = false)
+	@NotNull(message = "{kundenverwaltung.kunde.passwort.notNull}")
+//	@Size(min = 4, max = 16, message = "{kundenverwaltung.kunde.passwort.length}")
 	private String passwort;
 	
 	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
@@ -142,7 +140,7 @@ public class Kunde extends AbstractAuditable {
 	private List<Bestellung> bestellungen;
 	
 	@OneToOne(mappedBy = "kunde", cascade={PERSIST, REMOVE})
-	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
+//	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
 	@Valid
 	private Adresse adresse;
 	

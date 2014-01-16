@@ -1,5 +1,7 @@
 package de.webshop.kundenverwaltung.domain;
 
+import static de.webshop.util.Constants.START_ID_NULL;
+
 import java.lang.invoke.MethodHandles;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -38,7 +40,7 @@ public class Adresse extends AbstractAuditable {
 	@Id
 	@GeneratedValue
 	@Basic(optional = false)
-	private Long id;
+	private Long id = START_ID_NULL;
 	
 	@OneToOne
 	@JoinColumn(name = "kunde_fk", nullable = false, unique = true)
