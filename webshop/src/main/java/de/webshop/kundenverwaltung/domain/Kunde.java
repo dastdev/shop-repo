@@ -193,11 +193,11 @@ public class Kunde extends AbstractAuditable {
 	}
 
 	public Date getGeburtstag() {
-		return geburtstag;
+		return (Date) geburtstag.clone();
 	}
 
 	public void setGeburtstag(Date geburtstag) {
-		this.geburtstag = geburtstag;
+		this.geburtstag = geburtstag == null ? null : (Date) geburtstag.clone();
 	}
 
 	public String getGeburtstagAsString(int style, Locale locale) {

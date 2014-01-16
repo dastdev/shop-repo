@@ -136,11 +136,11 @@ public class Bestellung extends AbstractAuditable {
 	}
 	
 	public Date getBestelldatum() {
-		return bestelldatum;
+		return bestelldatum == null ? null : (Date) bestelldatum.clone();
 	}
 	
 	public void setBestelldatum(Date bestelldatum) {
-		this.bestelldatum = bestelldatum;
+		this.bestelldatum = bestelldatum == null ? null : (Date) bestelldatum.clone();
 	}
 	
 	public List<Position> getPositionen() {

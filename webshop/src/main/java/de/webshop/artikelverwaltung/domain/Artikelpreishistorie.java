@@ -45,12 +45,12 @@ public class Artikelpreishistorie implements Serializable {
 	public Artikelpreishistorie() {
 		super();
 	}
-	
+	//FIXME [Thommy] Wird der Konstruktor hier wirklich benötigt?
 	public Artikelpreishistorie(Long artikelid, Date gueltigVon,
 			BigDecimal preis) {
 		super();
 		this.artikelID = artikelid;
-		this.gueltigVon = gueltigVon;
+		this.gueltigVon = gueltigVon == null ? null : (Date) gueltigVon.clone();
 		this.preis = preis;
 	}
 
@@ -72,11 +72,11 @@ public class Artikelpreishistorie implements Serializable {
 	}
 
 	public Date getGueltigVon() {
-		return gueltigVon;
+		return gueltigVon == null ? null : (Date) gueltigVon.clone();
 	}
 
 	public void setGueltigVon(Date gueltigVon) {
-		this.gueltigVon = gueltigVon;
+		this.gueltigVon = gueltigVon == null ? null : (Date) gueltigVon.clone();
 	}
 
 	public BigDecimal getPreis() {
@@ -111,7 +111,7 @@ public class Artikelpreishistorie implements Serializable {
 
 
 		final Artikelpreishistorie other = (Artikelpreishistorie) obj;
-		if (artikelID != other.artikelID) {
+		if (artikelID != other.artikelID.longValue()) {
 			return false;
 		}
 		

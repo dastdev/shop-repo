@@ -19,7 +19,7 @@ public class ArtikelService implements Serializable {
 	private static final long serialVersionUID = -3006652195760480390L;
 
 	@Inject
-	private EntityManager em;
+	private transient EntityManager em;
 	
 	/**
 	 * Findet einen vorhandenen Artikel entsprechend seiner ID
