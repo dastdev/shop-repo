@@ -294,7 +294,15 @@ public class KundeResource implements Serializable {
 	@Consumes({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
 	@Produces
 	public void updateKunde(@Valid Kunde kunde) {
-		ks.updateKunde(kunde);
+		// Vorhandenen Kunden ermitteln
+		final Kunde origKunde = ks.findKundeById(kunde.getID(), FetchType.NUR_KUNDE);
+		LOGGER.tracef("Kunde vorher: %s", origKunde);
+	
+		// Daten des vorhandenen Kunden ueberschreiben
+		origKunde.setValues(kunde);
+		LOGGER.tracef("Kunde nachher: %s", origKunde);
+		
+		ks.updateKunde(origKunde);
 		LOGGER.tracef("Kunde: %s", kunde);
 	}
 	
