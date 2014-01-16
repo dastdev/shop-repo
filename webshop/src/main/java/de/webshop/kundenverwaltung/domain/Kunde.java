@@ -1,7 +1,6 @@
 package de.webshop.kundenverwaltung.domain;
 
 import static de.webshop.util.Constants.START_ID_NULL;
-import static javax.persistence.TemporalType.DATE;
 import static javax.persistence.TemporalType.TIMESTAMP;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
@@ -34,7 +33,6 @@ import javax.persistence.Index;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-//import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -47,7 +45,7 @@ import de.webshop.bestellverwaltung.domain.Bestellung;
 import de.webshop.util.persistence.AbstractAuditable;
 
 @Entity
-@Table(indexes = @Index(columnList ="name") )
+@Table(indexes = @Index(columnList = "name"))
 @NamedEntityGraphs({
 	@NamedEntityGraph (name = "bestellungen", attributeNodes = @NamedAttributeNode ("bestellungen"))
 })
@@ -139,7 +137,7 @@ public class Kunde extends AbstractAuditable {
 	@XmlTransient
 	private List<Bestellung> bestellungen;
 	
-	@OneToOne(mappedBy = "kunde", cascade={PERSIST, REMOVE})
+	@OneToOne(mappedBy = "kunde", cascade = { PERSIST, REMOVE })
 	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
 	@Valid
 	private Adresse adresse;

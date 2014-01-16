@@ -93,8 +93,7 @@ public class KundeResource implements Serializable {
 //                               String plz,
                                @QueryParam(KUNDEN_EMAIL_QUERY_PARAM)
                                @Email(message = "{kunde.email}")
-                               String email) 
-	                           {
+                               String email) {
 		List<Kunde> kunden = null;
 		Kunde kunde = null;
 		// TODO Mehrere Query-Parameter koennen angegeben sein
@@ -119,7 +118,7 @@ public class KundeResource implements Serializable {
 				setStructuralLinks(k, uriInfo);
 			}
 		
-			entity = new GenericEntity<List<Kunde>>(kunden){};
+			entity = new GenericEntity<List<Kunde>>(kunden) { };
 			links = getTransitionalLinksKunden(kunden, uriInfo);
 		}
 		else if (kunde != null) {

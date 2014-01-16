@@ -58,7 +58,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 			return null;
 		}
 		
-		Kunde kunde = ks.findKundeById(kundeId, FetchType.NUR_KUNDE);
+		final Kunde kunde = ks.findKundeById(kundeId, FetchType.NUR_KUNDE);
 		return createBestellung(bestellung, kunde);
 	}
 	
@@ -69,7 +69,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 		}
 		
 		// Kunde mit Bestellung verknuepfen
-		if(!em.contains(kunde)) {	
+		if (!em.contains(kunde)) {	
 			kunde = ks.findKundeById(kunde.getID(), FetchType.NUR_KUNDE);
 		}
 			
